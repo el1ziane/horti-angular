@@ -1,0 +1,12 @@
+[
+  {
+    "_id": "1",
+    "fornecedor": "Casa das Etiquetas",
+    "produto": "Rolo de Etiquetas",
+    "quantidadeRecebimento": 10,
+    "valor_recebimento": 300,
+    "data_recebimento": "2024-04-21",
+    "status": "A faturar"
+  }
+
+]

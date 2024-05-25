@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 10000;
+}
+
+.nav-brand {
+  text-align: center;
+}
+.toolbar-item-spacer {
+  flex: 1 1 auto;
+}

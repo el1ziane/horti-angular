@@ -1,0 +1,25 @@
+<mat-toolbar style="background-color: #64C2A8" class="fix-nav">
+  <button type="button" mat-icon-button (click)="toggleSidebar()">
+      <mat-icon>menu</mat-icon>
+  </button>
+  <span>Sistema de Horti Fruti</span>
+  <span class="toolbar-item-spacer"></span>
+  <button mat-icon-button matTooltip="Notificações">
+      <mat-icon>notifications</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="My Account" [matMenuTriggerFor]="userAccountMenu">
+      <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
+      <button mat-menu-item routerLink="#">
+          <mat-icon>person</mat-icon><span>Minha Conta</span>
+      </button>
+      <button mat-menu-item routerLink="#">
+          <mat-icon>settings</mat-icon><span>Configurações</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item routerLink="#">
+          <mat-icon>exit_to_app</mat-icon>Sair
+      </button>
+  </mat-menu>
+</mat-toolbar>

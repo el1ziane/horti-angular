@@ -1,1 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@include mat.core();
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+html, body { height: 100%;}
+body {
+
+font-family: Roboto,"Helvetica Neue", sans-serif; }
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .sidenav-container {
+    flex: 1;
+
+    .sidenav {
+      width: 100%;
+      background-color: #CEF6EF;
+      transition: width 200ms;
+    }
+
+    .main-container {
+      background-color: #E8F8F5;
+      padding: 35px;
+      height: 100%; /* Adiciona essa linha */
+    }
+
+
+  }
+}
+
+#sidenav-content {
+  transition: margin-left 200ms;
+}
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
