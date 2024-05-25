@@ -25,10 +25,11 @@ import {
   MY_DATE_FORMATS,
 } from './recebimentos/containers/form-recebimento/form-recebimento.component';
 import { RecebimentosComponent } from './recebimentos/containers/recebimentos/recebimentos.component';
-import { SharedModule } from './shared/shared.module';
 import { SideNavClosedComponent } from './side-nav-left/side-nav-closed/side-nav-closed.component';
 import { SideNavComponent } from './side-nav-left/side-nav/side-nav.component';
 import { TopNavComponent } from './top-nav/top-nav.component';
+import { SharedModule } from './shared/shared.module';
+
 
 
 
@@ -42,7 +43,8 @@ import { TopNavComponent } from './top-nav/top-nav.component';
     FormComponent,
     RecebimentosComponent,
     FormRecebimentoComponent,
-    RecebimentosListaComponent
+    RecebimentosListaComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,6 @@ import { TopNavComponent } from './top-nav/top-nav.component';
     MatMenuModule,
     MatTableModule,
     HttpClientModule,
-    SharedModule,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
@@ -61,6 +62,7 @@ import { TopNavComponent } from './top-nav/top-nav.component';
     MatInputModule,
     MatAutocompleteModule,
     MatDatepickerModule,
+    SharedModule
   ],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }, // Fornecer o valor de MY_DATE_FORMATS para MAT_DATE_FORMATS

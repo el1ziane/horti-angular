@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { RecebimentosService } from '../../services/recebimentos.service';
 import { ActivatedRoute } from '@angular/router';
 import { Recebimento } from '../../model/recebimento';
+import { FormUtilsService } from '../../../shared/form/form-utils.service';
 
 // Definição dos formatos de data
 export const MY_DATE_FORMATS: MatDateFormats = {
@@ -73,10 +74,15 @@ export class FormRecebimentoComponent implements OnInit {
   }
 
   enviar(){
-    this.service.salvar(this.form.value).subscribe(result=> this.onSuccess(), error => this.onError());
+    if (this.form.valid) {
+      this.service.salvar(this.form.value).subscribe(result=> this.onSuccess(), error => this.onError());
+    }else{
+      alert('form invalido')
+    }
+
 
     }
-    
+
     cancelar(){
       this.location.back();
     }

@@ -8,7 +8,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
   templateUrl: './confirmation-dialog.component.html',
   standalone: true,
   imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule, MatFormField, MatLabel],
-  styleUrl: './confirmation-dialog.component.scss'
+  styleUrl: './confirmation-dialog.component.css'
 })
 export class ConfirmationDialogComponent implements OnInit {
   constructor(

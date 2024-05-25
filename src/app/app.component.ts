@@ -1,5 +1,5 @@
 import { MediaObserver, MediaChange } from '@angular/flex-layout';
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, Inject } from '@angular/core';
 import { MatSidenav, MatSidenavContainer } from '@angular/material/sidenav';
 
 import { Observable, map } from 'rxjs';
@@ -7,7 +7,7 @@ import { Observable, map } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: []
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   title = 'Material-Side-Navbar-In-Angular';
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   toolBarHeight = 64;
   private readonly mediaWatcher: Observable<boolean>;;
   isDarkTheme: boolean = false;
-  constructor(media: MediaObserver) {
+  constructor(@Inject(MediaObserver) private media: MediaObserver) {
     this.mediaWatcher = media.asObservable()
       .pipe(
         map((changes: MediaChange[]) =>

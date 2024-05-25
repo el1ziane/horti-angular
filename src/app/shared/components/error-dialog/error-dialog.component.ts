@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, Ma
   standalone: true,
   imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule],
   templateUrl: './error-dialog.component.html',
-  styleUrl: './error-dialog.component.scss',
+  styleUrl: './error-dialog.component.css',
 
 })
 export class ErrorDialogComponent implements OnInit {
