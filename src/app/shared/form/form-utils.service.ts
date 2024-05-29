@@ -1,18 +1,35 @@
-import { Injectable } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { Injectable } from "@angular/core";
+import { UntypedFormGroup, UntypedFormControl, FormGroup, FormControl } from "@angular/forms";
+
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormUtilsService {
 
+  validateAllFormFields(formGroup: UntypedFormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof UntypedFormControl) {
+        control.markAsTouched({ onlySelf: true });
+      } else if (
+        control instanceof UntypedFormGroup
+      ) {
+        control.markAsTouched({ onlySelf: true });
+        this.validateAllFormFields(control);
+      }
+    });
+  }
+
   constructor() { }
-  getErrorMessage(formGroup: UntypedFormGroup, fieldName: string){
-    const field = formGroup.get(fieldName) as UntypedFormControl;
+  getFieldErrorMessage(formGroup: FormGroup, fieldName: string): string{
+    const field = formGroup.get(fieldName) as FormControl;
     return this.getErrorMessageFromField(field);
   }
 
-  getErrorMessageFromField(field: UntypedFormControl){
+  getErrorMessageFromField(field: UntypedFormControl): string{
     if (field?.hasError('required')) {
       return 'Campo obrigatório';
     }

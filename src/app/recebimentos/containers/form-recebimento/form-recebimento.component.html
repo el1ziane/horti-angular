@@ -9,37 +9,38 @@
           <mat-label>Fornecedor</mat-label>
           <input matInput formControlName="fornecedor" placeholder="Fornecedor" id="fornecedor" name="fornecedor">
 
-            <mat-error *ngIf="form.get('fornecedor')?.invalid">{{getErrorMessage("fornecedor")}}</mat-error>
+
 
         </mat-form-field>
         <mat-form-field appearance="outline" class="custom-form-field">
-          <mat-label>Status atual</mat-label>
+          <mat-label>Status</mat-label>
           <mat-select formControlName="status" id="status" name="status">
-            <mat-option value="pago">Pago</mat-option>
-            <mat-option value="afaturar">A faturar</mat-option>
+            <mat-option value="Pago">Pago</mat-option>
+            <mat-option value="Pendente">Pendente</mat-option>
           </mat-select>
         </mat-form-field>
+
         <mat-form-field appearance="outline" class="custom-form-field">
           <mat-label>Produto</mat-label>
           <input matInput formControlName="produto" placeholder="Produto" id="produto" name="produto" [matAutocomplete]="auto" (input)="searchProducts($event)">
-          <mat-error *ngIf="form.get('produto')?.invalid">{{getErrorMessage("produto")}}</mat-error>
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let option of produtos" [value]="option">
               {{ option }}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+
       </div>
       <div class="form-column">
         <mat-form-field appearance="outline" class="custom-form-field">
           <mat-label>Quantidade</mat-label>
           <input matInput formControlName="quantidadeRecebimento" placeholder="Quantidade" id="quantidadeRecebimento" name="quantidadeRecebimento">
-          <mat-error *ngIf="form.get('quantidadeRecebimento')?.invalid">{{getErrorMessage("quantidadeRecebimento")}}</mat-error>
+
         </mat-form-field>
         <mat-form-field appearance="outline" class="custom-form-field">
           <mat-label>Valor</mat-label>
           <input matInput type="number" formControlName="valorRecebimento" class="example-right-align" placeholder="0">
-          <mat-error *ngIf="form.get('valorRecebimento')?.invalid">{{getErrorMessage("valorRecebimento")}}</mat-error>
+
           <span matTextPrefix>$&nbsp;</span>
           <span matTextSuffix>.00</span>
         </mat-form-field>

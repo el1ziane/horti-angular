@@ -28,10 +28,8 @@
   </ng-container>
 
   <ng-container matColumnDef="status" >
-    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-    <mat-cell *matCellDef="let recebimento">
-
-    </mat-cell>
+    <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+    <mat-cell *matCellDef="let recebimento">{{recebimento.status}}</mat-cell>
   </ng-container>
 
   <ng-container  matColumnDef="acoes">

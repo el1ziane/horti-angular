@@ -11,7 +11,7 @@ export class RecebimentosService {
     throw new Error('Method not implemented.');
   }*/
 
-  private readonly API = 'api/recebimentos';
+  private readonly API = 'http://localhost:8080/api/recebimentos';
 
   constructor(private httpClient: HttpClient) { }
 

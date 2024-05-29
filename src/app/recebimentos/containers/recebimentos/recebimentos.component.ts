@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, combineLatest, map, Observable, of, startWith } from 'rxjs';
 
 import { RecebimentosService } from '../../services/recebimentos.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { Recebimento } from '../../model/recebimento';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -18,20 +19,45 @@ import { Recebimento } from '../../model/recebimento';
 export class RecebimentosComponent implements OnInit {
 
   recebimentos$: Observable<Recebimento[]> | null = null;
-//recebimentosService: RecebimentosService;
+  filteredRecebimentos$: Observable<Recebimento[]> | null = null;
+  searchTerm$ = new BehaviorSubject<string>('');
+  faSearch = faSearch;  // Atribuindo o ícone à variável faSearch
+  searchTerm = '';
 
-  constructor(private recebimentosService: RecebimentosService, public dialog: MatDialog, private router: Router, private route: ActivatedRoute, private _snackBar: MatSnackBar) {
-    //this.recebimentosService = new RecebimentosService();
-   this.atualizar();
+  constructor(
+    private recebimentosService: RecebimentosService,
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute,
+    private _snackBar: MatSnackBar
+  ) {
+    this.atualizar();
   }
-  atualizar(){
+
+  atualizar() {
     this.recebimentos$ = this.recebimentosService.list().pipe(
       catchError(error => {
         this.onError('Erro ao carregar recebimentos.');
-       return of([])
+        return of([])
       })
     );
+
+    this.filteredRecebimentos$ = combineLatest([
+      this.recebimentos$,
+      this.searchTerm$.pipe(startWith(''))
+    ]).pipe(
+      map(([recebimentos, searchTerm]) =>
+        recebimentos.filter(recebimento =>
+          (recebimento.fornecedor && recebimento.fornecedor.toLowerCase().includes(searchTerm.toLowerCase())) ||
+          (recebimento.produto && recebimento.produto.toLowerCase().includes(searchTerm.toLowerCase())) ||
+          (recebimento.status && recebimento.status.toLowerCase().includes(searchTerm.toLowerCase()))
+
+        )
+      )
+    );
   }
+
+
 
   onError(errorMsg: string) {
     this.dialog.open(ErrorDialogComponent, {
@@ -70,4 +96,10 @@ export class RecebimentosComponent implements OnInit {
     });
 
   }
+
+    search(e: Event): void {
+      const target = e.target as HTMLInputElement;
+      this.searchTerm$.next(target.value);
+    }
+
 }
