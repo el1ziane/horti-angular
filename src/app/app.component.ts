@@ -1,13 +1,20 @@
 import { MediaObserver, MediaChange } from '@angular/flex-layout';
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, Inject } from '@angular/core';
-import { MatSidenav, MatSidenavContainer } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 
 import { Observable, map } from 'rxjs';
+import { RouterOutlet } from '@angular/router';
+import { SideNavClosedComponent } from './side-nav-left/side-nav-closed/side-nav-closed.component';
+import { SideNavComponent } from './side-nav-left/side-nav/side-nav.component';
+import { NgStyle, NgIf } from '@angular/common';
+import { TopNavComponent } from './top-nav/top-nav.component';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: []
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: [],
+    standalone: true,
+    imports: [TopNavComponent, MatSidenavContainer, MatSidenav, NgStyle, NgIf, SideNavComponent, SideNavClosedComponent, MatSidenavContent, RouterOutlet]
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   title = 'Material-Side-Navbar-In-Angular';
