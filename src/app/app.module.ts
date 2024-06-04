@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,43 +26,66 @@ import { SideNavComponent } from './side-nav-left/side-nav/side-nav.component';
 import { TopNavComponent } from './top-nav/top-nav.component';
 import { AppDateAdapter } from './app-data';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SideNavClosedComponent,
-    SideNavComponent,
-    TopNavComponent,
-    FormComponent,
-    RecebimentosComponent,
-    FormRecebimentoComponent,
-    RecebimentosListaComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    MatMenuModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    FormsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    MatDatepickerModule,
-    SharedModule,
-    FontAwesomeModule,
-    MatDatepickerModule,
-
-  ],
-  providers: [
-   { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
-    { provide: DateAdapter, useClass: AppDateAdapter },
-    provideHttpClient(withInterceptorsFromDi())
-  ],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        MatMenuModule,
+        MatTableModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        FormsModule,
+        MatButtonModule,
+        MatInputModule,
+        MatAutocompleteModule,
+        MatDatepickerModule,
+        FontAwesomeModule,
+        MatDatepickerModule,
+        MatButtonModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule,
+        MatSlideToggleModule,
+        MatSnackBarModule,
+        SideNavClosedComponent,
+        SideNavComponent,
+        TopNavComponent,
+        FormComponent,
+        RecebimentosComponent,
+        FormRecebimentoComponent,
+        RecebimentosListaComponent
+    ],
+    exports: [
+        MatButtonModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule,
+        MatSlideToggleModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        MatSnackBarModule
+    ],
+    providers: [
+        { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+        { provide: DateAdapter, useClass: AppDateAdapter },
+        provideHttpClient(withInterceptorsFromDi())
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

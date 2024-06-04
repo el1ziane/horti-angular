@@ -1,13 +1,20 @@
-import { Location } from '@angular/common';
+import { Location, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
+import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats, MatOption } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RecebimentosService } from '../../services/recebimentos.service';
 import { ActivatedRoute } from '@angular/router';
 import { Recebimento } from '../../model/recebimento';
 import { FormUtilsService } from '../../../shared/form/form-utils.service';
 import { AppDateAdapter } from '../../../app-data';
+import { MatButton } from '@angular/material/button';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatSelect } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
 
 export const MY_DATE_FORMATS: MatDateFormats = {
   parse: {
@@ -22,13 +29,15 @@ export const MY_DATE_FORMATS: MatDateFormats = {
 };
 
 @Component({
-  selector: 'app-form-recebimento',
-  templateUrl: './form-recebimento.component.html',
-  styleUrls: ['./form-recebimento.component.scss'],
-  providers: [
-    { provide: DateAdapter, useClass: AppDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
-  ]
+    selector: 'app-form-recebimento',
+    templateUrl: './form-recebimento.component.html',
+    styleUrls: ['./form-recebimento.component.scss'],
+    providers: [
+        { provide: DateAdapter, useClass: AppDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+    ],
+    standalone: true,
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatPrefix, MatSuffix, MatDatepickerInput, MatDatepickerToggle, MatDatepicker, MatCardActions, MatButton]
 })
 export class FormRecebimentoComponent implements OnInit {
 

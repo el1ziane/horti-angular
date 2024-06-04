@@ -9,12 +9,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { Recebimento } from '../../model/recebimento';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { RecebimentosListaComponent } from '../../components/recebimentos-lista/recebimentos-lista.component';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatCard, MatCardHeader, MatCardTitle } from '@angular/material/card';
 
 @Component({
-  selector: 'app-recebimentos',
-  templateUrl: './recebimentos.component.html',
-  styleUrls: ['./recebimentos.component.scss']
+    selector: 'app-recebimentos',
+    templateUrl: './recebimentos.component.html',
+    styleUrls: ['./recebimentos.component.scss'],
+    standalone: true,
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatToolbar, MatButton, MatIcon, ReactiveFormsModule, FormsModule, FaIconComponent, NgIf, RecebimentosListaComponent, MatProgressSpinner, AsyncPipe]
 })
 export class RecebimentosComponent implements OnInit {
 
