@@ -1,0 +1,26 @@
+<mat-card>
+  <mat-card-header style="background-color: white">
+    <mat-card-title>Produtos</mat-card-title>
+  </mat-card-header>
+  <mat-toolbar style="background-color: white">
+    <button mat-flat-button color="primary" style="background-color: #0fac65c0; color: white;" (click)="onAdd()">
+      <mat-icon>add</mat-icon>
+      Adicionar
+    </button>
+    <div class="search-container">
+      <form action="">
+        <fa-icon [icon]="faSearch"></fa-icon>
+        <input type="text" (input)="search($event)" placeholder="Buscar...">
+      </form>
+    </div>
+  </mat-toolbar>
+
+  <div class="column-flex" class="mat-elevation-z8">
+    <app-produtos-lista *ngIf="filteredProdutos$ | async as produtos; else loading" [produtos]="produtos" (add)="onAdd()" (edit)="onEdit($event)" (delete)="onDelete($event)"></app-produtos-lista>
+    <ng-template #loading>
+      <div class="loading-spinner">
+        <mat-spinner color="foreground"></mat-spinner>
+      </div>
+    </ng-template>
+  </div>
+</mat-card>

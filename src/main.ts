@@ -25,8 +25,9 @@ import { AppRoutingModule } from './app/app-routing.module';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppDateAdapter } from './app/app-data';
-import { MY_DATE_FORMATS } from './app/recebimentos/containers/form-recebimento/form-recebimento.component';
+
 import { MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
+import { MY_DATE_FORMATS } from './app/features/recebimentos/form-recebimento/form-recebimento.component';
 
 if (environment.production) {
   enableProdMode();

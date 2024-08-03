@@ -1,59 +1,57 @@
-
+import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { FormComponent } from './form/form.component';
-import { RecebimentosComponent } from './recebimentos/containers/recebimentos/recebimentos.component';
+import { EstoqueComponent } from './features/estoque/estoque.component';
+import { ProdutosComponent } from './features/produtos/produtos.component';
+import { RecebimentosComponent } from './features/recebimentos/recebimentos.component';
+import { FornecedoresComponent } from './features/fornecedores/fornecedores.component';
+import { DespesasComponent } from './features/despesas/despesas.component';
+import { VendasComponent } from './features/vendas/vendas.component';
+import { EstimativasComponent } from './features/estimativas/estimativas.component';
+
 
 
 
 export const childRoutes = [
   {
-    path: 'form',
-    component: FormComponent,
+    path: 'dashboard',
+    component: DashboardComponent,
     data: { icon: 'home', text: 'Início' }
   },
   {
-    path: 'chart',
-    component: FormComponent,
+    path: 'estoque',
+    component: EstoqueComponent,
     data: { icon: 'inventory_2', text: 'Estoque' }
   },
   {
-    path: 'chart',
-    component: FormComponent,
+    path: 'produtos',
+    component: ProdutosComponent,
     data: { icon: 'ecor', text: 'Produtos' }
   },
   {
-    path: 'chart',
-    component: FormComponent,
+    path: 'estimativas',
+    component: EstimativasComponent,
     data: { icon: 'calculate', text: 'Estimativa' }
   },
   {
-    path: 'chart',
+    path: 'producao',
     component: FormComponent,
     data: { icon: 'manage_history', text: 'Produção' }
   },
   {
-    path: 'chart',
-    component: FormComponent,
+    path: 'vendas',
+    component: VendasComponent,
     data: { icon: 'add_business', text: 'Vendas' }
   },
-  {
-    path: 'chart',
-    component: FormComponent,
-    data: { icon: 'payments', text: 'Despesas' }
-  },
+
   {
     path: 'recebimentos',
     component: RecebimentosComponent,
-    data: { icon: 'point_of_sale', text: 'Recebimento' }
+    data: { icon: 'point_of_sale', text: 'Compras' }
   },
   {
-    path: 'chart',
-    component: FormComponent,
+    path: 'fornecedores',
+    component: FornecedoresComponent,
     data: { icon: 'groups', text: 'Fornecedores' }
-  },
-  {
-    path: 'chart',
-    component: FormComponent,
-    data: { icon: 'person_add', text: 'Funcionários' }
   },
   {
     path: 'chart',

@@ -1,0 +1,46 @@
+
+<mat-table [dataSource]="fornecedor" >
+
+
+  <ng-container matColumnDef="fornecedorNome">
+    <mat-header-cell *matHeaderCellDef> Fornecedor </mat-header-cell>
+    <mat-cell *matCellDef="let fornecedor"> {{fornecedor.fornecedorNome}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="cnpj">
+    <mat-header-cell *matHeaderCellDef> CNPJ </mat-header-cell>
+    <mat-cell *matCellDef="let fornecedor"> {{fornecedor.cnpj}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="telefone">
+    <mat-header-cell *matHeaderCellDef> Telefone </mat-header-cell>
+    <mat-cell *matCellDef="let fornecedor"> {{fornecedor.telefone}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef> E-mail </mat-header-cell>
+    <mat-cell *matCellDef="let fornecedor"> {{fornecedor.telefone}} </mat-cell>
+  </ng-container>
+
+  <ng-container  matColumnDef="acoes">
+    <mat-header-cell *matHeaderCellDef class="action-column-header">
+
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let produto" class="action-column">
+      <button mat-icon-button="Primary" style="color: #64C2A8" aria-label="Editar" (click)="onEdit(produto)">
+        <mat-icon >edit_square</mat-icon>
+      </button>
+      <button mat-icon-button="Primary" style="color: #D66767" aria-label="Remover" (click)="onDelete(produto)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+
+</mat-table>
+
+

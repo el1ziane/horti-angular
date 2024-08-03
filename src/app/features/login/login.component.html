@@ -1,0 +1,26 @@
+
+
+<mat-card class="custom-mat-card">
+  <mat-card-header style="background-color: white">
+    <mat-card-title>Bem vindo(a)! Informe seus dados.</mat-card-title>
+  </mat-card-header>
+      <mat-form-field appearance="outline" class="custom-form-field">
+        <mat-label for="usuario">Usuário</mat-label>
+        <input [(ngModel)]="usuario.nome" matInput id="usuario" type="text" class="validate">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="custom-form-field">
+        <mat-label for="senha">Senha</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="usuario.senha" id="senha" class="validate">
+        <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <button mat-flat-button color="primary"  style="background-color:#FAB59B; color: white;" class="login-button" (click)="fazerLogin()">
+        <mat-icon>send</mat-icon>
+        Entrar
+      </button>
+    </mat-card>
+
+

@@ -1,0 +1,2 @@
+export interface Venda {
+}
