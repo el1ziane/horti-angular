@@ -3,19 +3,56 @@
     <mat-card-title>Produtos</mat-card-title>
   </mat-card-header>
   <mat-toolbar style="background-color: white">
-    <button mat-flat-button color="primary" style="background-color: #0fac65c0; color: white;" (click)="onAdd()">
+    <button mat-flat-button color="primary" style="background-color: #0fac65c0; color: white; margin-right: 16px;" (click)="onAdd()">
       <mat-icon>add</mat-icon>
-      Adicionar
+      <span>Adicionar</span>
     </button>
+
+    <div [ngStyle]="{ 'display': 'none' }" id="print-section">
+      <h1>Detalhes do Produto</h1>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th style="border: 1px solid #000; padding: 8px;">Código</th>
+            <th style="border: 1px solid #000; padding: 8px;">Produto</th>
+            <th style="border: 1px solid #000; padding: 8px;">Quantidade Ideal</th>
+            <th style="border: 1px solid #000; padding: 8px;">Peso Bandeja</th>
+            <th style="border: 1px solid #000; padding: 8px;">Valor de Venda</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let produto of produtosService.getProdutosParaRelatorio(); let i = index">
+            <td style="border: 1px solid #000; padding: 8px;">{{ produto.codigo }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ produto.produtoNome }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ produto.quantidadeProduto }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ produto.peso }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ produto.valorProduto }}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <button mat-button
+    (click)="onReport()"
+    mat-flat-button
+    color="primary"
+    style="background-color: #0fac65c0; color: white; margin-left: 16px;"
+
+    ngxPrint>
+<mat-icon>open_in_browser</mat-icon>
+<span>Relatório</span>
+</button>
+
     <div class="search-container">
       <form action="">
-        <fa-icon [icon]="faSearch"></fa-icon>
+        <span><fa-icon [icon]="faSearch"></fa-icon></span>
         <input type="text" (input)="search($event)" placeholder="Buscar...">
       </form>
     </div>
   </mat-toolbar>
 
-  <div class="column-flex" class="mat-elevation-z8">
+  <div class="column-flex mat-elevation-z8">
     <app-produtos-lista *ngIf="filteredProdutos$ | async as produtos; else loading" [produtos]="produtos" (add)="onAdd()" (edit)="onEdit($event)" (delete)="onDelete($event)"></app-produtos-lista>
     <ng-template #loading>
       <div class="loading-spinner">

@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Detalhes do Fornecedor</h1>
+<div mat-dialog-content>
+  <p>Fornecedor: {{data.fornecedorNome}}</p>
+  <p>CNPJ: {{data.cnpj}}</p>
+  <p>Telefone: {{data.telefone}}</p>
+  <p>E-mail: {{data.email}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Fechar</button>
+</div>
+

@@ -4,4 +4,5 @@ export interface Fornecedor {
   cnpj: string;
   telefone: string;
   email: string;
+  showDetails?: boolean;
 }

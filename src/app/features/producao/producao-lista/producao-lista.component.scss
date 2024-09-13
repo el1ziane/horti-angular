@@ -1,0 +1,62 @@
+
+.mat-table {
+  overflow: auto;
+  max-height: 600px;
+}
+
+.action-column {
+  text-align: center;
+  flex: 0 0 108px;
+}
+
+.action-column-header {
+  text-align: center;
+  flex: 0 0 98px;
+}
+
+.tabela-list {
+  display: none;
+}
+
+.tabela-item {
+  border: 1px solid #000000;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 25px;
+  background-color: #ffffff;
+  margin-top: 15px;
+}
+
+.tabela-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tabela-info {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.tabela-details {
+  margin-top: 10px;
+}
+@media (max-width: 480px) {
+  .mat-table {
+    display: none;
+  }
+
+  .tabela-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px;
+  }
+
+  .tabela-info {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 10px;
+  }
+}

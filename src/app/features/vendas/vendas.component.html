@@ -1,1 +1,68 @@
-<p>vendas works!</p>
+<mat-card>
+  <mat-card-header style="background-color: white">
+    <mat-card-title>Vendas</mat-card-title>
+  </mat-card-header>
+  <mat-toolbar style="background-color: white">
+    <button mat-flat-button color="primary" style="background-color: #0fac65c0; color: white; margin-right: 16px;" (click)="onAdd()">
+      <mat-icon>add</mat-icon>
+      <span>Adicionar</span>
+    </button>
+
+    <div [ngStyle]="{ 'display': 'none' }" id="print-section">
+      <h1>Relatório de vendas</h1>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th style="border: 1px solid #000; padding: 5px;">Código</th>
+            <th style="border: 1px solid #000; padding: 5px;">Produto</th>
+            <th style="border: 1px solid #000; padding: 5px;">Quantidade </th>
+            <th style="border: 1px solid #000; padding: 5px;">Valor</th>
+            <th style="border: 1px solid #000; padding: 5px;">Período</th>
+            <th style="border: 1px solid #000; padding: 5px;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let venda of vendasService.getVendasParaRelatorio(); let i = index">
+            <td style="border: 1px solid #000; padding: 4px;">{{ venda.codigoVenda }}</td>
+            <td style="border: 1px solid #000; padding: 4px;">{{ venda.produtoVenda }}</td>
+            <td style="border: 1px solid #000; padding: 4px;">{{ venda.quantidadeVenda }}</td>
+            <td style="border: 1px solid #000; padding: 4px;">{{ venda.valorVenda }}</td>
+            <td style="border: 1px solid #000; padding: 4px;">
+              {{ venda.dataInicial }} - {{ venda.dataFinal }}
+            </td>
+            <td style="border: 1px solid #000; padding: 4px;">{{ venda.statusVenda}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <button mat-button
+    (click)="onReport()"
+    mat-flat-button
+    color="primary"
+    style="background-color: #0fac65c0; color: white; margin-left: 16px;"
+
+    ngxPrint>
+<mat-icon>open_in_browser</mat-icon>
+<span>Relatório</span>
+</button>
+
+    <div class="search-container">
+      <form action="">
+        <fa-icon [icon]="faSearch"></fa-icon>
+        <input type="text" (input)="search($event)" placeholder="Buscar...">
+      </form>
+    </div>
+  </mat-toolbar>
+
+  <div class="column-flex" class="mat-elevation-z8">
+    <app-vendas-lista *ngIf="filteredVenda$ | async as vendas; else loading" [vendas]="vendas" (add)="onAdd()" (edit)="onEdit($event)" (delete)="onDelete($event)"></app-vendas-lista>
+    <ng-template #loading>
+      <div class="loading-spinner">
+        <mat-spinner color="foreground"></mat-spinner>
+      </div>
+    </ng-template>
+  </div>
+</mat-card>
+

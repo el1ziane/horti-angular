@@ -5,4 +5,5 @@ export interface Produto {
   quantidadeProduto: number | null;
   valorProduto: number | null;
   peso: number | null;
+  showDetails?: boolean;
 }

@@ -8,7 +8,7 @@ import { Recebimento } from '../model/recebimento';
 })
 export class RecebimentosService {
   private readonly API = 'http://localhost:8080/api/recebimentos';
-
+  private recebimentoParaRelatorio: Recebimento[] = [];
   constructor(private httpClient: HttpClient) { }
 
   list() {
@@ -40,4 +40,27 @@ export class RecebimentosService {
   excluir(id : string){
     return this.httpClient.delete(`${this.API}/${id}`);
   }
+  setRecebimentoParaRelatorio(recebimentos: Recebimento[]) {
+    this.recebimentoParaRelatorio = recebimentos;
+  }
+
+  getRecebimentoParaRelatorio(): Recebimento[] {
+    return this.recebimentoParaRelatorio;
+  }
+
+  imprimirRelatorio(sectionId: string) {
+    const printContents = document.getElementById(sectionId)?.innerHTML;
+    if (!printContents) return;
+
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+
+    location.reload();
+}
+
 }

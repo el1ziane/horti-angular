@@ -70,7 +70,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.sidenavContainer.scrollable.elementScrolled().subscribe((a: any) => {
-      // Código adicional se necessário
+
     });
   }
 

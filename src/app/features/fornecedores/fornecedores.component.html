@@ -3,9 +3,36 @@
     <mat-card-title>Fornecedores</mat-card-title>
   </mat-card-header>
   <mat-toolbar style="background-color: white">
-    <button mat-flat-button color="primary" style="background-color: #0fac65c0; color: white;" (click)="onAdd()">
+    <button mat-flat-button color="primary" style="background-color: #0fac65c0; color: white; margin-right: 16px;" (click)="onAdd()">
       <mat-icon>add</mat-icon>
-      Adicionar
+      <span>Adicionar</span>
+    </button>
+    <div [ngStyle]="{ 'display': 'none' }" id="print-section">
+      <h1>Relatório de Fornecedores</h1>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th style="border: 1px solid #000; padding: 8px;">Fornecedor</th>
+            <th style="border: 1px solid #000; padding: 8px;">CNPJ</th>
+            <th style="border: 1px solid #000; padding: 8px;">Telefone</th>
+            <th style="border: 1px solid #000; padding: 8px;">E-mail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fornecedor of fornecedoresService.getFornecedorParaRelatorio(); let i = index">
+            <td style="border: 1px solid #000; padding: 8px;">{{ fornecedor.fornecedorNome }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ fornecedor.cnpj }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ fornecedor.telefone }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ fornecedor.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button mat-button (click)="onReport()" mat-flat-button color="primary"
+      style="background-color: #0fac65c0; color: white; margin-left: 16px;" ngxPrint>
+      <mat-icon>open_in_browser</mat-icon>
+      <span>Relatório</span>
     </button>
     <div class="search-container">
       <form action="">
@@ -16,7 +43,9 @@
   </mat-toolbar>
 
   <div class="column-flex" class="mat-elevation-z8">
-    <app-fornecedor-lista *ngIf="filteredFornecedores$ | async as fornecedores; else loading" [fornecedor]="fornecedores" (add)="onAdd()" (edit)="onEdit($event)" (delete)="onDelete($event)"></app-fornecedor-lista>
+    <app-fornecedor-lista *ngIf="filteredFornecedores$ | async as fornecedores; else loading"
+      [fornecedor]="fornecedores" (add)="onAdd()" (edit)="onEdit($event)" (delete)="onDelete($event)">
+    </app-fornecedor-lista>
     <ng-template #loading>
       <div class="loading-spinner">
         <mat-spinner color="foreground"></mat-spinner>
@@ -24,4 +53,3 @@
     </ng-template>
   </div>
 </mat-card>
-

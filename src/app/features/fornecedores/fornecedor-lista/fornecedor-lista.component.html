@@ -1,7 +1,31 @@
-
-<mat-table [dataSource]="fornecedor" >
-
-
+<div class="column-flex mat-elevation-z8">
+  <div class="tabela-list">
+    <div *ngFor="let fornecedor of fornecedor" class="tabela-item">
+      <div class="tabela-header" (click)="toggleDetails(fornecedor)">
+        <div class="tabela-info">
+          <span>{{ fornecedor.fornecedorNome }}</span>
+          <span>{{ fornecedor.email }}</span>
+        </div>
+        <button mat-icon-button [matMenuTriggerFor]="opcoesMenu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #opcoesMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item (click)="onEdit(fornecedor)">
+            <mat-icon>edit_square</mat-icon><span>Editar</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="onDelete(fornecedor)">
+            <mat-icon>delete</mat-icon><span>Excluir</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="openDetailsDialog(fornecedor)">
+            <mat-icon>info</mat-icon><span>Detalhes</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+<mat-table [dataSource]="fornecedor" class="mat-table" >
   <ng-container matColumnDef="fornecedorNome">
     <mat-header-cell *matHeaderCellDef> Fornecedor </mat-header-cell>
     <mat-cell *matCellDef="let fornecedor"> {{fornecedor.fornecedorNome}} </mat-cell>
@@ -42,5 +66,6 @@
 
 
 </mat-table>
+</div>
 
 

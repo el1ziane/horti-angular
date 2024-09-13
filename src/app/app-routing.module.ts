@@ -10,6 +10,12 @@ import { ProdutoResolver } from './guards/produto.resolver';
 import { FornecedoresComponent } from './features/fornecedores/fornecedores.component';
 import { FormFornecedorComponent } from './features/fornecedores/form-fornecedor/form-fornecedor.component';
 import { FornecedorResolver } from './guards/fornecedor.resolver';
+import { VendasComponent } from './features/vendas/vendas.component';
+import { VendasFormComponent } from './features/vendas/vendas-form/vendas-form.component';
+import { VendaResolver } from './guards/venda.resolver';
+import { ProducaoResolver } from './guards/producao.resolver';
+import { ProducaoComponent } from './features/producao/producao.component';
+import { FormProducaoComponent } from './features/producao/form-producao/form-producao.component';
 
 const routes: Routes = [
   ...childRoutes,
@@ -36,6 +42,22 @@ const routes: Routes = [
       { path: '', component: FornecedoresComponent},
       { path: 'novo', component: FormFornecedorComponent, resolve: {fornecedor: FornecedorResolver}},
       {path: 'editar/:id',component:FormFornecedorComponent, resolve:{fornecedor: FornecedorResolver}}
+    ]
+  },
+  {
+    path: 'vendas',
+    children: [
+      { path: '', component: VendasComponent},
+      { path: 'novo', component: VendasFormComponent, resolve: {venda: VendaResolver}},
+      {path: 'editar/:id',component:VendasFormComponent, resolve:{venda: VendaResolver}}
+    ]
+  },
+  {
+    path: 'producao',
+    children: [
+      { path: '', component: ProducaoComponent},
+      { path: 'novo', component: FormProducaoComponent, resolve: {producao: ProducaoResolver}},
+      {path: 'editar/:id',component:FormProducaoComponent, resolve:{producao: ProducaoResolver}}
     ]
   },
   { path: '**', redirectTo: 'courses' }

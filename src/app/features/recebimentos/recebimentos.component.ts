@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, catchError, combineLatest, map, Observable, of, startWith } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
@@ -9,7 +9,7 @@ import { Recebimento } from '../../model/recebimento';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { RecebimentosListaComponent } from './recebimentos-lista/recebimentos-lista.component';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { NgIf, AsyncPipe, NgStyle, NgForOf } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
@@ -17,13 +17,14 @@ import { MatButton } from '@angular/material/button';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatCard, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { RecebimentosService } from '../../services/recebimentos.service';
+import { NgxPrintService } from 'ngx-print';
 
 @Component({
     selector: 'app-recebimentos',
     templateUrl: './recebimentos.component.html',
     styleUrls: ['./recebimentos.component.scss'],
     standalone: true,
-    imports: [MatCard, MatCardHeader, MatCardTitle, MatToolbar, MatButton, MatIcon, ReactiveFormsModule, FormsModule, FaIconComponent, NgIf, RecebimentosListaComponent, MatProgressSpinner, AsyncPipe]
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatToolbar, MatButton, MatIcon, ReactiveFormsModule, FormsModule, FaIconComponent, NgIf, RecebimentosListaComponent, MatProgressSpinner, AsyncPipe, NgStyle, NgForOf ]
 })
 export class RecebimentosComponent implements OnInit {
 
@@ -32,13 +33,16 @@ export class RecebimentosComponent implements OnInit {
   searchTerm$ = new BehaviorSubject<string>('');
   faSearch = faSearch;
   searchTerm = '';
-
+  showPrintSection: boolean = false;
+  @ViewChild(RecebimentosListaComponent) recebimentosListaComponent!:RecebimentosListaComponent
   constructor(
-    private recebimentosService: RecebimentosService,
+    public recebimentosService: RecebimentosService,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private printService: NgxPrintService,
+    private cdRef: ChangeDetectorRef
   ) {
     this.atualizar();
   }
@@ -73,6 +77,14 @@ export class RecebimentosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  onReport(): void {
+      this.recebimentosListaComponent;
+          this.recebimentosListaComponent.enviarParaRelatorio();
+          this.cdRef.detectChanges();
+              this.recebimentosService.imprimirRelatorio('print-section');
+              this.cdRef.detectChanges();
   }
   onAdd() {
     this.router.navigate(['novo'], {relativeTo: this.route});

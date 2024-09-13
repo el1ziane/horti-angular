@@ -9,6 +9,7 @@ import { first } from 'rxjs';
 export class FornecedoresService {
 
   private readonly API = 'http://localhost:8080/api/fornecedores';
+  private fornecedorParaRelatorio: Fornecedor[] = [];
 
   constructor(private httpClient: HttpClient) { }
 
@@ -41,4 +42,27 @@ export class FornecedoresService {
   excluir(id : string){
     return this.httpClient.delete(`${this.API}/${id}`);
   }
+  setFornecedorParaRelatorio(fornecedores: Fornecedor[]) {
+    this.fornecedorParaRelatorio = fornecedores;
+  }
+
+  getFornecedorParaRelatorio(): Fornecedor[] {
+    return this.fornecedorParaRelatorio;
+  }
+
+  imprimirRelatorio(sectionId: string) {
+    const printContents = document.getElementById(sectionId)?.innerHTML;
+    if (!printContents) return;
+
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+
+    location.reload();
+}
+
 }

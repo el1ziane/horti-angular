@@ -4,9 +4,9 @@ import { EstoqueComponent } from './features/estoque/estoque.component';
 import { ProdutosComponent } from './features/produtos/produtos.component';
 import { RecebimentosComponent } from './features/recebimentos/recebimentos.component';
 import { FornecedoresComponent } from './features/fornecedores/fornecedores.component';
-import { DespesasComponent } from './features/despesas/despesas.component';
 import { VendasComponent } from './features/vendas/vendas.component';
 import { EstimativasComponent } from './features/estimativas/estimativas.component';
+import { ProducaoComponent } from './features/producao/producao.component';
 
 
 
@@ -34,7 +34,7 @@ export const childRoutes = [
   },
   {
     path: 'producao',
-    component: FormComponent,
+    component: ProducaoComponent,
     data: { icon: 'manage_history', text: 'Produção' }
   },
   {
@@ -52,11 +52,6 @@ export const childRoutes = [
     path: 'fornecedores',
     component: FornecedoresComponent,
     data: { icon: 'groups', text: 'Fornecedores' }
-  },
-  {
-    path: 'chart',
-    component: FormComponent,
-    data: { icon: 'description', text: 'Relatórios' }
   },
 
 ];

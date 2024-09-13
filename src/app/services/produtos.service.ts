@@ -7,6 +7,7 @@ import { Produto } from '../model/produto';
   providedIn: 'root'
 })
 export class ProdutosService {
+  private produtosParaRelatorio: Produto[] = [];
   private readonly API = 'http://localhost:8080/api/produtos';
 
   constructor(private httpClient: HttpClient) { }
@@ -40,4 +41,37 @@ export class ProdutosService {
   excluir(id : string){
     return this.httpClient.delete(`${this.API}/${id}`);
   }
+
+  setProdutosParaRelatorio(produtos: Produto[]) {
+    this.produtosParaRelatorio = produtos;
+  }
+
+  getProdutosParaRelatorio(): Produto[] {
+    return this.produtosParaRelatorio;
+  }
+
+  imprimirRelatorio(sectionId: string) {
+    const printContents = document.getElementById(sectionId)?.innerHTML;
+    if (!printContents) return;
+
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+
+    location.reload();
+}
+
+
+
+
+
+
+
+
+
+
 }

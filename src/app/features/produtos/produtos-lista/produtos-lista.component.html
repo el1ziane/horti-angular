@@ -1,50 +1,69 @@
+<div class="column-flex mat-elevation-z8">
+  <div class="tabela-list">
+    <div *ngFor="let produto of produtos" class="tabela-item">
+      <div class="tabela-header" (click)="toggleDetails(produto)">
+        <div class="tabela-info">
+          <span>{{ produto.produtoNome }}</span>
+        </div>
+        <button mat-icon-button [matMenuTriggerFor]="opcoesMenu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #opcoesMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item (click)="onEdit(produto)">
+            <mat-icon>edit_square</mat-icon><span>Editar</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="onDelete(produto)">
+            <mat-icon>delete</mat-icon><span>Excluir</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="openDetailsDialog(produto)">
+            <mat-icon>info</mat-icon><span>Detalhes</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
 
-<mat-table [dataSource]="produtos" >
+  <mat-table [dataSource]="produtos" class="mat-table">
+    <ng-container matColumnDef="codigo">
+      <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
+      <mat-cell *matCellDef="let produto"> {{produto.codigo}} </mat-cell>
+    </ng-container>
 
+    <ng-container matColumnDef="produtoNome">
+      <mat-header-cell *matHeaderCellDef> Produto </mat-header-cell>
+      <mat-cell *matCellDef="let produto"> {{produto.produtoNome}} </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="codigo">
-    <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
-    <mat-cell *matCellDef="let produto"> {{produto.codigo}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="quantidadeProduto">
+      <mat-header-cell *matHeaderCellDef> Quantidade </mat-header-cell>
+      <mat-cell *matCellDef="let produto"> {{produto.quantidadeProduto}} </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="produtoNome">
-    <mat-header-cell *matHeaderCellDef> Produto </mat-header-cell>
-    <mat-cell *matCellDef="let produto"> {{produto.produtoNome}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="peso" >
+      <mat-header-cell *matHeaderCellDef> Peso </mat-header-cell>
+      <mat-cell *matCellDef="let produto">  {{ produto.peso | decimalVirgula }} </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="quantidadeProduto">
-    <mat-header-cell *matHeaderCellDef> Quantidade </mat-header-cell>
-    <mat-cell *matCellDef="let produto"> {{produto.quantidadeProduto}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="valorProduto" >
+      <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+      <mat-cell *matCellDef="let produto">  {{ produto.valorProduto | decimalVirgula }} </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="peso" >
-    <mat-header-cell *matHeaderCellDef> Peso </mat-header-cell>
-    <mat-cell *matCellDef="let produto">  {{ produto.peso | decimalVirgula }} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="valorProduto" >
-    <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
-    <mat-cell *matCellDef="let produto">  {{ produto.valorProduto | decimalVirgula }} </mat-cell>
-  </ng-container>
-
-  <ng-container  matColumnDef="acoes">
-    <mat-header-cell *matHeaderCellDef class="action-column-header">
-
-    </mat-header-cell>
-
-    <mat-cell *matCellDef="let produto" class="action-column">
-      <button mat-icon-button="Primary" style="color: #64C2A8" aria-label="Editar" (click)="onEdit(produto)">
-        <mat-icon >edit_square</mat-icon>
-      </button>
-      <button mat-icon-button="Primary" style="color: #D66767" aria-label="Remover" (click)="onDelete(produto)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </mat-cell>
-  </ng-container>
-
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-
-
-</mat-table>
-
+    <ng-container  matColumnDef="acoes">
+      <mat-header-cell *matHeaderCellDef class="action-column-header">
+      </mat-header-cell>
+      <mat-cell *matCellDef="let produto" class="action-column">
+        <button mat-icon-button="Primary" style="color: #64C2A8" aria-label="Editar" (click)="onEdit(produto)">
+          <mat-icon >edit_square</mat-icon>
+        </button>
+        <button mat-icon-button="Primary" style="color: #D66767" aria-label="Remover" (click)="onDelete(produto)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>

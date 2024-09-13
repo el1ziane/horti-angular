@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Fornecedor } from '../../model/fornecedor';
+import { Fornecedor } from './../../model/fornecedor';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -7,7 +7,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Observable, BehaviorSubject, catchError, of, combineLatest, startWith, map } from 'rxjs';
 import { ConfirmationDialogComponent } from '../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { NgIf, AsyncPipe, NgStyle, NgForOf } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardHeader, MatCardTitle } from '@angular/material/card';
@@ -17,11 +17,12 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { FornecedoresService } from '../../services/fornecedores.service';
 import { FornecedorListaComponent } from './fornecedor-lista/fornecedor-lista.component';
+import { NgxPrintService } from 'ngx-print';
 
 @Component({
   selector: 'app-fornecedores',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardTitle, MatToolbar, MatButton, MatIcon, ReactiveFormsModule, FormsModule, FaIconComponent, NgIf, FornecedorListaComponent, MatProgressSpinner, AsyncPipe],
+  imports: [MatCard, MatCardHeader, MatCardTitle, MatToolbar, MatButton, MatIcon, ReactiveFormsModule, FormsModule, FaIconComponent, NgIf, FornecedorListaComponent, MatProgressSpinner, AsyncPipe, NgStyle, NgForOf],
   templateUrl: './fornecedores.component.html',
   styleUrl: './fornecedores.component.scss'
 })
@@ -33,13 +34,17 @@ export class FornecedoresComponent implements OnInit {
   searchTerm$ = new BehaviorSubject<string>('');
   faSearch = faSearch;
   searchTerm = '';
+  showPrintSection: boolean = false;
+  @ViewChild(FornecedorListaComponent) fornecedorListaComponent!:FornecedorListaComponent
 
   constructor(
-    private fornecedoresService: FornecedoresService,
+    public fornecedoresService: FornecedoresService,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private printService: NgxPrintService,
+    private cdRef: ChangeDetectorRef
   ) {
     this.atualizar();
   }
@@ -72,6 +77,20 @@ export class FornecedoresComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+  onReport(): void {
+    //  console.log(this.produtosListaComponent);
+      if (this.fornecedorListaComponent) {
+
+          this.fornecedorListaComponent.enviarParaRelatorio();
+
+          this.cdRef.detectChanges();
+              this.fornecedoresService.imprimirRelatorio('print-section');
+
+              this.cdRef.detectChanges();
+      } else {
+          console.error('ProdutosListaComponent não foi inicializado.');
+      }
   }
   onAdd() {
     this.router.navigate(['novo'], {relativeTo: this.route});

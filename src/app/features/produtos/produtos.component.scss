@@ -1,11 +1,3 @@
-/* Estilos padrão */
-.loading-spinner {
-  padding: 25px;
-  background-color: rgba(0, 0, 0, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 mat-card {
   width: 100%;
@@ -49,3 +41,24 @@ mat-card {
     min-width: 300px;
   }
 }
+
+@media (max-width: 480px) {
+  .mat-toolbar button {
+    min-width: 50px;
+    padding: 10px;
+  }
+
+  .mat-toolbar button span {
+    display: none;
+  }
+
+  .mat-toolbar button mat-icon {
+    margin-right: 0;
+  }
+
+  .mat-toolbar fa-icon span {
+    display: none;
+  }
+
+}
+

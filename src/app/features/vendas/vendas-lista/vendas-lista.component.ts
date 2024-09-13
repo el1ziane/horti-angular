@@ -1,12 +1,61 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { CommonModule, DecimalPipe } from '@angular/common';
+import { DecimalVirgulaPipe } from '../../../shared/decimal-virgula.pipe';
+import { Venda } from '../../../model/venda';
+import { MatDivider } from '@angular/material/divider';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { DetalhesVendasDialogComponent } from '../detalhes-vendas-dialog/detalhes-vendas-dialog.component';
+import { VendasService } from '../../../services/vendas.service';
+
+
 
 @Component({
-  selector: 'app-vendas-lista',
-  standalone: true,
-  imports: [],
-  templateUrl: './vendas-lista.component.html',
-  styleUrl: './vendas-lista.component.css'
+    selector: 'app-vendas-lista',
+    templateUrl: './vendas-lista.component.html',
+    styleUrl: './vendas-lista.component.scss',
+    standalone: true,
+    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe, DecimalVirgulaPipe, CommonModule, MatMenu, MatMenuItem, MatDivider, MatMenuTrigger]
 })
-export class VendasListaComponent {
+export class VendasListaComponent implements OnInit {
 
+  @Input() vendas: Venda[] = [];
+  @Output() add = new EventEmitter(false)
+  @Output() edit = new EventEmitter(false)
+  @Output() delete = new EventEmitter(false)
+
+  readonly displayedColumns = ['codigoVenda', 'produtoVenda', 'quantidadeVenda', 'valorVenda', 'periodoVenda', 'statusVenda','acoes'];
+
+  toggleDetails(venda: Venda) {
+    venda.showDetails = !venda.showDetails;
+  }
+  constructor(public dialog: MatDialog, private vendasService: VendasService){}
+  ngOnInit(): void {
+
+  }
+
+  enviarParaRelatorio() {
+    console.log(this.vendas)
+    this.vendasService.setVendasParaRelatorio(this.vendas);
+  }
+
+  onAdd() {
+    this.add.emit(true);
+
+  }
+  onEdit(venda: Venda){
+    this.edit.emit(venda);
+  }
+  onDelete(venda:Venda){
+    this.delete.emit(venda);
+  }
+  openDetailsDialog(venda: any): void {
+    this.dialog.open(DetalhesVendasDialogComponent, {
+      width: '300px',
+      data: venda
+    });
+  }
 }

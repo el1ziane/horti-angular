@@ -3,9 +3,39 @@
     <mat-card-title>Compras e Despesas</mat-card-title>
   </mat-card-header>
   <mat-toolbar style="background-color: white">
-    <button mat-flat-button color="primary" style="background-color:  #0fac65c0; color: white;" (click)="onAdd()">
+    <button mat-flat-button color="primary" style="background-color: #0fac65c0; color: white; margin-right: 16px;" (click)="onAdd()">
       <mat-icon>add</mat-icon>
-      Adicionar
+      <span>Adicionar</span>
+    </button>
+    <div [ngStyle]="{ 'display': 'none' }" id="print-section">
+      <h1>Relatório de Compras</h1>
+      <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th style="border: 1px solid #000; padding: 8px;">Forncedor</th>
+            <th style="border: 1px solid #000; padding: 8px;">Produto</th>
+            <th style="border: 1px solid #000; padding: 8px;">Qtd</th>
+            <th style="border: 1px solid #000; padding: 8px;">Valor</th>
+            <th style="border: 1px solid #000; padding: 8px;">Data</th>
+            <th style="border: 1px solid #000; padding: 8px;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let recebimento of recebimentosService.getRecebimentoParaRelatorio(); let i = index">
+            <td style="border: 1px solid #000; padding: 8px;">{{ recebimento.fornecedorRec }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ recebimento.produto }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ recebimento.quantidadeRecebimento }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ recebimento.valorRecebimento }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ recebimento.dataRecebimento }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ recebimento.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button mat-button (click)="onReport()" mat-flat-button color="primary"
+      style="background-color: #0fac65c0; color: white; margin-left: 16px;" ngxPrint>
+      <mat-icon>open_in_browser</mat-icon>
+      <span>Relatório</span>
     </button>
     <div class="search-container">
       <form action="">
@@ -16,7 +46,9 @@
   </mat-toolbar>
 
   <div class="column-flex" class="mat-elevation-z8">
-    <app-recebimentos-lista *ngIf="filteredRecebimentos$ | async as recebimentos; else loading" [recebimentos]="recebimentos" (add)="onAdd()" (edit)="onEdit($event)" (delete)="onDelete($event)"></app-recebimentos-lista>
+    <app-recebimentos-lista *ngIf="filteredRecebimentos$ | async as recebimentos; else loading"
+      [recebimentos]="recebimentos" (add)="onAdd()" (edit)="onEdit($event)" (delete)="onDelete($event)">
+    </app-recebimentos-lista>
     <ng-template #loading>
       <div class="loading-spinner">
         <mat-spinner color="foreground"></mat-spinner>

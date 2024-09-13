@@ -6,4 +6,5 @@ export interface Recebimento {
   valorRecebimento: number | null;
   dataRecebimento: Date;
   status: string;
+  showDetails?: boolean;
 }

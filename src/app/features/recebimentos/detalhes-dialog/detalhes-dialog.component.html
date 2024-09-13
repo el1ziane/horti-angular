@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Detalhes da Compra</h1>
+<div mat-dialog-content>
+  <p>Data: {{data.dataRecebimento}}</p>
+  <p>Fornecedor: {{data.fornecedorRec}}</p>
+  <p>Valor da Compra: {{data.valorRecebimento}}</p>
+  <p>Status de Pagamento: {{data.status}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Fechar</button>
+</div>

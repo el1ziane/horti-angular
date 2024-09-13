@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Detalhes do Produto</h1>
+<div mat-dialog-content>
+  <p>Código: {{data.codigoVenda}}</p>
+  <p>Produto: {{data.produtoVenda}}</p>
+  <p>Quantidade Vendida: {{data.quantidadeVenda}}</p>
+  <p>Valor da Venda: {{data.valorVenda}}</p>
+  <p>Período de Venda:  {{ data.dataInicial }} - {{ data.dataFinal }}</p>
+  <p>Status de Pagamento: {{data.statusVenda}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Fechar</button>
+</div>
+

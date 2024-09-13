@@ -20,15 +20,25 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="custom-form-field">
-          <mat-label>Produto</mat-label>
-          <input matInput formControlName="produto" placeholder="Produto" id="produto" name="produto" [matAutocomplete]="auto" (input)="searchProducts($event)">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of produtos" [value]="option">
-              {{ option }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+       <mat-form-field appearance="outline" class="custom-form-field">
+  <mat-label>Produto</mat-label>
+  <input
+    matInput
+    formControlName="produto"
+    placeholder="Produto"
+    id="produto"
+    name="produto"
+    [matAutocomplete]="auto"
+    (input)="searchProducts($event)"
+    [value]="form.controls['produto'].value?.produtoNome || form.controls['produto'].value"
+  >
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let produto of filteredProdutos" [value]="produto.produtoNome">
+      {{ produto.produtoNome }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+
 
       </div>
       <div class="form-column">
