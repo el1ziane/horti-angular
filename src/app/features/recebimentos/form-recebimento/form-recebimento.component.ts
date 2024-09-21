@@ -82,7 +82,7 @@ export class FormRecebimentoComponent implements OnInit {
     this.form = this.formBuilder.group({
       _id: [recebimento._id],
       fornecedorRec: [recebimento.fornecedorRec, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      produto: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      produto: [recebimento.produto, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       quantidadeRecebimento: [recebimento.quantidadeRecebimento, [Validators.required]],
       valorRecebimento: [recebimento.valorRecebimento, [Validators.required]],
       dataRecebimento: [dataRecebimento, [Validators.required]],

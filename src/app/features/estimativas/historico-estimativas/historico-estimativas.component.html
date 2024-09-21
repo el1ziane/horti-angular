@@ -1,0 +1,47 @@
+<div class="column-flex mat-elevation-z8">
+  <div class="tabela-list">
+    <div *ngFor="let estimativa of estimativas" class="tabela-item">
+      <div class="tabela-header" (click)="toggleDetails(estimativa)">
+        <div class="tabela-info">
+          <span>{{ estimativa.produtoEstimativa }}</span>
+
+        </div>
+        <button mat-icon-button [matMenuTriggerFor]="opcoesMenu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #opcoesMenu="matMenu" [overlapTrigger]="false">
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="openDetailsDialog(estimativa)">
+            <mat-icon>info</mat-icon><span>Detalhes</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+
+  <mat-table [dataSource]="estimativas ?? []" class="mat-table">
+
+    <ng-container matColumnDef="produtoEstimativa">
+      <mat-header-cell *matHeaderCellDef> Produto </mat-header-cell>
+      <mat-cell *matCellDef="let estimativa"> {{estimativa.produtoEstimativa}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="caixaEstimativa">
+      <mat-header-cell *matHeaderCellDef> Quantidade de Caixas </mat-header-cell>
+      <mat-cell *matCellDef="let estimativa"> {{estimativa.caixaEstimativa}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="pesoEstimativa" >
+      <mat-header-cell *matHeaderCellDef> Peso </mat-header-cell>
+      <mat-cell *matCellDef="let estimativa">  {{ estimativa.pesoEstimativa | decimalVirgula }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="resultado">
+      <mat-header-cell *matHeaderCellDef> Resultado </mat-header-cell>
+      <mat-cell *matCellDef="let estimativa"> {{estimativa.resultado}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>

@@ -1,0 +1,65 @@
+<mat-card>
+  <mat-card-content>
+    <form *ngIf="form" [formGroup]="form" class="form-columns">
+      <div class="form-column">
+        <mat-form-field appearance="outline" class="custom-form-field">
+          <mat-label>Produto</mat-label>
+          <input
+            matInput
+            formControlName="produtoEstimativa"
+            placeholder="Produto"
+            id="produtoEstimativa"
+            name="produtoEstimativa"
+            [matAutocomplete]="auto"
+            (input)="searchProducts($event)"
+            [value]="form.controls['produtoEstimativa'].value?.produtoNome || form.controls['produtoEstimativa'].value"
+          >
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let produtoEstimativa of filteredProdutos" [value]="produtoEstimativa.produtoNome">
+              {{ produtoEstimativa.produtoNome }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="custom-form-field">
+          <mat-label value="Caixa">Quantidade de Caixas</mat-label>
+          <input matInput formControlName="caixaEstimativa" placeholder="Estimativa" id="caixaEstimativa">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="custom-form-field">
+          <mat-label value="Pago">Peso</mat-label>
+          <input matInput type="number" formControlName="pesoEstimativa" class="example-right-align" placeholder="0,00">
+          <span matTextPrefix>Kg&nbsp;</span>
+        </mat-form-field>
+      </div>
+
+
+      <div class="form-column">
+        <label id="example-radio-group-label">Escolha o tipo de entrada:</label>
+
+        <!-- Adicionei a classe 'vertical-radio-group' -->
+        <mat-radio-group
+          aria-labelledby="example-radio-group-label"
+          formControlName="tipoEntrada"
+          class="vertical-radio-group"
+        >
+          <mat-radio-button *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-card *ngIf="resultado !== undefined && resultado > 0" class="result-box">
+          <mat-card-content>
+            <p>
+              Quantidade de bandejas de <strong>{{ produtoSelecionado }}</strong> que podem ser produzidas: <strong>{{ resultado }}</strong>
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions class="actions-container">
+    <button mat-raised-button color="primary" (click)="calcular()">Calcular</button>
+    <button mat-raised-button style="margin-left: 8px;" (click)="limpar()">Limpar</button>
+  </mat-card-actions>
+</mat-card>

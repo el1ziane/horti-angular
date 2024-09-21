@@ -16,6 +16,9 @@ import { VendaResolver } from './guards/venda.resolver';
 import { ProducaoResolver } from './guards/producao.resolver';
 import { ProducaoComponent } from './features/producao/producao.component';
 import { FormProducaoComponent } from './features/producao/form-producao/form-producao.component';
+import { EstimativasComponent } from './features/estimativas/estimativas.component';
+import { EstimativaResolver } from './guards/estimativa.resolver';
+import { FormEstimativasComponent } from './features/estimativas/form-estimativas/form-estimativas.component';
 
 const routes: Routes = [
   ...childRoutes,
@@ -58,6 +61,15 @@ const routes: Routes = [
       { path: '', component: ProducaoComponent},
       { path: 'novo', component: FormProducaoComponent, resolve: {producao: ProducaoResolver}},
       {path: 'editar/:id',component:FormProducaoComponent, resolve:{producao: ProducaoResolver}}
+    ]
+  },
+
+  {
+    path: 'estimativa',
+    children: [
+      { path: '', component: FormEstimativasComponent, resolve: {estimativa: EstimativaResolver}},
+      { path: 'estimativas', component: FormEstimativasComponent, resolve: {estimativa: EstimativaResolver}},
+      {path: 'historico/:id', component: FormEstimativasComponent, resolve: {estimativa: EstimativaResolver}}
     ]
   },
   { path: '**', redirectTo: 'courses' }

@@ -53,5 +53,10 @@ export const childRoutes = [
     component: FornecedoresComponent,
     data: { icon: 'groups', text: 'Fornecedores' }
   },
+  {
+    path: 'financeiro',
+    component: FornecedoresComponent,
+    data: { icon: 'money', text: 'Financeiro' }
+  },
 
 ];

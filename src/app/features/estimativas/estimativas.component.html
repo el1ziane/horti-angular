@@ -1,1 +1,17 @@
-<p>estimativas works!</p>
+<mat-card>
+  <mat-card-header style="background-color: white">
+    <mat-card-title>Estimativas de Produção</mat-card-title>
+
+
+  </mat-card-header>
+  <mat-tab-group>
+    <mat-tab label="Calcular Produção">
+      <app-form-estimativas></app-form-estimativas>
+    </mat-tab>
+
+    <mat-tab label="Histórico">
+      <app-historico-estimativas [estimativas]="estimativas$ | async"></app-historico-estimativas>
+    </mat-tab>
+
+  </mat-tab-group>
+</mat-card>

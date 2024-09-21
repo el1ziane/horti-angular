@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Detalhes da Estimativa</h1>
+<div mat-dialog-content>
+  <p>Código: {{data.produtoEstimativa}}</p>
+  <p>Produto: {{data.caixaEstimativa}}</p>
+  <p>Quantidade Ideal: {{data.pesoEstimativa}}</p>
+  <p>Peso Bandeja: {{data.resultado}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Fechar</button>
+</div>
+
