@@ -44,16 +44,24 @@
 <span>Relatório</span>
 </button>
 
+
     <div class="search-container">
       <form action="">
-        <span><fa-icon [icon]="faSearch"></fa-icon></span>
-        <input type="text" (input)="search($event)" placeholder="Buscar...">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
       </form>
     </div>
   </mat-toolbar>
 
   <div class="column-flex mat-elevation-z8">
-    <app-produtos-lista *ngIf="filteredProdutos$ | async as produtos; else loading" [produtos]="produtos" (add)="onAdd()" (edit)="onEdit($event)" (delete)="onDelete($event)"></app-produtos-lista>
+    <app-produtos-lista
+  *ngIf="produtos$ | async as produtos; else loading"
+  [dataSource]="dataSource"
+  (add)="onAdd()"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)">
+</app-produtos-lista>
+
+
     <ng-template #loading>
       <div class="loading-spinner">
         <mat-spinner color="foreground"></mat-spinner>

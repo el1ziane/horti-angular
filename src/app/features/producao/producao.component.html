@@ -32,16 +32,22 @@
 
     <button mat-button
     (click)="onReport()"mat-flat-button color="primary" style="background-color: #0fac65c0; color: white; margin-left: 16px;" ngxPrint><mat-icon>open_in_browser</mat-icon><span>Relatório</span></button>
+
     <div class="search-container">
       <form action="">
-        <fa-icon [icon]="faSearch"></fa-icon>
-        <input type="text" (input)="search($event)" placeholder="Buscar...">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
       </form>
     </div>
   </mat-toolbar>
 
   <div class="column-flex" class="mat-elevation-z8">
-    <app-producao-lista *ngIf="filteredProducoes$ | async as producoes; else loading" [producoes]="producoes" (add)="onAdd()" (edit)="onEdit($event)" (delete)="onDelete($event)"></app-producao-lista>
+    <app-producao-lista
+    *ngIf="producao$ | async as producao; else loading"
+    [dataSource]="dataSource"
+    (add)="onAdd()"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)">
+  </app-producao-lista>
     <ng-template #loading>
       <div class="loading-spinner">
         <mat-spinner color="foreground"></mat-spinner>

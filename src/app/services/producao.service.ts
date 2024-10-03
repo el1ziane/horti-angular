@@ -22,6 +22,7 @@ export class ProducaoService {
   loadById(id: string){
     return this.httpClient.get<Producao>(`${this.API}/${id}`);
   }
+
   salvar(registro: Partial<Producao>){
     if (registro._id) {
       return this.editar(registro);

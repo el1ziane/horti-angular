@@ -2,8 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Observable, BehaviorSubject, catchError, of, combineLatest, startWith, map } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 import { ConfirmationDialogComponent } from '../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
 import { MatToolbar } from '@angular/material/toolbar';
@@ -18,6 +17,9 @@ import { ProducaoListaComponent } from './producao-lista/producao-lista.componen
 import { Producao } from '../../model/producao';
 import { ProducaoService } from '../../services/producao.service';
 import { NgxPrintService } from 'ngx-print';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -30,13 +32,14 @@ import { NgxPrintService } from 'ngx-print';
 export class ProducaoComponent implements OnInit {
 
 
-  producoes$: Observable<Producao[]> | null = null;
-  filteredProducoes$: Observable<Producao[]> | null = null;
-  searchTerm$ = new BehaviorSubject<string>('');
-  faSearch = faSearch;
-  searchTerm = '';
+  producao$: Observable<Producao[]> | null = null;
   showPrintSection: boolean = false;
+  dataSource: MatTableDataSource<Producao> = new MatTableDataSource<Producao>();
   @ViewChild(ProducaoListaComponent) producaoListaComponent!:ProducaoListaComponent
+  @ViewChild(MatPaginator, { read: true })
+  paginator!: MatPaginator;
+  @ViewChild(MatSort)
+  sort!: MatSort;
 
   constructor(
     public producaoService: ProducaoService,
@@ -51,24 +54,22 @@ export class ProducaoComponent implements OnInit {
   }
 
   atualizar() {
-    this.producoes$ = this.producaoService.list().pipe(
+    this.producao$ = this.producaoService.list().pipe(
       catchError(error => {
-        this.onError('Erro ao carregar lista.');
-        return of([])
+        this.onError('Erro ao carregar produtos.');
+        return of([]);
       })
     );
 
-    this.filteredProducoes$ = combineLatest([
-      this.producoes$,
-      this.searchTerm$.pipe(startWith(''))
-    ]).pipe(
-      map(([producoes, searchTerm]) =>
-        producoes.filter(producao =>
-          (producao.produtoProducao && producao.produtoProducao.toLowerCase().includes(searchTerm.toLowerCase())) ||
-          (producao.codigoProducao && producao.codigoProducao.toString().includes(searchTerm.toLowerCase()))
-        )
-      )
-    );
+    this.producao$.subscribe(producao => {
+      this.dataSource.data = producao;
+      if (this.paginator) {
+        this.dataSource.paginator = this.paginator; // Atribuição segura
+      }
+      if (this.sort) {
+        this.dataSource.sort = this.sort; // Atribuição segura
+      }
+    });
   }
 
   onError(errorMsg: string) {
@@ -120,10 +121,21 @@ export class ProducaoComponent implements OnInit {
     });
 
   }
+  onSuccess() {
+    //this.atualizarEstoque(); // Atualiza o estoque após o sucesso na produção
+    this._snackBar.open('Produção salva com sucesso!', 'X', {
+      duration: 3000,
+      verticalPosition: 'bottom',
+      horizontalPosition: 'center'
+    });
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    search(e: Event): void {
-      const target = e.target as HTMLInputElement;
-      this.searchTerm$.next(target.value);
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
+  }
 
 }

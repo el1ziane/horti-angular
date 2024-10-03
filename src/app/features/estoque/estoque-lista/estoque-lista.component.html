@@ -1,0 +1,73 @@
+<div class="column-flex mat-elevation-z8">
+  <div class="tabela-list">
+    <div *ngFor="let estoque of dataSource.data" class="tabela-item">
+      <div class="tabela-header" (click)="toggleDetails(estoque)">
+        <div class="tabela-info">
+          <span>{{ estoque.produtoEstoque }}</span>
+          <span>{{ estoque.quantidadeEstoque }}</span>
+        </div>
+        <button mat-icon-button [matMenuTriggerFor]="opcoesMenu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #opcoesMenu="matMenu" [overlapTrigger]="false">
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="onDelete(estoque)">
+            <mat-icon>delete</mat-icon><span>Excluir</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="openDetailsDialog(estoque)">
+            <mat-icon>info</mat-icon><span>Detalhes</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+
+  <mat-table [dataSource]="dataSource" class="mat-table" matSort>
+    <ng-container matColumnDef="codigoEstoque">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Código </mat-header-cell>
+      <mat-cell *matCellDef="let estoque"> {{estoque.codigoEstoque}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="produtoEstoque">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Produto </mat-header-cell>
+      <mat-cell *matCellDef="let estoque"> {{estoque.produtoEstoque}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="quantidadeEstoque">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Quantidade </mat-header-cell>
+      <mat-cell *matCellDef="let estoque"> {{estoque.quantidadeEstoque}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="valorUnitarioEstoque" >
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Valor Unitário </mat-header-cell>
+      <mat-cell *matCellDef="let estoque">  {{ estoque.valorUnitarioEstoque | decimalVirgula }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="valorTotalEstoque" >
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Valor Total </mat-header-cell>
+      <mat-cell *matCellDef="let estoque">  {{ estoque.valorTotalEstoque | decimalVirgula }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dataEstoque">
+      <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
+      <mat-cell *matCellDef="let estoque"> {{estoque.dataEstoque}} </mat-cell>
+    </ng-container>
+
+    <ng-container  matColumnDef="acoes">
+      <mat-header-cell *matHeaderCellDef class="action-column-header">
+      </mat-header-cell>
+      <mat-cell *matCellDef="let produto" class="action-column">
+        <button mat-icon-button="Primary" style="color: #D66767" aria-label="Remover" (click)="onDelete(produto)">
+
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+
+  </mat-table>
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+</div>

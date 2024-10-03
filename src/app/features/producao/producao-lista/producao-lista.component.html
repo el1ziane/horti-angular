@@ -1,6 +1,6 @@
 <div class="column-flex mat-elevation-z8">
   <div class="tabela-list">
-    <div *ngFor="let producao of producoes" class="tabela-item">
+    <div *ngFor="let producao of dataSource.data" class="tabela-item">
       <div class="tabela-header" (click)="toggleDetails(producao)">
         <div class="tabela-info">
           <span>{{ producao.produtoProducao }}</span>
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <mat-table [dataSource]="producoes" class="mat-table">
+  <mat-table [dataSource]="dataSource" class="mat-table" matSort>
     <ng-container matColumnDef="codigoProducao">
       <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
       <mat-cell *matCellDef="let producao"> {{producao.codigoProducao}} </mat-cell>
@@ -63,4 +63,5 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>

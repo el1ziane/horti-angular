@@ -1,6 +1,6 @@
 <div class="column-flex mat-elevation-z8">
   <div class="tabela-list">
-    <div *ngFor="let produto of produtos" class="tabela-item">
+    <div *ngFor="let produto of dataSource.data" class="tabela-item">
       <div class="tabela-header" (click)="toggleDetails(produto)">
         <div class="tabela-info">
           <span>{{ produto.produtoNome }}</span>
@@ -25,29 +25,29 @@
     </div>
   </div>
 
-  <mat-table [dataSource]="produtos" class="mat-table">
+  <mat-table [dataSource]="dataSource" class="mat-table" matSort>
     <ng-container matColumnDef="codigo">
-      <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Código </mat-header-cell>
       <mat-cell *matCellDef="let produto"> {{produto.codigo}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="produtoNome">
-      <mat-header-cell *matHeaderCellDef> Produto </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Produto </mat-header-cell>
       <mat-cell *matCellDef="let produto"> {{produto.produtoNome}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="quantidadeProduto">
-      <mat-header-cell *matHeaderCellDef> Quantidade </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Quantidade </mat-header-cell>
       <mat-cell *matCellDef="let produto"> {{produto.quantidadeProduto}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="peso" >
-      <mat-header-cell *matHeaderCellDef> Peso </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Peso </mat-header-cell>
       <mat-cell *matCellDef="let produto">  {{ produto.peso | decimalVirgula }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="valorProduto" >
-      <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Valor </mat-header-cell>
       <mat-cell *matCellDef="let produto">  {{ produto.valorProduto | decimalVirgula }} </mat-cell>
     </ng-container>
 
@@ -65,5 +65,9 @@
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+
   </mat-table>
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
 </div>

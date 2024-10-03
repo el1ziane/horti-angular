@@ -15,6 +15,8 @@ import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } 
 import { ProducaoService } from '../../../services/producao.service';
 import { Producao } from '../../../model/producao';
 import moment from 'moment';
+import { EstoqueService } from '../../../services/estoque.service';
+import { Estoque } from '../../../model/estoque';
 
 
 @Component({
@@ -35,6 +37,7 @@ export class FormProducaoComponent implements OnInit {
   constructor(
     private formBuilder: NonNullableFormBuilder,
     private service: ProducaoService,
+    private estoqueService: EstoqueService,
     private _snackBar: MatSnackBar,
     private location: Location,
     private router: ActivatedRoute,
@@ -75,12 +78,18 @@ export class FormProducaoComponent implements OnInit {
       const formValue = this.prepareSave();
       if (formValue._id) {
         this.service.editar(formValue).subscribe(
-          result => this.onSuccessedit(),
+          result => {
+            this.atualizarEstoque(formValue); // Atualiza o estoque após a edição
+            this.onSuccessedit();
+          },
           error => this.onError()
         );
       } else {
         this.service.salvar(formValue).subscribe(
-          result => this.onSuccess(),
+          result => {
+            this.atualizarEstoque(formValue); // Atualiza o estoque após a criação
+            this.onSuccess();
+          },
           error => this.onError()
         );
       }
@@ -88,6 +97,29 @@ export class FormProducaoComponent implements OnInit {
       this.formUtils.validateAllFormFields(this.form);
     }
   }
+
+  private atualizarEstoque(producao: Producao): void {
+    const estoqueItem: Estoque = {
+      _id: producao._id,
+      codigoEstoque: producao.codigoProducao, // Ajuste conforme necessário
+      produtoEstoque: producao.produtoProducao,
+      quantidadeEstoque: producao.quantidadeProducao,
+      valorUnitarioEstoque:0,
+      valorTotalEstoque:0,
+      dataEstoque: producao.dataProducao // Formate conforme necessário
+    };
+
+    this.estoqueService.adicionarAoEstoque(estoqueItem).subscribe(
+      response => {
+        console.log("Estoque atualizado com sucesso:", response);
+      },
+      error => {
+        this._snackBar.open("Erro ao atualizar estoque", '', { duration: 3000 });
+      }
+    );
+  }
+
+
 
 
   cancelar(): void {
