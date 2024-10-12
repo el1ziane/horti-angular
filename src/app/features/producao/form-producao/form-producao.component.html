@@ -7,16 +7,28 @@
       <div class="form-column">
         <mat-form-field appearance="outline" class="custom-form-field">
           <mat-label>Código</mat-label>
-          <input matInput formControlName="codigoProducao" placeholder="Código" id="codigoProducao" name="codigoProducao">
+          <input matInput formControlName="codigoProducao" placeholder="Código" id="codigoProducao" name="codigoProducao" >
 
         </mat-form-field>
 
 
-      
+
         <mat-form-field appearance="outline" class="custom-form-field">
           <mat-label>Produto</mat-label>
-          <input matInput formControlName="produtoProducao" placeholder="Produto" id="produtoProducao" name="produtoProducao">
+          <mat-error *ngIf="form.get('produtoProducao')?.hasError('notFound')">
+            Produto não encontrado. Cadastre o item na tela de produto.
+          </mat-error>
+          <mat-select  formControlName="produtoProducao"
+          placeholder="Produto"
+          id="produtoProducao"
+          name="produtoProducao"
 
+          (input)="searchProducts($event)"
+          [value]="form.controls['produtoProducao'].value?.produtoNome || form.controls['produtoProducao'].value">
+            <mat-option *ngFor="let produto of filteredProdutos" [value]="produto.produtoNome">
+              {{ produto.produtoNome }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
       <div class="form-column">

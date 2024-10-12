@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { childRoutes } from './child-routes';
-import { FormRecebimentoComponent } from './features/recebimentos/form-recebimento/form-recebimento.component';
-import { RecebimentoResolver } from './guards/recebimento.resolver';
-import { RecebimentosComponent } from './features/recebimentos/recebimentos.component';
 import { ProdutosComponent } from './features/produtos/produtos.component';
 import { FormProdutoComponent } from './features/produtos/form-produto/form-produto.component';
 import { ProdutoResolver } from './guards/produto.resolver';
@@ -19,16 +16,24 @@ import { FormProducaoComponent } from './features/producao/form-producao/form-pr
 import { EstimativaResolver } from './guards/estimativa.resolver';
 import { FormEstimativasComponent } from './features/estimativas/form-estimativas/form-estimativas.component';
 import { EstoqueComponent } from './features/estoque/estoque.component';
+import { CompraResolver } from './guards/compra.resolver';
+import { CompraComponent } from './features/recebimentos/compra.component';
+import { FormCompraComponent } from './features/recebimentos/form-compra/form-compra.component';
+import { FormDespesaComponent } from './features/recebimentos/form-compra/form-despesa/form-despesa.component';
+import { DespesaResolver } from './guards/despesa.resolver';
+
 
 const routes: Routes = [
   ...childRoutes,
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
   {
-    path: 'recebimentos',
+    path: 'compra',
     children: [
-      { path: '', component: RecebimentosComponent },
-      { path: 'novo', component: FormRecebimentoComponent, resolve: {recebimento: RecebimentoResolver}},
-      {path: 'editar/:id',component:FormRecebimentoComponent, resolve:{recebimento: RecebimentoResolver}}
+      { path: '', component: CompraComponent },
+      { path: 'novo', component: FormCompraComponent, resolve: {compra: CompraResolver}},
+      {path: 'editar/:id',component:FormCompraComponent, resolve:{compra: CompraResolver}},
+      { path: 'nova', component: FormDespesaComponent, resolve: {despesa: DespesaResolver}},
+      {path: 'edita/:id',component:FormDespesaComponent, resolve:{compra: DespesaResolver}}
     ]
   },
   {
@@ -80,6 +85,14 @@ const routes: Routes = [
      // {path: 'editar/:id',component:FormProducaoComponent, resolve:{producao: ProducaoResolver}}
     ]
   },
+  {
+    path: 'despesa/:id',
+    component: FormDespesaComponent,
+    resolve: {
+      despesa: DespesaResolver // O resolver que busca a despesa
+    }
+  },
+
   { path: '**', redirectTo: 'courses' }
 ];
 

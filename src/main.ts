@@ -1,4 +1,4 @@
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { enableProdMode, importProvidersFrom, LOCALE_ID } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import 'zone.js';
 
@@ -25,8 +25,8 @@ import { AppRoutingModule } from './app/app-routing.module';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-import { MAT_DATE_FORMATS, DateAdapter, MatNativeDateModule } from '@angular/material/core';
-import { MY_DATE_FORMATS } from './app/features/recebimentos/form-recebimento/form-recebimento.component';
+import { MAT_DATE_FORMATS, DateAdapter, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MY_DATE_FORMATS } from './app/features/recebimentos/form-compra/form-compra.component';
 
 if (environment.production) {
   enableProdMode();
@@ -39,6 +39,8 @@ bootstrapApplication(AppComponent, {
       importProvidersFrom(MatNativeDateModule),
         importProvidersFrom(BrowserModule, AppRoutingModule, ReactiveFormsModule, MatMenuModule, MatTableModule, MatFormFieldModule, MatSelectModule, FormsModule, MatButtonModule, MatInputModule, MatAutocompleteModule, MatDatepickerModule, FontAwesomeModule, MatDatepickerModule, MatButtonModule, MatButtonModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatSlideToggleModule, MatSnackBarModule),
         { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+          { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+
         provideHttpClient(withInterceptorsFromDi()),
         provideAnimations()
     ]

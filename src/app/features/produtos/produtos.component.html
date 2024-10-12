@@ -26,7 +26,7 @@
             <td style="border: 1px solid #000; padding: 8px;">{{ produto.produtoNome }}</td>
             <td style="border: 1px solid #000; padding: 8px;">{{ produto.quantidadeProduto }}</td>
             <td style="border: 1px solid #000; padding: 8px;">{{ produto.peso }}</td>
-            <td style="border: 1px solid #000; padding: 8px;">{{ produto.valorProduto }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">  R${{ (produto.valorProduto ?? 0) | decimalVirgula }}</td>
           </tr>
 
         </tbody>

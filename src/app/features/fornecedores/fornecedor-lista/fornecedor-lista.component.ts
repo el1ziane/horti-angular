@@ -1,42 +1,51 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Fornecedor } from '../../../model/fornecedor';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatTableDataSource } from '@angular/material/table';
 import { DecimalVirgulaPipe } from '../../../shared/decimal-virgula.pipe';
 import { MatDivider } from '@angular/material/divider';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { DetalhesFornecedoresDialogComponent } from '../detalhes-fornecedores-dialog/detalhes-fornecedores-dialog.component';
 import { FornecedoresService } from '../../../services/fornecedores.service';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 @Component({
   selector: 'app-fornecedor-lista',
   standalone: true,
   templateUrl: './fornecedor-lista.component.html',
   styleUrls: ['./fornecedor-lista.component.scss'],
-  imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe, DecimalVirgulaPipe, CommonModule, MatMenu, MatMenuItem, MatDivider, MatMenuTrigger]
+  imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe, DecimalVirgulaPipe, CommonModule, MatMenu, MatMenuItem, MatDivider, MatMenuTrigger, MatPaginator,MatSortModule, MatPaginatorModule]
 })
-export class FornecedorListaComponent implements OnInit {
+export class FornecedorListaComponent implements OnInit, AfterViewInit {
 
-  @Input() fornecedor: Fornecedor[] = [];
+  //@Input() fornecedor: Fornecedor[] = [];
+  @Input() dataSource!: MatTableDataSource<Fornecedor>;
   @Output() add = new EventEmitter(false)
   @Output() edit = new EventEmitter(false)
   @Output() delete = new EventEmitter(false)
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   readonly displayedColumns = ['fornecedorNome', 'cnpj', 'telefone', 'email', 'acoes'];
 
   constructor(public dialog: MatDialog, private fornecedoresService: FornecedoresService){}
-  ngOnInit(): void {
+  ngOnInit(): void {}
+  ngAfterViewInit() {
+    if (this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
 
   }
   toggleDetails(fornecedor: Fornecedor) {
     fornecedor.showDetails = !fornecedor.showDetails;
   }
   enviarParaRelatorio() {
-    console.log(this.fornecedor)
-    this.fornecedoresService.setFornecedorParaRelatorio(this.fornecedor);
+    this.fornecedoresService.setFornecedorParaRelatorio(this.dataSource.data);
   }
 
   onAdd() {

@@ -18,6 +18,9 @@ import { ConfirmationDialogComponent } from "../../shared/components/confirmatio
 import { ErrorDialogComponent } from "../../shared/components/error-dialog/error-dialog.component";
 import { VendasListaComponent } from "./vendas-lista/vendas-lista.component";
 import { NgxPrintModule, NgxPrintService } from "ngx-print";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
 
 
 @Component({
@@ -29,22 +32,17 @@ import { NgxPrintModule, NgxPrintService } from "ngx-print";
 })
 export class VendasComponent implements OnInit {
 
-  vendas$: Observable<Venda[]> | null = null;
-  filteredVenda$: Observable<Venda[]> | null = null;
-  searchTerm$ = new BehaviorSubject<string>('');
-  faSearch = faSearch;
-  searchTerm = '';
-  @ViewChild(VendasListaComponent)
-  vendasListaComponent!: VendasListaComponent
-
+  venda$: Observable<Venda[]> | null = null;
+  dataSource: MatTableDataSource<Venda> = new MatTableDataSource<Venda>();
+  @ViewChild(VendasListaComponent) vendasListaComponent!:VendasListaComponent
+  @ViewChild(MatPaginator, { read: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   constructor(
     public vendasService: VendasService,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
     private _snackBar: MatSnackBar,
-    private printService: NgxPrintService,
-
     private cdRef: ChangeDetectorRef
   ) {
     this.atualizar();
@@ -52,26 +50,22 @@ export class VendasComponent implements OnInit {
   showPrintSection: boolean = false;
 
   atualizar() {
-    this.vendas$ = this.vendasService.list().pipe(
+    this.venda$ = this.vendasService.list().pipe(
       catchError(error => {
         this.onError('Erro ao carregar vendas.');
-        return of([])
+        return of([]);
       })
     );
 
-    this.filteredVenda$ = combineLatest([
-      this.vendas$,
-      this.searchTerm$.pipe(startWith(''))
-    ]).pipe(
-      map(([vendas, searchTerm]) =>
-        vendas.filter(venda =>
-          (venda.produtoVenda && venda.produtoVenda.toLowerCase().includes(searchTerm.toLowerCase())) ||
-
-          (venda.statusVenda && venda.statusVenda.toLowerCase().includes(searchTerm.toLowerCase()))
-
-        )
-      )
-    );
+    this.venda$.subscribe(venda => {
+      this.dataSource.data = venda;
+      if (this.paginator) {
+        this.dataSource.paginator = this.paginator;
+      }
+      if (this.sort) {
+        this.dataSource.sort = this.sort;
+      }
+    });
   }
 
   onError(errorMsg: string) {
@@ -127,10 +121,13 @@ export class VendasComponent implements OnInit {
     });
 
   }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    search(e: Event): void {
-      const target = e.target as HTMLInputElement;
-      this.searchTerm$.next(target.value);
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
+  }
 
 }

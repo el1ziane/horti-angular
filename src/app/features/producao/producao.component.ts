@@ -20,6 +20,7 @@ import { NgxPrintService } from 'ngx-print';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { EstoqueService } from '../../services/estoque.service';
 
 
 @Component({
@@ -48,7 +49,8 @@ export class ProducaoComponent implements OnInit {
     private route: ActivatedRoute,
     private _snackBar: MatSnackBar,
     private printService: NgxPrintService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private estoqueService: EstoqueService
   ) {
     this.atualizar();
   }
@@ -97,9 +99,14 @@ export class ProducaoComponent implements OnInit {
     this.router.navigate(['novo'], {relativeTo: this.route});
   }
 
-  onEdit(producao: Producao){
+  /*onEdit(producao: Producao){
     this.router.navigate(['editar', producao._id], {relativeTo: this.route});
-  }
+
+  }*/
+    onEdit(producao: Producao) {
+      this.router.navigate(['editar', producao._id], {relativeTo: this.route});
+    }
+
   onDelete(producao: Producao){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: 'Tem certeza que deseja remover esse item?',

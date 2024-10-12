@@ -13,11 +13,12 @@ import { MatSelect } from '@angular/material/select';
 import { ProdutosService } from '../../../services/produtos.service';
 import { Produto } from '../../../model/produto';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @Component({
   selector: 'app-form-produto',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatPrefix, MatSuffix,   MatCardActions, MatButton],
+  imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatPrefix, MatSuffix,   MatCardActions, MatButton, CurrencyMaskModule],
   templateUrl: './form-produto.component.html',
   styleUrl: './form-produto.component.scss'
 })

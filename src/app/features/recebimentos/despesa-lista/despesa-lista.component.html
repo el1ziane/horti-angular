@@ -1,0 +1,76 @@
+<div class="column-flex mat-elevation-z8">
+  <div class="tabela-list">
+    <div *ngFor="let despesa of dataSource.data" class="tabela-item">
+      <div class="tabela-header" (click)="toggleDetails(despesa)">
+        <div class="tabela-info">
+          <span>{{ despesa.descricaoDespesa }}</span>
+          <span>{{ despesa.dataDespesa }}</span>
+        </div>
+        <button mat-icon-button [matMenuTriggerFor]="opcoesMenu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #opcoesMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item (click)="onEdit(despesa)">
+            <mat-icon>edit_square</mat-icon><span>Editar</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="onDelete(despesa)">
+            <mat-icon>delete</mat-icon><span>Excluir</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="openDetailsDialog(despesa)">
+            <mat-icon>info</mat-icon><span>Detalhes</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+
+<mat-table  [dataSource]="dataSource" class="mat-table" matSort>
+  <ng-container matColumnDef="fornecedorDespesa">
+    <mat-header-cell *matHeaderCellDef> Fornecedor </mat-header-cell>
+    <mat-cell *matCellDef="let despesa"> {{despesa.fornecedorDespesa}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="descricaoDespesa">
+    <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+    <mat-cell *matCellDef="let despesa"> {{despesa.descricaoDespesa}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="valorDespesa">
+    <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+    <mat-cell *matCellDef="let despesa"> R${{despesa.valorDespesa | decimalVirgula}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="dataDespesa">
+    <mat-header-cell *matHeaderCellDef> Data de Vencimento </mat-header-cell>
+    <mat-cell *matCellDef="let despesa">{{ despesa.dataDespesa }}
+    </mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="statusDespesa" >
+    <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+    <mat-cell *matCellDef="let despesa">{{despesa.statusDespesa}}</mat-cell>
+  </ng-container>
+
+  <ng-container  matColumnDef="acoes">
+    <mat-header-cell *matHeaderCellDef class="action-column-header">
+
+    </mat-header-cell>
+
+    <mat-cell *matCellDef="let despesa" class="action-column">
+      <button mat-icon-button="Primary" style="color: #64C2A8" aria-label="Editar" (click)="onEdit(despesa)">
+        <mat-icon >edit_square</mat-icon>
+      </button>
+      <button mat-icon-button="Primary" style="color: #D66767" aria-label="Remover" (click)="onDelete(despesa)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+<mat-paginator [pageSize]="10" [pageSizeOptions]="[20, 30, 40]" showFirstLastButtons></mat-paginator>
+</div>

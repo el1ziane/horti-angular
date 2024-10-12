@@ -48,7 +48,7 @@
 
     <ng-container matColumnDef="valorProduto" >
       <mat-header-cell *matHeaderCellDef mat-sort-header> Valor </mat-header-cell>
-      <mat-cell *matCellDef="let produto">  {{ produto.valorProduto | decimalVirgula }} </mat-cell>
+      <mat-cell *matCellDef="let produto">   R${{ produto.valorProduto | decimalVirgula }} </mat-cell>
     </ng-container>
 
     <ng-container  matColumnDef="acoes">
@@ -68,6 +68,6 @@
 
 
   </mat-table>
-  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[20, 30, 40]" showFirstLastButtons></mat-paginator>
 
 </div>

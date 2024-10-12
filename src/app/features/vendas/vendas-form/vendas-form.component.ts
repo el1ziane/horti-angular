@@ -1,4 +1,4 @@
-import { Location, NgFor } from '@angular/common';
+import { Location, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { DateAdapter, MAT_DATE_LOCALE, MatOption, provideNativeDateAdapter } from '@angular/material/core';
@@ -10,11 +10,14 @@ import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker, MatDateRangeInp
 import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatSelect } from '@angular/material/select';
 import { MatInput } from '@angular/material/input';
-import { MatFormField, MatFormFieldModule, MatHint, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
+import { MatError, MatFormField, MatFormFieldModule, MatHint, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
 import { Venda } from '../../../model/venda';
 import { VendasService } from '../../../services/vendas.service';
 import moment from 'moment';
+import { Produto } from '../../../model/produto';
+import { ProdutosService } from '../../../services/produtos.service';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @Component({
   selector: 'app-vendas-form',
@@ -30,39 +33,34 @@ import moment from 'moment';
     MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule,
     MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatAutocompleteTrigger,
     MatAutocomplete, NgFor, MatPrefix, MatSuffix, MatDatepickerInput, MatDatepickerToggle,
-    MatDatepickerModule, MatCardActions, MatButton, MatDateRangeInput, MatHint, MatDateRangePicker,MatFormFieldModule, MatDatepicker,
+    MatDatepickerModule, MatCardActions, MatButton, MatDateRangeInput, MatHint, MatDateRangePicker,MatFormFieldModule, MatDatepicker,CurrencyMaskModule,NgIf, MatError
   ]
 })
 export class VendasFormComponent implements OnInit {
+  produtos: Produto[] = [];
+  filteredProdutos: Produto[] = [];
   form!: FormGroup;
+
 
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
     private dateAdapter: DateAdapter<Date>,
-    private service: VendasService,
+    private vendaService: VendasService,
     private _snackBar: MatSnackBar,
     private location: Location,
     private router: ActivatedRoute,
+    private produtosService: ProdutosService,
     public formUtils: FormUtilsService
   ) {
     //this.dateAdapter.setLocale('pt');
   }
 
-  private parseDate(dateStr: string): Date | null {
-    const [day, month, year] = dateStr.split('-').map(Number);
-    if (day && month && year) {
-      return new Date(year, month - 1, day);
-    }
-    return null;
-  }
-
-  private formatDateForBackend(date: Date | null): string {
-    if (!date) return '';
-    return moment(date).format('DD-MM-YYYY');
-  }
-
   ngOnInit(): void {
+    this.produtosService.list().subscribe((produtos) => {
+      this.produtos = produtos;
+      this.filteredProdutos = produtos;
+    });
     const venda: Venda = this.router.snapshot.data['venda'];
 
     //console.log('Data Inicial Original Recebida:', venda.dataInicial);
@@ -77,8 +75,8 @@ export class VendasFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       _id: [venda._id],
-      codigoVenda: [venda.codigoVenda, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      produtoVenda: [venda.produtoVenda, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      codigoVenda: [venda.codigoVenda, [Validators.required]],
+      produtoVenda: [venda.produtoVenda, [Validators.required]],
       quantidadeVenda: [venda.quantidadeVenda, [Validators.required]],
       valorVenda: [venda.valorVenda, [Validators.required]],
       dataInicial: [dataInicial, [Validators.required]],
@@ -86,22 +84,49 @@ export class VendasFormComponent implements OnInit {
       statusVenda: [venda.statusVenda]
     });
 
-    //console.log('Data Inicial Formatada:', this.form.get('dataInicial')?.value);
-    //console.log('Data Final Formatada:', this.form.get('dataFinal')?.value);
+    this.form.get('produtoVenda')?.valueChanges.subscribe(value => {
+      this.onProdutoChange(value);
+    });
   }
 
+
+  private onProdutoChange(produtoNome: string): void {
+    this.vendaService.verificarProduto(produtoNome).subscribe(produto => {
+      if (produto) {
+
+        this.form.patchValue({
+          codigoVenda: produto.codigo
+        });
+      }
+    });
+
+}
+private parseDate(dateStr: string): Date | null {
+  const [day, month, year] = dateStr.split('-').map(Number);
+  if (day && month && year) {
+    return new Date(year, month - 1, day);
+  }
+  return null;
+}
+
+private formatDateForBackend(date: Date | null): string {
+  if (!date) return '';
+  return moment(date).format('DD-MM-YYYY');
+}
 
   enviar(): void {
     if (this.form.valid) {
       const formValue = this.prepareSave();
+      const selectedProduct: Produto = this.form.value.produtoVenda;
+      formValue.produtoVenda = selectedProduct;
 
       if (formValue._id) {
-        this.service.editar(formValue).subscribe(
+        this.vendaService.editar(formValue).subscribe(
           result => this.onSuccessedit(),
           error => this.onError()
         );
       } else {
-        this.service.salvar(formValue).subscribe(
+        this.vendaService.salvar(formValue).subscribe(
           result => this.onSuccess(),
           error => this.onError()
         );
@@ -136,4 +161,16 @@ export class VendasFormComponent implements OnInit {
     return formValue;
   }
 
+  searchProducts(event: any): void {
+    const query = event.target.value.toLowerCase();
+    if (query.trim() !== '') {
+      const filteredProducts = this.produtos.filter(product => product.produtoNome.toLowerCase().includes(query));
+      this.filteredProdutos = [
+        ...filteredProducts.filter(product => product.produtoNome.toLowerCase().startsWith(query)),
+        ...filteredProducts.filter(product => !product.produtoNome.toLowerCase().startsWith(query))
+      ];
+    } else {
+      this.filteredProdutos = this.produtos;
+    }
+  }
 }

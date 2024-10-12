@@ -2,12 +2,11 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { FormComponent } from './form/form.component';
 import { EstoqueComponent } from './features/estoque/estoque.component';
 import { ProdutosComponent } from './features/produtos/produtos.component';
-import { RecebimentosComponent } from './features/recebimentos/recebimentos.component';
 import { FornecedoresComponent } from './features/fornecedores/fornecedores.component';
 import { VendasComponent } from './features/vendas/vendas.component';
 import { EstimativasComponent } from './features/estimativas/estimativas.component';
 import { ProducaoComponent } from './features/producao/producao.component';
-
+import { CompraComponent } from './features/recebimentos/compra.component';
 
 
 
@@ -44,8 +43,8 @@ export const childRoutes = [
   },
 
   {
-    path: 'recebimentos',
-    component: RecebimentosComponent,
+    path: 'compra',
+    component: CompraComponent,
     data: { icon: 'point_of_sale', text: 'Compras' }
   },
   {

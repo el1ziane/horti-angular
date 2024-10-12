@@ -17,7 +17,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 @Component({
   selector: 'app-produtos-lista',
   standalone: true,
-  imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe, DecimalVirgulaPipe, CommonModule, MatMenu, MatMenuItem, MatDivider, MatMenuTrigger, MatPaginator,MatSortModule, MatPaginatorModule, MatFormField, MatLabel],
+  imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe, DecimalVirgulaPipe, CommonModule, MatMenu, MatMenuItem, MatDivider, MatMenuTrigger, MatPaginator,MatSortModule, MatPaginatorModule, MatFormField, MatLabel,],
   templateUrl: './produtos-lista.component.html',
   styleUrl: './produtos-lista.component.scss'
 })
@@ -55,9 +55,6 @@ export class ProdutosListaComponent implements OnInit, AfterViewInit{
     }
 
   }
-
-
-
 
   enviarParaRelatorio() {
     this.produtosService.setProdutosParaRelatorio(this.dataSource.data);

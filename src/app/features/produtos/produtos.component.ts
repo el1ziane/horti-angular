@@ -22,13 +22,14 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
+import { DecimalVirgulaPipe } from "../../shared/decimal-virgula.pipe";
 
 
 
 @Component({
   selector: 'app-produtos',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardTitle, MatToolbar, MatButton, MatIcon, ReactiveFormsModule, FormsModule, FaIconComponent, NgIf, ProdutosListaComponent, MatProgressSpinner, AsyncPipe,NgxPrintModule,NgStyle, CommonModule, NgForOf, MatFormField, MatLabel,MatSortModule,MatPaginatorModule],
+  imports: [MatCard, MatCardHeader, MatCardTitle, MatToolbar, MatButton, MatIcon, ReactiveFormsModule, FormsModule, FaIconComponent, NgIf, ProdutosListaComponent, MatProgressSpinner, AsyncPipe, NgxPrintModule, NgStyle, CommonModule, NgForOf, MatFormField, MatLabel, MatSortModule, MatPaginatorModule, DecimalVirgulaPipe],
   templateUrl: './produtos.component.html',
   styleUrl: './produtos.component.scss'
 })

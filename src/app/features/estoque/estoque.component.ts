@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
 import { Estoque } from '../../model/estoque';
-import { NgIf, AsyncPipe, NgStyle, NgForOf } from '@angular/common';
+import { NgIf, AsyncPipe, NgStyle, NgForOf, CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardHeader, MatCardTitle } from '@angular/material/card';
@@ -26,16 +26,17 @@ import { ProducaoService } from '../../services/producao.service';
 @Component({
   selector: 'app-estoque',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardTitle, MatToolbar, MatButton, MatIcon, ReactiveFormsModule, FormsModule, FaIconComponent, NgIf, EstoqueListaComponent, MatProgressSpinner, AsyncPipe, NgStyle, NgForOf],
+  imports: [MatCard, MatCardHeader, MatCardTitle, MatToolbar, MatButton, MatIcon, ReactiveFormsModule, FormsModule, FaIconComponent, NgIf, EstoqueListaComponent, MatProgressSpinner, AsyncPipe, NgStyle, NgForOf, CommonModule],
+ 
   templateUrl: './estoque.component.html',
   styleUrl: './estoque.component.scss'
 })
 export class EstoqueComponent implements OnInit {
+  estoque: Estoque[] = [];
   estoque$: Observable<Estoque[]> | null = null;
   dataSource: MatTableDataSource<Estoque> = new MatTableDataSource<Estoque>();
   @ViewChild(EstoqueListaComponent) estoqueListaComponent!:EstoqueListaComponent
  @ViewChild(MatPaginator, { read: true }) paginator!: MatPaginator;
- // @ViewChild('estoquePaginator') paginator!: MatPaginator;
   @ViewChild(MatSort)
   sort!: MatSort;
   showPrintSection: boolean = false;
@@ -56,19 +57,11 @@ export class EstoqueComponent implements OnInit {
   atualizar() {
     this.estoque$ = this.estoqueService.list().pipe(
       tap(estoque => {
-        console.log('Dados do estoque:', estoque); // Log de dados
+        console.log('Dados do estoque:', estoque);
         this.dataSource.data = estoque;
       }),
-      catchError(error => {
-        console.error('Erro ao carregar lista:', error); // Log de erro
-        this.onError('Erro ao carregar lista.');
-        return of([]);
-      })
     );
   }
-
-
-
 
   onError(errorMsg: string) {
     this.dialog.open(ErrorDialogComponent, {
@@ -77,6 +70,9 @@ export class EstoqueComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.estoqueService.list().subscribe((estoque) => {
+      this.estoque = estoque;
+    });
     this.atualizar();
   }
 
@@ -93,13 +89,6 @@ export class EstoqueComponent implements OnInit {
               this.cdRef.detectChanges();
       }
 
-  /*onAdd() {
-    this.router.navigate(['novo'], {relativeTo: this.route});
-  }*/
-
-  onEdit(producao: Producao){
-    this.router.navigate(['editar', producao._id], {relativeTo: this.route});
-  }
   onDelete(producao: Producao){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: 'Tem certeza que deseja remover esse item?',

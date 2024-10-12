@@ -1,6 +1,6 @@
 <div class="column-flex mat-elevation-z8">
   <div class="tabela-list">
-    <div *ngFor="let venda of vendas" class="tabela-item">
+    <div *ngFor="let venda of dataSource.data" class="tabela-item">
       <div class="tabela-header" (click)="toggleDetails(venda)">
         <div class="tabela-info">
           <span>{{ venda.produtoVenda }}</span>
@@ -25,7 +25,7 @@
       </div>
     </div>
   </div>
-<mat-table [dataSource]="vendas" class="mat-table" >
+<mat-table  [dataSource]="dataSource" class="mat-table" matSort>
   <ng-container matColumnDef="codigoVenda">
     <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
     <mat-cell *matCellDef="let venda"> {{venda.codigoVenda}} </mat-cell>
@@ -43,7 +43,7 @@
 
   <ng-container matColumnDef="valorVenda" >
     <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
-    <mat-cell *matCellDef="let venda">  {{ venda.valorVenda | decimalVirgula }} </mat-cell>
+    <mat-cell *matCellDef="let venda"> R${{ venda.valorVenda | decimalVirgula }} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="periodoVenda">
@@ -76,7 +76,6 @@
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-
-
 </mat-table>
+<mat-paginator [pageSize]="10" [pageSizeOptions]="[20, 30, 40]" showFirstLastButtons></mat-paginator>
 </div>

@@ -31,7 +31,7 @@
 
     <ng-container matColumnDef="produtoEstoque">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Produto </mat-header-cell>
-      <mat-cell *matCellDef="let estoque"> {{estoque.produtoEstoque}} </mat-cell>
+      <mat-cell *matCellDef="let estoque"> {{estoque.produtoEstoque?.produtoNome}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="quantidadeEstoque">
@@ -41,12 +41,12 @@
 
     <ng-container matColumnDef="valorUnitarioEstoque" >
       <mat-header-cell *matHeaderCellDef mat-sort-header> Valor Unitário </mat-header-cell>
-      <mat-cell *matCellDef="let estoque">  {{ estoque.valorUnitarioEstoque | decimalVirgula }} </mat-cell>
+      <mat-cell *matCellDef="let estoque">  {{ estoque.produtoEstoque?.valorProduto | currency:'BRL':'symbol':'1.2-2' }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="valorTotalEstoque" >
       <mat-header-cell *matHeaderCellDef mat-sort-header> Valor Total </mat-header-cell>
-      <mat-cell *matCellDef="let estoque">  {{ estoque.valorTotalEstoque | decimalVirgula }} </mat-cell>
+      <mat-cell *matCellDef="let estoque">  {{ estoque.valorTotalEstoque | currency:'BRL':'symbol':'1.2-2' }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="dataEstoque">

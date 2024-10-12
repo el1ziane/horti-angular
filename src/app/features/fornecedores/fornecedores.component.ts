@@ -18,6 +18,10 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { FornecedoresService } from '../../services/fornecedores.service';
 import { FornecedorListaComponent } from './fornecedor-lista/fornecedor-lista.component';
 import { NgxPrintService } from 'ngx-print';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Produto } from '../../model/produto';
 
 @Component({
   selector: 'app-fornecedores',
@@ -30,13 +34,13 @@ export class FornecedoresComponent implements OnInit {
 
 
   fornecedor$: Observable<Fornecedor[]> | null = null;
-  filteredFornecedores$: Observable<Fornecedor[]> | null = null;
-  searchTerm$ = new BehaviorSubject<string>('');
-  faSearch = faSearch;
-  searchTerm = '';
   showPrintSection: boolean = false;
-  @ViewChild(FornecedorListaComponent) fornecedorListaComponent!:FornecedorListaComponent
-
+  dataSource: MatTableDataSource<Fornecedor> = new MatTableDataSource<Fornecedor>();
+  @ViewChild(FornecedorListaComponent) fornecedorListaComponent!: FornecedorListaComponent
+  @ViewChild(MatPaginator, { read: true })
+  paginator!: MatPaginator;
+  @ViewChild(MatSort)
+  sort!: MatSort;
   constructor(
     public fornecedoresService: FornecedoresService,
     public dialog: MatDialog,
@@ -52,22 +56,20 @@ export class FornecedoresComponent implements OnInit {
   atualizar() {
     this.fornecedor$ = this.fornecedoresService.list().pipe(
       catchError(error => {
-        this.onError('Erro ao carregar forncedores.');
-        return of([])
+        this.onError('Erro ao carregar fornecedores.');
+        return of([]);
       })
     );
 
-    this.filteredFornecedores$ = combineLatest([
-      this.fornecedor$,
-      this.searchTerm$.pipe(startWith(''))
-    ]).pipe(
-      map(([fornecedor, searchTerm]) =>
-        fornecedor.filter(fornecedor =>
-          (fornecedor.fornecedorNome && fornecedor.fornecedorNome.toLowerCase().includes(searchTerm.toLowerCase())) ||
-          (fornecedor.cnpj && fornecedor.cnpj.toString().includes(searchTerm.toLowerCase()))
-        )
-      )
-    );
+    this.fornecedor$.subscribe(fornecedor => {
+      this.dataSource.data = fornecedor;
+      if (this.paginator) {
+        this.dataSource.paginator = this.paginator;
+      }
+      if (this.sort) {
+        this.dataSource.sort = this.sort;
+      }
+    });
   }
 
   onError(errorMsg: string) {
@@ -120,11 +122,12 @@ export class FornecedoresComponent implements OnInit {
     });
 
   }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    search(e: Event): void {
-      const target = e.target as HTMLInputElement;
-      this.searchTerm$.next(target.value);
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
-
-
+  }
 }

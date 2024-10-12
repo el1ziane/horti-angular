@@ -1,0 +1,152 @@
+.widget-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 16px;
+}
+
+.widget {
+  width: 20%;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 15px; /* Borda arredondada para os widgets */
+}
+
+@media screen and (max-width: 600px) {
+  .widget {
+    width: 90%;
+  }
+}
+
+.middle-section, .bottom-section {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.middle-section .widget {
+  flex-basis: 48%;
+  margin: 10px;
+  border-radius: 15px; /* Borda arredondada para os widgets */
+}
+
+@media screen and (max-width: 1200px) {
+  .middle-section, .bottom-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .middle-section .widget, .bottom-section .widget {
+    width: 80%;
+  }
+}
+.bottom-section {
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  flex-wrap: wrap;
+}
+
+.bottom-section .widget {
+  height: auto; /* Altura automática para se ajustar ao conteúdo */
+  width: 100%; /* Aumenta a largura do gráfico para 95% */
+  background-color: #fff;
+  border-radius: 15px; /* Bordas arredondadas */
+  margin: 10px 0; /* Adiciona margem superior e inferior */
+
+}
+
+
+
+@media screen and (max-width: 600px) {
+  .bottom-section .widget {
+    width: 100%; /* Ocupar 100% da largura em dispositivos móveis */
+  }
+}
+.widgetDash {
+  width: calc(25% - 20px); /* Largura dos widgets em telas maiores */
+  height: auto; /* Altura automática */
+  margin: 10px; /* Margem ao redor do widget */
+  display: flex; /* Flexbox para disposição */
+  flex-direction: column; /* Organiza os elementos em coluna */
+  justify-content: flex-start; /* Alinha os itens no topo */
+  border-radius: 15px; /* Bordas arredondadas */
+  padding: 16px; /* Padding interno do widget */
+  background-color: #fff; /* Cor de fundo do card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para o card */
+  position: relative; /* Necessário para o ícone absoluto */
+}
+
+.title {
+  position: absolute; /* Título fixo */
+  top: 16px; /* Espaçamento do topo */
+  left: 16px; /* Espaçamento da esquerda */
+  font-size: 18px; /* Tamanho do título */
+  font-weight: bold; /* Deixa o título em negrito */
+  color: #333; /* Cor do título */
+  z-index: 1; /* Garante que o título fique acima de outros elementos */
+}
+
+.icon {
+  position: absolute; /* Define o ícone como fixo dentro do card */
+  top: 10px; /* Ajusta a posição do ícone dentro do widget */
+  right: 10px; /* Define o alinhamento à direita */
+}
+
+.material-symbols-outlined {
+  font-size: 60px; /* Tamanho do ícone */
+  color: #98bae6;
+}
+
+.value {
+  text-align: left; /* Alinhamento do texto à esquerda */
+  width: 100%; /* Ocupa toda a largura do card */
+  padding-top: 70px; /* Espaço extra para não sobrepor o ícone e o título */
+
+  .top {
+    font-size: 24px; /* Tamanho da fonte do valor */
+    line-height: 1.2; /* Aumenta o espaço entre linhas */
+  }
+
+  .bottom {
+    font-size: 20px; /* Tamanho da fonte do texto secundário */
+    margin-top: 10px; /* Margem superior */
+    line-height: 1.2; /* Aumenta o espaço entre linhas */
+  }
+}
+
+/* Ajustes para telas menores */
+@media screen and (max-width: 600px) {
+  .widgetDash {
+    width: 100%; /* Ocupa toda a largura em telas menores */
+    margin: 10px 0; /* Ajusta a margem para ocupar toda a tela */
+    padding: 10px; /* Reduz o padding em telas menores */
+    align-items: flex-start; /* Mantém o alinhamento à esquerda */
+  }
+
+  .title {
+    position: relative; /* Para garantir o posicionamento correto em telas menores */
+    top: 0;
+    left: 0;
+    margin-bottom: 10px; /* Espaço entre o título e o conteúdo */
+  }
+
+  .material-symbols-outlined {
+    font-size: 40px; /* Reduz o tamanho do ícone em telas menores */
+  }
+
+  .value {
+    text-align: left; /* Mantém o texto alinhado à esquerda em telas menores */
+    padding-top: 30px; /* Espaço extra para acomodar o título e ícone */
+
+    .top {
+      font-size: 20px; /* Tamanho da fonte do valor em telas menores */
+    }
+
+    .bottom {
+      font-size: 14px; /* Tamanho da fonte do texto secundário em telas menores */
+    }
+  }
+}
+

@@ -9,26 +9,25 @@ import { first, Observable, tap } from 'rxjs';
 export class EstoqueService {
   private estoqueParaRelatorio: Estoque[] = [];
   private readonly API = 'http://localhost:8080/api/estoque';
+  private readonly PRODUCT_API = 'http://localhost:8080/api/produto';
+
 
   constructor(private httpClient: HttpClient) { }
 
-  adicionarAoEstoque(item: Estoque): Observable<Estoque> {
-    return this.httpClient.post<Estoque>(`${this.API}/add`, item).pipe(
-      tap(response => {
-        console.log('Item adicionado ao estoque:', response);
-      })
-    );
-  }
 
-  list(): Observable<Estoque[]> {
-    return this.httpClient.get<Estoque[]>(this.API).pipe(
-      first(),
-    );
-  }
+
+    list(): Observable<Estoque[]> {
+      return this.httpClient.get<Estoque[]>(this.API).pipe(
+        first()
+      );
+    }
+
   loadById(id: string){
     return this.httpClient.get<Estoque>(`${this.API}/${id}`);
   }
-
+  getQuantidadeEstoque(): Observable<number> {
+    return this.httpClient.get<number>(`${this.API}/quantidade`); // Alterado para chamar a rota correta
+  }
   setEstoqueParaRelatorio(estoque: Estoque[]) {
     this.estoqueParaRelatorio = estoque;
   }

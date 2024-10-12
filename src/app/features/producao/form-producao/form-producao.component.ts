@@ -1,4 +1,4 @@
-import { Location, NgFor } from '@angular/common';
+import { Location, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE, MatOption, provideNativeDateAdapter } from '@angular/material/core';
@@ -10,13 +10,15 @@ import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular
 import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatSelect } from '@angular/material/select';
 import { MatInput } from '@angular/material/input';
-import { MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
+import { MatError, MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
 import { ProducaoService } from '../../../services/producao.service';
 import { Producao } from '../../../model/producao';
 import moment from 'moment';
 import { EstoqueService } from '../../../services/estoque.service';
 import { Estoque } from '../../../model/estoque';
+import { ProdutosService } from '../../../services/produtos.service';
+import { Produto } from '../../../model/produto';
 
 
 @Component({
@@ -28,10 +30,12 @@ import { Estoque } from '../../../model/estoque';
       {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
     ],
     standalone: true,
-    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatPrefix, MatSuffix, MatDatepickerInput, MatDatepickerToggle, MatDatepicker, MatCardActions, MatButton, ]
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatPrefix, MatSuffix, MatDatepickerInput, MatDatepickerToggle, MatDatepicker, MatCardActions, MatButton, NgIf, MatError]
 })
 export class FormProducaoComponent implements OnInit {
 
+  produtos: Produto[] = [];
+  filteredProdutos: Produto[] = [];
   form!: FormGroup;
 
   constructor(
@@ -41,7 +45,8 @@ export class FormProducaoComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private location: Location,
     private router: ActivatedRoute,
-    public formUtils: FormUtilsService
+    public formUtils: FormUtilsService,
+    private produtosService: ProdutosService
   ) {
 
   }
@@ -59,6 +64,10 @@ export class FormProducaoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.produtosService.list().subscribe((produtos) => {
+      this.produtos = produtos;
+      this.filteredProdutos = produtos;
+    });
     const producao: Producao = this.router.snapshot.data['producao'];
 
     const dataProducao = typeof producao.dataProducao === 'string' ? this.parseDate(producao.dataProducao)
@@ -66,20 +75,47 @@ export class FormProducaoComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       _id: [producao._id],
-      codigoProducao: [producao.codigoProducao, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      produtoProducao: [producao.produtoProducao, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      // disabled: true
+      codigoProducao: [producao.codigoProducao, [Validators.required]],
+      produtoProducao: [producao.produtoProducao, [Validators.required]],
       quantidadeProducao: [producao.quantidadeProducao, [Validators.required]],
       dataProducao: [dataProducao, [Validators.required]],
     });
+      // Adicionando o listener para o campo de produto
+      this.form.get('produtoProducao')?.valueChanges.subscribe(value => {
+        this.onProdutoChange(value);
+      });
+
+  }
+  private onProdutoChange(produtoNome: string): void {
+      this.service.verificarProduto(produtoNome).subscribe(produto => {
+        if (produto) {
+
+          this.form.patchValue({
+            codigoProducao: produto.codigo
+          });
+        } else {
+          // Produto não encontrado, exiba mensagem de erro
+          this.form.get('produtoProducao')?.setErrors({ notFound: true });
+          this._snackBar.open('Produto não encontrado. Cadastre o item na tela de produto.', '', {
+            duration: 5000,
+          });
+        }
+      });
+
   }
 
   enviar(): void {
     if (this.form.valid) {
       const formValue = this.prepareSave();
+
+      const selectedProduct: Produto = this.form.value.produtoProducao;
+      formValue.produtoProducao = selectedProduct;
+
       if (formValue._id) {
         this.service.editar(formValue).subscribe(
           result => {
-            this.atualizarEstoque(formValue); // Atualiza o estoque após a edição
+           // this.atualizarEstoque(formValue);
             this.onSuccessedit();
           },
           error => this.onError()
@@ -87,7 +123,7 @@ export class FormProducaoComponent implements OnInit {
       } else {
         this.service.salvar(formValue).subscribe(
           result => {
-            this.atualizarEstoque(formValue); // Atualiza o estoque após a criação
+          //  this.atualizarEstoque(formValue); // Atualiza o estoque após a criação
             this.onSuccess();
           },
           error => this.onError()
@@ -97,28 +133,6 @@ export class FormProducaoComponent implements OnInit {
       this.formUtils.validateAllFormFields(this.form);
     }
   }
-
-  private atualizarEstoque(producao: Producao): void {
-    const estoqueItem: Estoque = {
-      _id: producao._id,
-      codigoEstoque: producao.codigoProducao, // Ajuste conforme necessário
-      produtoEstoque: producao.produtoProducao,
-      quantidadeEstoque: producao.quantidadeProducao,
-      valorUnitarioEstoque:0,
-      valorTotalEstoque:0,
-      dataEstoque: producao.dataProducao // Formate conforme necessário
-    };
-
-    this.estoqueService.adicionarAoEstoque(estoqueItem).subscribe(
-      response => {
-        console.log("Estoque atualizado com sucesso:", response);
-      },
-      error => {
-        this._snackBar.open("Erro ao atualizar estoque", '', { duration: 3000 });
-      }
-    );
-  }
-
 
 
 
@@ -143,6 +157,18 @@ export class FormProducaoComponent implements OnInit {
     const formValue = { ...this.form.value };
     formValue.dataProducao = this.formatDateForBackend(formValue.dataProducao);
     return formValue;
+  }
+  searchProducts(event: any): void {
+    const query = event.target.value.toLowerCase();
+    if (query.trim() !== '') {
+      const filteredProducts = this.produtos.filter(product => product.produtoNome.toLowerCase().includes(query));
+      this.filteredProdutos = [
+        ...filteredProducts.filter(product => product.produtoNome.toLowerCase().startsWith(query)),
+        ...filteredProducts.filter(product => !product.produtoNome.toLowerCase().startsWith(query))
+      ];
+    } else {
+      this.filteredProdutos = this.produtos;
+    }
   }
 
 }

@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Detalhes da Despesa</h1>
+<div mat-dialog-content>
+  <p>Fornecedor: {{data.fornecedorDespesa}}</p>
+  <p>Descrição: {{data.descricaoDespesa}}</p>
+  <p>Valor da Despesa: {{data.valorDespesa}}</p>
+  <p>Vencimento:  {{ data.dataDespesa }}</p>
+  <p>Status de Pagamento: {{data.statusDespesa}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Fechar</button>
+</div>
+

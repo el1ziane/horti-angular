@@ -8,7 +8,7 @@ import { Produto } from '../model/produto';
 })
 export class ProdutosService {
   private produtosParaRelatorio: Produto[] = [];
-  private readonly API = 'http://localhost:8080/api/produtos';
+  private readonly API = 'http://localhost:8080/api/produto';
 
   constructor(private httpClient: HttpClient) { }
 

@@ -9,13 +9,17 @@ import { SideNavClosedComponent } from './core/components/side-nav-left/side-nav
 import { NgStyle, NgIf } from '@angular/common';
 import { TopNavComponent } from './core/components/top-nav/top-nav.component';
 import { SideNavComponent } from './core/components/side-nav-left/side-nav/side-nav.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [TopNavComponent, MatSidenavContainer, MatSidenav, NgStyle, NgIf, SideNavComponent, SideNavClosedComponent, MatSidenavContent, RouterOutlet, SideNavComponent]
+  imports: [TopNavComponent, MatSidenavContainer, MatSidenav, NgStyle, NgIf, SideNavComponent, SideNavClosedComponent, MatSidenavContent, RouterOutlet, SideNavComponent],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+  ],
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   title = 'Material-Side-Navbar-In-Angular';
