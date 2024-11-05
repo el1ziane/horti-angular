@@ -1,0 +1,32 @@
+<div class="container-fluid ps-md-0">
+  <div class="row g-0 h-100 d-flex justify-content-center align-items-center">
+    <!-- Container para o mat-card -->
+    <div class="d-flex flex-row justify-content-center align-items-center">
+      <!-- Mat-card com o formulário de recuperação de senha -->
+      <mat-card class="custom-mat-card">
+        <mat-card-content>
+          <h3 class="login-heading mb-4 text-center">Recuperação de Senha</h3>
+
+          <form (ngSubmit)="enviarEmailRecuperacao()">
+            <div class="form-floating mb-4">
+              <mat-form-field appearance="outline" class="custom-form-field">
+                <mat-label for="email">Email</mat-label>
+                <input matInput id="email" type="email" [(ngModel)]="usuario.email" name="email" required>
+              </mat-form-field>
+            </div>
+
+            <div class="d-grid mb-4">
+              <button mat-flat-button class="btn btn-lg btn-login text-uppercase fw-bold" type="submit" style="background-color: #64C2A8; color: white">
+                <mat-icon>email</mat-icon> Enviar Email de Recuperação
+              </button>
+            </div>
+
+            <div class="text-center">
+              <a class="small" href="/login">Voltar ao Login</a>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

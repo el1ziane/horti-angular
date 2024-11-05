@@ -39,35 +39,32 @@
       <mat-cell *matCellDef="let estoque"> {{estoque.quantidadeEstoque}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="valorUnitarioEstoque" >
+    <ng-container matColumnDef="valorUnitarioEstoque">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Valor Unitário </mat-header-cell>
-      <mat-cell *matCellDef="let estoque">  {{ estoque.produtoEstoque?.valorProduto | currency:'BRL':'symbol':'1.2-2' }} </mat-cell>
+      <mat-cell *matCellDef="let estoque"> R${{ estoque.produtoEstoque?.valorProduto | decimalVirgula}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="valorTotalEstoque" >
+    <ng-container matColumnDef="valorTotalEstoque">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Valor Total </mat-header-cell>
-      <mat-cell *matCellDef="let estoque">  {{ estoque.valorTotalEstoque | currency:'BRL':'symbol':'1.2-2' }} </mat-cell>
+      <mat-cell *matCellDef="let estoque"> R${{ estoque.valorTotalEstoque | decimalVirgula}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="dataEstoque">
-      <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Data de Entrada </mat-header-cell>
       <mat-cell *matCellDef="let estoque"> {{estoque.dataEstoque}} </mat-cell>
     </ng-container>
 
-    <ng-container  matColumnDef="acoes">
+    <ng-container matColumnDef="acoes">
       <mat-header-cell *matHeaderCellDef class="action-column-header">
       </mat-header-cell>
       <mat-cell *matCellDef="let produto" class="action-column">
         <button mat-icon-button="Primary" style="color: #D66767" aria-label="Remover" (click)="onDelete(produto)">
-
+          <mat-icon>delete</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-
-
   </mat-table>
   <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-
 </div>

@@ -12,7 +12,6 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 })
 export class DetalhesProdutosDialogComponent implements OnInit {
 
-
   constructor(
     public dialogRef: MatDialogRef<DetalhesProdutosDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any

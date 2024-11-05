@@ -8,40 +8,37 @@ import { UntypedFormGroup, UntypedFormControl, FormGroup, FormControl } from "@a
   providedIn: 'root'
 })
 export class FormUtilsService {
-
   validateAllFormFields(formGroup: UntypedFormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof UntypedFormControl) {
         control.markAsTouched({ onlySelf: true });
-      } else if (
-        control instanceof UntypedFormGroup
-      ) {
-        control.markAsTouched({ onlySelf: true });
+      } else if (control instanceof UntypedFormGroup) {
         this.validateAllFormFields(control);
       }
     });
   }
 
-  constructor() { }
-  getFieldErrorMessage(formGroup: FormGroup, fieldName: string): string{
+  getFieldErrorMessage(formGroup: FormGroup, fieldName: string): string {
     const field = formGroup.get(fieldName) as FormControl;
     return this.getErrorMessageFromField(field);
   }
 
-  getErrorMessageFromField(field: UntypedFormControl): string{
+  getErrorMessageFromField(field: UntypedFormControl): string {
     if (field?.hasError('required')) {
       return 'Campo obrigatório';
     }
     if (field?.hasError('minlength')) {
-      const requiredLength = field.errors ? field.errors['minlength']['requiredLength']: 3;
-      return `Tamanho mínimo precisa ser de ${requiredLength} caracteres.`;
+      const requiredLength = field.errors ? field.errors['minlength']['requiredLength'] : 8;
+      return `A senha deve ter no mínimo ${requiredLength} caracteres.`;
+    }
+    if (field?.hasError('email')) {
+      return 'Formato de email inválido';
     }
     if (field?.hasError('maxlength')) {
-      const requiredLength = field.errors ? field.errors['maxlength']['requiredLength']: 100;
+      const requiredLength = field.errors ? field.errors['maxlength']['requiredLength'] : 100;
       return `Tamanho máximo excedido de ${requiredLength} caracteres.`;
     }
-    return 'Campo invalido';
+    return 'Campo inválido';
   }
-
 }

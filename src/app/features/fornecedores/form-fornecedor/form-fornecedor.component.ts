@@ -14,13 +14,15 @@ import { ActivatedRoute } from '@angular/router';
 import { FornecedoresService } from '../../../services/fornecedores.service';
 import { FormUtilsService } from '../../../shared/form/form-utils.service';
 import { Fornecedor } from '../../../model/fornecedor';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-form-fornecedor',
   templateUrl: './form-fornecedor.component.html',
   styleUrls: ['./form-fornecedor.component.scss'],
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatPrefix, MatSuffix, MatDatepickerInput, MatDatepickerToggle, MatDatepicker, MatCardActions, MatButton, ],
+  imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatPrefix, MatSuffix, MatDatepickerInput, MatDatepickerToggle, MatDatepicker, MatCardActions, MatButton, NgxMaskDirective],
+  providers: [provideNgxMask()],
 })
 export class FormFornecedorComponent implements OnInit {
 
@@ -61,7 +63,6 @@ export class FormFornecedorComponent implements OnInit {
       this.formUtils.validateAllFormFields(this.form);
     }
   }
-
 
   cancelar(): void {
     this.location.back();

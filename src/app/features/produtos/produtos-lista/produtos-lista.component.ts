@@ -29,13 +29,11 @@ export class ProdutosListaComponent implements OnInit, AfterViewInit{
   @Output() edit = new EventEmitter(false)
   @Output() delete = new EventEmitter(false)
 
-  readonly displayedColumns = ['codigo', 'produtoNome', 'quantidadeProduto', 'valorProduto', 'peso','acoes'];
+  readonly displayedColumns = ['codigo', 'produtoNome', 'quantidadeProduto', 'valorProduto', 'peso', 'quantidadePorCaixa', 'acoes'];
 
  // dataSource = new MatTableDataSource<Produto>();
 
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   @ViewChild(MatSort) sort!: MatSort;
  // dataSource: MatTableDataSource<Produto>;
   toggleDetails(produto: Produto) {
@@ -50,8 +48,8 @@ export class ProdutosListaComponent implements OnInit, AfterViewInit{
 
   ngAfterViewInit() {
     if (this.dataSource) {
-      this.dataSource.paginator = this.paginator; // Atribuição segura
-      this.dataSource.sort = this.sort; // Atribuição segura
+      this.dataSource.paginator = this.paginator; 
+      this.dataSource.sort = this.sort;
     }
 
   }

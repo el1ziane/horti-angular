@@ -1,6 +1,8 @@
 
-export class Usuario {
-  nome: string = '';
-  senha: string = '';
+export interface Usuario {
+  _id: string;
+  nome: string;
+  senha: string;
+  email: string;
 
 }

@@ -40,8 +40,8 @@ export class ProducaoListaComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
   ngAfterViewInit() {
     if (this.dataSource) {
-      this.dataSource.paginator = this.paginator; // Atribuição segura
-      this.dataSource.sort = this.sort; // Atribuição segura
+      this.dataSource.paginator = this.paginator; 
+      this.dataSource.sort = this.sort; 
     }
 
   }

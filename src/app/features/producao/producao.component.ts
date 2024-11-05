@@ -66,10 +66,10 @@ export class ProducaoComponent implements OnInit {
     this.producao$.subscribe(producao => {
       this.dataSource.data = producao;
       if (this.paginator) {
-        this.dataSource.paginator = this.paginator; // Atribuição segura
+        this.dataSource.paginator = this.paginator; 
       }
       if (this.sort) {
-        this.dataSource.sort = this.sort; // Atribuição segura
+        this.dataSource.sort = this.sort; 
       }
     });
   }
@@ -84,7 +84,6 @@ export class ProducaoComponent implements OnInit {
   }
 
   onReport(): void {
-    //  console.log(this.produtosListaComponent);
       this.producaoListaComponent;
 
           this.producaoListaComponent.enviarParaRelatorio();
@@ -99,10 +98,6 @@ export class ProducaoComponent implements OnInit {
     this.router.navigate(['novo'], {relativeTo: this.route});
   }
 
-  /*onEdit(producao: Producao){
-    this.router.navigate(['editar', producao._id], {relativeTo: this.route});
-
-  }*/
     onEdit(producao: Producao) {
       this.router.navigate(['editar', producao._id], {relativeTo: this.route});
     }

@@ -17,32 +17,47 @@ import { EstimativaResolver } from './guards/estimativa.resolver';
 import { FormEstimativasComponent } from './features/estimativas/form-estimativas/form-estimativas.component';
 import { EstoqueComponent } from './features/estoque/estoque.component';
 import { CompraResolver } from './guards/compra.resolver';
-import { CompraComponent } from './features/recebimentos/compra.component';
-import { FormCompraComponent } from './features/recebimentos/form-compra/form-compra.component';
-import { FormDespesaComponent } from './features/recebimentos/form-compra/form-despesa/form-despesa.component';
+import { CompraComponent } from './features/compra/compra.component';
+import { FormCompraComponent } from './features/compra/form/form-compra/form-compra.component';
 import { DespesaResolver } from './guards/despesa.resolver';
+import { LoginComponent } from './features/login/login.component';
+import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { RecuperarSenhaComponent } from './features/login/recuperar-senha/recuperar-senha.component';
+import { RedefinirSenhaComponent } from './features/login/redefinir-senha/redefinir-senha.component';
+import { AuthGuard } from './auth-guard';
+import { ContaUsuarioComponent } from './features/login/conta-usuario/conta-usuario.component';
+import { UsuarioResolver } from './guards/usuario.resolver';
+import { FormDespesaComponent } from './features/compra/form/form-despesa/form-despesa.component';
 
 
 const routes: Routes = [
-  ...childRoutes,
-  { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+  ...childRoutes, 
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'recuperar-senha', component: RecuperarSenhaComponent },
+  { path: 'redefinir-senha', component: RedefinirSenhaComponent },
   {
-    path: 'compra',
+    path: 'compra',  canActivate: [AuthGuard],
     children: [
-      { path: '', component: CompraComponent },
+      { path: '', component: CompraComponent,  canActivate: [AuthGuard] },
       { path: 'novo', component: FormCompraComponent, resolve: {compra: CompraResolver}},
-      {path: 'editar/:id',component:FormCompraComponent, resolve:{compra: CompraResolver}},
+      {path: 'editar-compra/:id',component:FormCompraComponent, resolve:{compra: CompraResolver}},
       { path: 'nova', component: FormDespesaComponent, resolve: {despesa: DespesaResolver}},
-      {path: 'edita/:id',component:FormDespesaComponent, resolve:{compra: DespesaResolver}}
-    ]
+      {path: 'editar-despesa/:id',component:FormDespesaComponent, resolve:{despesa: DespesaResolver}}
+    ],
+   
   },
+  { path: 'minha-conta/:id', component: ContaUsuarioComponent, resolve: { usuario: UsuarioResolver } },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   {
-    path: 'produtos',
+    path: 'produto', canActivate: [AuthGuard],
     children: [
-      { path: '', component: ProdutosComponent},
+      { path: '', component: ProdutosComponent, canLoad: [AuthGuard],
+        canActivateChild: [AuthGuard]},
       { path: 'novo', component: FormProdutoComponent, resolve: {produto: ProdutoResolver}},
       {path: 'editar/:id',component:FormProdutoComponent, resolve:{produto: ProdutoResolver}}
-    ]
+    ],
+   
   },
   {
     path: 'fornecedores',
@@ -50,7 +65,8 @@ const routes: Routes = [
       { path: '', component: FornecedoresComponent},
       { path: 'novo', component: FormFornecedorComponent, resolve: {fornecedor: FornecedorResolver}},
       {path: 'editar/:id',component:FormFornecedorComponent, resolve:{fornecedor: FornecedorResolver}}
-    ]
+    ],
+    canActivate: [AuthGuard]
   },
   {
     path: 'vendas',
@@ -58,7 +74,8 @@ const routes: Routes = [
       { path: '', component: VendasComponent},
       { path: 'novo', component: VendasFormComponent, resolve: {venda: VendaResolver}},
       {path: 'editar/:id',component:VendasFormComponent, resolve:{venda: VendaResolver}}
-    ]
+    ],
+    canActivate: [AuthGuard]
   },
   {
     path: 'producao',
@@ -66,7 +83,8 @@ const routes: Routes = [
       { path: '', component: ProducaoComponent},
       { path: 'novo', component: FormProducaoComponent, resolve: {producao: ProducaoResolver}},
       {path: 'editar/:id',component:FormProducaoComponent, resolve:{producao: ProducaoResolver}}
-    ]
+    ],
+    canActivate: [AuthGuard]
   },
 
   {
@@ -75,25 +93,16 @@ const routes: Routes = [
       { path: '', component: FormEstimativasComponent, resolve: {estimativa: EstimativaResolver}},
       { path: 'estimativas', component: FormEstimativasComponent, resolve: {estimativa: EstimativaResolver}},
       {path: 'historico/:id', component: FormEstimativasComponent, resolve: {estimativa: EstimativaResolver}}
-    ]
+    ],
+    canActivate: [AuthGuard]
   },
   {
     path: 'estoque',
     children: [
       { path: '', component: EstoqueComponent},
-     // { path: 'novo', component: FormProducaoComponent, resolve: {producao: ProducaoResolver}},
-     // {path: 'editar/:id',component:FormProducaoComponent, resolve:{producao: ProducaoResolver}}
-    ]
+    ],
+    canActivate: [AuthGuard]
   },
-  {
-    path: 'despesa/:id',
-    component: FormDespesaComponent,
-    resolve: {
-      despesa: DespesaResolver // O resolver que busca a despesa
-    }
-  },
-
-  { path: '**', redirectTo: 'courses' }
 ];
 
 @NgModule({

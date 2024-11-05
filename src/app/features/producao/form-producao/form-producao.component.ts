@@ -16,7 +16,6 @@ import { ProducaoService } from '../../../services/producao.service';
 import { Producao } from '../../../model/producao';
 import moment from 'moment';
 import { EstoqueService } from '../../../services/estoque.service';
-import { Estoque } from '../../../model/estoque';
 import { ProdutosService } from '../../../services/produtos.service';
 import { Produto } from '../../../model/produto';
 
@@ -50,6 +49,53 @@ export class FormProducaoComponent implements OnInit {
   ) {
 
   }
+
+  ngOnInit(): void {
+    const producao: Producao = this.router.snapshot.data['producao'];
+    const dataProducao = typeof producao.dataProducao === 'string' ? this.parseDate(producao.dataProducao): producao.dataProducao;
+
+    this.form = this.formBuilder.group({
+      _id: [producao._id],
+      codigoProducao: [producao.codigoProducao, [Validators.required]],
+      produtoProducao: [producao.produtoProducao, [Validators.required]],
+      quantidadeProducao: [producao.quantidadeProducao, [Validators.required]],
+      dataProducao: [dataProducao, [Validators.required]],
+    });
+
+    this.produtosService.list().subscribe((produtos) => {
+      this.produtos = produtos;
+      this.filteredProdutos = produtos;
+    });
+
+    if (producao.produtoProducao) {
+      const produto = this.produtos.find(p => p._id === producao.produtoProducao?._id);
+
+      if (produto) { // Add this null check
+        console.log('Produto encontrado:', produto);
+        this.form.patchValue({
+          produtoProducao: produto,
+          codigoProducao: produto.codigo,
+          quantidadeProducao: producao.quantidadeProducao,
+          dataProducao: dataProducao
+        });
+      } else {
+        console.log('Produto não encontrado');
+      }
+    }
+
+      this.form.get('produtoProducao')?.valueChanges.subscribe(value => {
+        this.onProdutoChange(value);
+      });
+
+  }
+  public onProdutoChange(produto: Produto): void {
+    console.log('Produto selecionado:', produto);
+    if (produto) {
+      this.form.patchValue({
+        codigoProducao: produto.codigo
+      });
+    }
+  }
   private parseDate(dateStr: string): Date | null {
     const [day, month, year] = dateStr.split('-').map(Number);
     if (day && month && year) {
@@ -62,56 +108,9 @@ export class FormProducaoComponent implements OnInit {
     if (!date) return '';
     return moment(date).format('DD-MM-YYYY');
   }
-
-  ngOnInit(): void {
-    this.produtosService.list().subscribe((produtos) => {
-      this.produtos = produtos;
-      this.filteredProdutos = produtos;
-    });
-    const producao: Producao = this.router.snapshot.data['producao'];
-
-    const dataProducao = typeof producao.dataProducao === 'string' ? this.parseDate(producao.dataProducao)
-    : producao.dataProducao;
-
-    this.form = this.formBuilder.group({
-      _id: [producao._id],
-      // disabled: true
-      codigoProducao: [producao.codigoProducao, [Validators.required]],
-      produtoProducao: [producao.produtoProducao, [Validators.required]],
-      quantidadeProducao: [producao.quantidadeProducao, [Validators.required]],
-      dataProducao: [dataProducao, [Validators.required]],
-    });
-      // Adicionando o listener para o campo de produto
-      this.form.get('produtoProducao')?.valueChanges.subscribe(value => {
-        this.onProdutoChange(value);
-      });
-
-  }
-  private onProdutoChange(produtoNome: string): void {
-      this.service.verificarProduto(produtoNome).subscribe(produto => {
-        if (produto) {
-
-          this.form.patchValue({
-            codigoProducao: produto.codigo
-          });
-        } else {
-          // Produto não encontrado, exiba mensagem de erro
-          this.form.get('produtoProducao')?.setErrors({ notFound: true });
-          this._snackBar.open('Produto não encontrado. Cadastre o item na tela de produto.', '', {
-            duration: 5000,
-          });
-        }
-      });
-
-  }
-
   enviar(): void {
     if (this.form.valid) {
       const formValue = this.prepareSave();
-
-      const selectedProduct: Produto = this.form.value.produtoProducao;
-      formValue.produtoProducao = selectedProduct;
-
       if (formValue._id) {
         this.service.editar(formValue).subscribe(
           result => {
@@ -123,7 +122,7 @@ export class FormProducaoComponent implements OnInit {
       } else {
         this.service.salvar(formValue).subscribe(
           result => {
-          //  this.atualizarEstoque(formValue); // Atualiza o estoque após a criação
+          //  this.atualizarEstoque(formValue); 
             this.onSuccess();
           },
           error => this.onError()
@@ -133,8 +132,6 @@ export class FormProducaoComponent implements OnInit {
       this.formUtils.validateAllFormFields(this.form);
     }
   }
-
-
 
   cancelar(): void {
     this.location.back();
@@ -170,5 +167,4 @@ export class FormProducaoComponent implements OnInit {
       this.filteredProdutos = this.produtos;
     }
   }
-
 }

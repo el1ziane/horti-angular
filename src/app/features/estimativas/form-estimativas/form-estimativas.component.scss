@@ -1,17 +1,8 @@
-.example-radio-group {
-  display: flex;
-  flex-direction: column;
-  margin: 15px 0;
-  align-items: flex-start;
-}
 
-.example-radio-button {
-  margin: 5px;
-}
 @import '../../producao/form-producao/form-producao.component.scss';
 
 .vertical-radio-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;  // Espaçamento entre as opções
+  gap: 8px;
 }

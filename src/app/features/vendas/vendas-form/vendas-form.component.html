@@ -9,25 +9,22 @@
           <mat-label>Código</mat-label>
           <input matInput formControlName="codigoVenda" placeholder="Código" id="codigoVenda" name="codigoVenda">
         </mat-form-field>
-
         <mat-form-field appearance="outline" class="custom-form-field">
           <mat-label>Produto</mat-label>
           <mat-error *ngIf="form.get('produtoVenda')?.hasError('notFound')">
             Produto não encontrado. Cadastre o item na tela de produto.
           </mat-error>
-          <mat-select  formControlName="produtoVenda"
-          placeholder="Produto"
-          id="produtoVenda"
-          name="produtoVenda"
-
-          (input)="searchProducts($event)"
-          [value]="form.controls['produtoVenda'].value?.produtoNome || form.controls['produtoVenda'].value">
-            <mat-option *ngFor="let produto of filteredProdutos" [value]="produto.produtoNome">
+          <mat-select formControlName="produtoVenda"
+                      placeholder="Produto"
+                      id="produtoVenda"
+                      name="produtoVenda"
+                      (selectionChange)="onProdutoChange($event.value)">
+            <mat-option *ngFor="let produto of filteredProdutos" [value]="produto">
               {{ produto.produtoNome }}
+
             </mat-option>
           </mat-select>
         </mat-form-field>
-
         <mat-form-field appearance="outline" class="custom-form-field">
           <mat-label>Quantidade</mat-label>
           <input matInput formControlName="quantidadeVenda" placeholder="Quantidade Vendida" id="quantidadeVenda"
@@ -37,7 +34,7 @@
 
       <div class="form-column">
         <mat-form-field appearance="outline" class="custom-form-field">
-          <mat-label>Valor</mat-label>
+          <mat-label>Valor de venda(Unitário)</mat-label>
           <input currencyMask
             [options]="{ prefix: 'R$', thousands: '.', decimal: ',', aling:'left', allowNegative: false}" matInput
             type="text" formControlName="valorVenda" class="example-right-align">

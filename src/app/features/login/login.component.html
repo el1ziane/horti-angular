@@ -1,26 +1,49 @@
+<div class="container-fluid ps-md-0">
+  <div class="row g-0 h-100 d-flex justify-content-center align-items-center">
+    <!-- Container para os dois mat-cards -->
+    <div class="d-flex flex-row justify-content-center align-items-center">
+      <!-- Mat-card com a imagem -->
+      <mat-card class="image-mat-card">
+        <div class="login-image">
+          <img src="assets/bandeja.jpeg" alt="Cesta" class="img-fluid" />
+        </div>
+      </mat-card>
 
+      <!-- Mat-card com o formulário de login -->
+      <mat-card class="custom-mat-card">
+        <mat-card-content>
+          <h3 class="login-heading mb-4 text-center">Bem-vindo(a)! Informe seus dados.</h3>
 
-<mat-card class="custom-mat-card">
-  <mat-card-header style="background-color: white">
-    <mat-card-title>Bem vindo(a)! Informe seus dados.</mat-card-title>
-  </mat-card-header>
-      <mat-form-field appearance="outline" class="custom-form-field">
-        <mat-label for="usuario">Usuário</mat-label>
-        <input [(ngModel)]="usuario.nome" matInput id="usuario" type="text" class="validate">
-      </mat-form-field>
+          <form (ngSubmit)="fazerLogin()">
+            <div class="form-floating mb-3">
+              <mat-form-field appearance="outline" class="custom-form-field">
+                <mat-label for="email">Usuário</mat-label>
+                <input [(ngModel)]="usuario.email" matInput id="email" type="text" class="validate" name="email" required>
+              </mat-form-field>
+            </div>
 
-      <mat-form-field appearance="outline" class="custom-form-field">
-        <mat-label for="senha">Senha</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="usuario.senha" id="senha" class="validate">
-        <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field>
+            <div class="form-floating mb-4"> <!-- Adicionada uma margem inferior maior aqui -->
+              <mat-form-field appearance="outline" class="custom-form-field">
+                <mat-label for="senha">Senha</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="usuario.senha" id="senha" class="validate" name="senha" required>
+                <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <div class="d-grid mb-4"> <!-- Adicionei margem inferior maior -->
+              <button mat-flat-button class="btn btn-lg btn-login text-uppercase fw-bold" type="submit" style="background-color: #64C2A8; color: white">
+                <mat-icon>send</mat-icon> Entrar
+              </button>
+            </div>
 
-      <button mat-flat-button color="primary"  style="background-color:#FAB59B; color: white;" class="login-button" (click)="fazerLogin()">
-        <mat-icon>send</mat-icon>
-        Entrar
-      </button>
-    </mat-card>
-
-
+            <div class="text-center">
+              <a class="small" href="/recuperar-senha">Esqueceu sua senha?</a>
+            </div>
+            
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

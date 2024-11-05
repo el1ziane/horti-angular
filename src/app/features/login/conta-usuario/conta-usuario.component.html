@@ -1,0 +1,101 @@
+<div class="minha-conta-container">
+  <h2>Minha Conta</h2>
+  <mat-card>
+
+    <div class="user-icon-container">
+      <span class="material-symbols-outlined">
+        account_circle
+        </span>
+    </div>
+    <mat-card-header style=" justify-content: center;">
+      <mat-card-title>Informações do Usuário</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="form-columns">
+      
+     <form [formGroup]="formulario" (ngSubmit)="atualizarUsuario()" class="user-info-form">
+      <div class="form-floating mb-4">
+        <mat-form-field appearance="outline" class="custom-form-field">
+          <mat-label for="nome">Nome</mat-label>
+          <input matInput id="nome" type="text" formControlName="nome" [disabled]="!nomeEditavel" required>
+          <button mat-icon-button matSuffix (click)="habilitarEdicaoCampo('nome'); $event.stopPropagation()" type="button">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-floating mb-4">
+        <mat-form-field appearance="outline" class="custom-form-field">
+          <mat-label for="email">Email</mat-label>
+          <input matInput id="email" type="email" formControlName="email" [disabled]="!emailEditavel" required>
+          <button mat-icon-button matSuffix (click)="habilitarEdicaoCampo('email'); $event.stopPropagation()" type="button">
+            <mat-icon>edit</mat-icon>
+          </button>
+         
+        </mat-form-field>
+        <div *ngIf="formulario.get('email')?.invalid && formulario.get('email')?.touched" class="error">
+          {{ formUtils.getFieldErrorMessage(formulario, 'email') }}
+        </div>
+      </div>
+      
+      <button mat-flat-button class="btn btn-lg btn-login text-uppercase fw-bold" 
+              style="background-color: #64C2A8; color: white; margin-top: 16px;"
+              type="submit">
+        Atualizar
+      </button>
+    </form>
+
+      <form [formGroup]="formularioSenha" (ngSubmit)="alterarSenha()" class="password-form">
+        <div class="form-floating mb-4">
+          <mat-form-field appearance="outline" class="custom-form-field">
+            <mat-label for="senhaAtual">Senha Atual</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="senhaAtual" id="senhaAtual" 
+                   [disabled]="!senhaEditavel" required>
+            <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <button mat-icon-button matSuffix (click)="habilitarEdicaoCampo('senha')">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <!-- Campos de Nova Senha e Confirmar Senha, que aparecem quando a senha é editável -->
+        <div *ngIf="senhaEditavel">
+          <div class="form-floating mb-4">
+            <mat-form-field appearance="outline" class="custom-form-field">
+              <mat-label for="novaSenha">Nova Senha:</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="novaSenha" id="novaSenha" required>
+              <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+             
+            </mat-form-field>
+            <div *ngIf="formularioSenha.get('novaSenha')?.invalid && formularioSenha.get('novaSenha')?.touched" class="error">
+              {{ formUtils.getFieldErrorMessage(formularioSenha, 'novaSenha') }}
+            </div>
+          </div>
+
+          <div class="form-floating mb-4">
+            <mat-form-field appearance="outline" class="custom-form-field">
+              <mat-label for="confirmarSenha">Confirmar Nova Senha:</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmarSenha" id="confirmarSenha" required>
+              <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+             
+            </mat-form-field>
+            <div *ngIf="formularioSenha.get('confirmarSenha')?.invalid && formularioSenha.get('confirmarSenha')?.touched" class="error">
+              {{ formUtils.getFieldErrorMessage(formularioSenha, 'confirmarSenha') }}
+            </div>
+          </div>
+          
+          <!-- Botão Redefinir Senha -->
+          <button mat-flat-button class="btn btn-lg btn-login text-uppercase fw-bold" 
+                  type="submit" style="background-color: #64C2A8; color: white">
+            Redefinir Senha
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

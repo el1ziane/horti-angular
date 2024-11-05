@@ -23,10 +23,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app/app-routing.module';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { MAT_DATE_FORMATS, DateAdapter, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MY_DATE_FORMATS } from './app/features/recebimentos/form-compra/form-compra.component';
+import { MY_DATE_FORMATS } from './app/features/compra/form/form-compra/form-compra.component';
+import { AuthInterceptor } from './app/auth.interceptor';
 
 if (environment.production) {
   enableProdMode();
@@ -35,13 +36,20 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
     providers: [
       provideAnimations(),
-      provideHttpClient(),
+      provideHttpClient(), // Adiciona o HttpClient
+
+    // Registre o interceptor aqui
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true // Permite múltiplos interceptors
+    },
       importProvidersFrom(MatNativeDateModule),
         importProvidersFrom(BrowserModule, AppRoutingModule, ReactiveFormsModule, MatMenuModule, MatTableModule, MatFormFieldModule, MatSelectModule, FormsModule, MatButtonModule, MatInputModule, MatAutocompleteModule, MatDatepickerModule, FontAwesomeModule, MatDatepickerModule, MatButtonModule, MatButtonModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatSlideToggleModule, MatSnackBarModule),
         { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
           { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
 
-        provideHttpClient(withInterceptorsFromDi()),
+       // provideHttpClient(withInterceptorsFromDi()),
         provideAnimations()
     ]
 })

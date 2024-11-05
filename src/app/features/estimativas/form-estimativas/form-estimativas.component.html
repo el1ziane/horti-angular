@@ -4,16 +4,9 @@
       <div class="form-column">
         <mat-form-field appearance="outline" class="custom-form-field">
           <mat-label>Produto</mat-label>
-          <input
-            matInput
-            formControlName="produtoEstimativa"
-            placeholder="Produto"
-            id="produtoEstimativa"
-            name="produtoEstimativa"
-            [matAutocomplete]="auto"
-            (input)="searchProducts($event)"
-            [value]="form.controls['produtoEstimativa'].value?.produtoNome || form.controls['produtoEstimativa'].value"
-          >
+          <input matInput formControlName="produtoEstimativa" placeholder="Produto" id="produtoEstimativa"
+            name="produtoEstimativa" [matAutocomplete]="auto" (input)="searchProducts($event)"
+            [value]="form.controls['produtoEstimativa'].value?.produtoNome || form.controls['produtoEstimativa'].value">
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let produtoEstimativa of filteredProdutos" [value]="produtoEstimativa.produtoNome">
               {{ produtoEstimativa.produtoNome }}
@@ -36,20 +29,16 @@
 
       <div class="form-column">
         <label id="example-radio-group-label">Escolha o tipo de entrada:</label>
-
-        <!-- Adicionei a classe 'vertical-radio-group' -->
-        <mat-radio-group
-          aria-labelledby="example-radio-group-label"
-          formControlName="tipoEntrada"
-          class="vertical-radio-group"
-        >
+        <mat-radio-group aria-labelledby="example-radio-group-label" formControlName="tipoEntrada"
+          class="vertical-radio-group">
           <mat-radio-button *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</mat-radio-button>
         </mat-radio-group>
 
         <mat-card *ngIf="resultado !== undefined && resultado > 0" class="result-box">
           <mat-card-content>
             <p>
-              Quantidade de bandejas de <strong>{{ produtoSelecionado }}</strong> que podem ser produzidas: <strong>{{ resultado }}</strong>
+              Quantidade de bandejas de <strong>{{ produtoSelecionado }}</strong> que podem ser produzidas:
+              <strong>{{ resultado }}</strong>
             </p>
           </mat-card-content>
         </mat-card>

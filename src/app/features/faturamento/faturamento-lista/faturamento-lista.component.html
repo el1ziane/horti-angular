@@ -1,0 +1,49 @@
+<div class="column-flex mat-elevation-z8">
+<mat-table [dataSource]="dataSource" class="mat-table" matSort >
+  <ng-container matColumnDef="dataFat">
+    <mat-header-cell *matHeaderCellDef> Mês </mat-header-cell>
+    <mat-cell *matCellDef="let financeiro">
+      {{ financeiro.dataFat | date:'MM/yyyy'  }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="produtoFat">
+    <mat-header-cell *matHeaderCellDef> Produto</mat-header-cell>
+    <mat-cell *matCellDef="let financeiro"> {{financeiro.produtoFat}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="vendaFat">
+    <mat-header-cell *matHeaderCellDef> Venda </mat-header-cell>
+    <mat-cell *matCellDef="let financeiro"> {{financeiro.vendaFat}} </mat-cell>
+  </ng-container>
+  
+  <ng-container matColumnDef="valorFat">
+    <mat-header-cell *matHeaderCellDef> Valor venda </mat-header-cell>
+    <mat-cell *matCellDef="let financeiro"> R${{financeiro.valorFat| decimalVirgula}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="prodFat">
+    <mat-header-cell *matHeaderCellDef> Produção </mat-header-cell>
+    <mat-cell *matCellDef="let financeiro"> {{financeiro.prodFat}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="vcompraFat">
+    <mat-header-cell *matHeaderCellDef> Valor compra </mat-header-cell>
+    <mat-cell *matCellDef="let financeiro"> R${{financeiro.vcompraFat| decimalVirgula}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="lucroFat">
+    <mat-header-cell *matHeaderCellDef> Lucro </mat-header-cell>
+    <mat-cell *matCellDef="let financeiro"> R${{financeiro.lucroFat| decimalVirgula}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="perdaFat">
+    <mat-header-cell *matHeaderCellDef> Perda </mat-header-cell>
+    <mat-cell *matCellDef="let financeiro"> {{financeiro.perdaFat}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

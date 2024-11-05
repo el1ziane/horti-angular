@@ -1,0 +1,51 @@
+.minha-conta-container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.user-icon-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+.error {
+  color: red; /* Cor da mensagem de erro */
+  font-size: 0.8em; /* Tamanho da fonte */
+  margin-top: -18px; /* Margem acima da mensagem de erro */
+}
+
+
+.material-symbols-outlined {
+  font-size: 64px; /* Aumentado para um tamanho mais visível */
+  color: #000000;
+}
+
+.form-columns {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .form-columns {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.user-info-form,
+.password-form {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .user-info-form,
+  .password-form {
+    width: 45%;
+  }
+}
+
+.custom-form-field {
+  width: 100%;
+}

@@ -33,7 +33,7 @@
 
     <ng-container matColumnDef="produtoProducao">
       <mat-header-cell *matHeaderCellDef> Produto </mat-header-cell>
-      <mat-cell *matCellDef="let producao"> {{producao.produtoProducao}} </mat-cell>
+      <mat-cell *matCellDef="let producao"> {{producao.produtoProducao?.produtoNome}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="quantidadeProducao">
@@ -45,8 +45,6 @@
       <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
       <mat-cell *matCellDef="let producao"> {{producao.dataProducao}} </mat-cell>
     </ng-container>
-
-
 
     <ng-container matColumnDef="acoes">
       <mat-header-cell *matHeaderCellDef class="action-column-header"></mat-header-cell>

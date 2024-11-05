@@ -57,14 +57,7 @@ export class VendasFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.produtosService.list().subscribe((produtos) => {
-      this.produtos = produtos;
-      this.filteredProdutos = produtos;
-    });
     const venda: Venda = this.router.snapshot.data['venda'];
-
-    //console.log('Data Inicial Original Recebida:', venda.dataInicial);
-    //console.log('Data Final Original Recebida:', venda.dataFinal);
     const dataInicial = typeof venda.dataInicial === 'string'
     ? this.parseDate(venda.dataInicial)
     : venda.dataInicial;
@@ -72,6 +65,7 @@ export class VendasFormComponent implements OnInit {
   const dataFinal = typeof venda.dataFinal === 'string'
     ? this.parseDate(venda.dataFinal)
     : venda.dataFinal;
+
 
     this.form = this.formBuilder.group({
       _id: [venda._id],
@@ -84,23 +78,47 @@ export class VendasFormComponent implements OnInit {
       statusVenda: [venda.statusVenda]
     });
 
+    // Carrega os produtos primeiro
+    this.produtosService.list().subscribe((produtos) => {
+      this.produtos = produtos;
+      this.filteredProdutos = produtos;
+
+      // Só depois de carregar os produtos, tenta encontrar o produto da venda e preencher o formulário
+      if (venda.produtoVenda) {
+        const produto = this.produtos.find(p => p._id === venda.produtoVenda?._id);
+
+        if (produto) {
+          console.log('Produto encontrado:', produto);  // Verifica se o produto correto foi encontrado
+          this.form.patchValue({
+            produtoVenda: produto,  // Associando o objeto correto da lista ao formulário
+            codigoVenda: produto.codigo,
+            quantidadeVenda: venda.quantidadeVenda,
+            valorVenda: venda.valorVenda,
+            statusVenda: venda.statusVenda,
+            dataInicial: dataInicial,
+            dataFinal: dataFinal
+          });
+        } else {
+          console.log('Produto não encontrado na lista de produtos.');
+        }
+      }
+    });
+
     this.form.get('produtoVenda')?.valueChanges.subscribe(value => {
       this.onProdutoChange(value);
     });
   }
 
 
-  private onProdutoChange(produtoNome: string): void {
-    this.vendaService.verificarProduto(produtoNome).subscribe(produto => {
-      if (produto) {
+  public onProdutoChange(produto: Produto): void {
+    console.log('Produto selecionado:', produto);
+    if (produto) {
+      this.form.patchValue({
+        codigoVenda: produto.codigo
+      });
+    }
+  }
 
-        this.form.patchValue({
-          codigoVenda: produto.codigo
-        });
-      }
-    });
-
-}
 private parseDate(dateStr: string): Date | null {
   const [day, month, year] = dateStr.split('-').map(Number);
   if (day && month && year) {
@@ -114,27 +132,25 @@ private formatDateForBackend(date: Date | null): string {
   return moment(date).format('DD-MM-YYYY');
 }
 
-  enviar(): void {
-    if (this.form.valid) {
-      const formValue = this.prepareSave();
-      const selectedProduct: Produto = this.form.value.produtoVenda;
-      formValue.produtoVenda = selectedProduct;
-
-      if (formValue._id) {
-        this.vendaService.editar(formValue).subscribe(
-          result => this.onSuccessedit(),
-          error => this.onError()
-        );
-      } else {
-        this.vendaService.salvar(formValue).subscribe(
-          result => this.onSuccess(),
-          error => this.onError()
-        );
-      }
+enviar(): void {
+  if (this.form.valid) {
+    const formValue = this.prepareSave();
+    // Aqui não é necessário reatribuir produtoVenda, pois já está sendo armazenado como um objeto
+    if (formValue._id) {
+      this.vendaService.editar(formValue).subscribe(
+        result => this.onSuccessedit(),
+        error => this.onError()
+      );
     } else {
-      this.formUtils.validateAllFormFields(this.form);
+      this.vendaService.salvar(formValue).subscribe(
+        result => this.onSuccess(),
+        error => this.onError()
+      );
     }
+  } else {
+    this.formUtils.validateAllFormFields(this.form);
   }
+}
 
   cancelar(): void {
     this.location.back();

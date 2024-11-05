@@ -1,6 +1,6 @@
 import { Estoque } from './../model/estoque';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { first, Observable, tap } from 'rxjs';
 
 @Injectable({
@@ -12,22 +12,35 @@ export class EstoqueService {
   private readonly PRODUCT_API = 'http://localhost:8080/api/produto';
 
 
+  
   constructor(private httpClient: HttpClient) { }
 
-
-
-    list(): Observable<Estoque[]> {
-      return this.httpClient.get<Estoque[]>(this.API).pipe(
-        first()
-      );
-    }
-
-  loadById(id: string){
-    return this.httpClient.get<Estoque>(`${this.API}/${id}`);
+  // Método para obter o token do localStorage
+  private getToken(): string | null {
+    return localStorage.getItem('token');
   }
+
+  // Método para adicionar o token ao cabeçalho da requisição
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Authorization': `Bearer ${this.getToken()}`
+    });
+  }
+
+  list(): Observable<Estoque[]> {
+    return this.httpClient.get<Estoque[]>(this.API, { headers: this.getHeaders() }).pipe(
+      first()
+    );
+  }
+
+  loadById(id: string): Observable<Estoque> {
+    return this.httpClient.get<Estoque>(`${this.API}/${id}`, { headers: this.getHeaders() });
+  }
+
   getQuantidadeEstoque(): Observable<number> {
-    return this.httpClient.get<number>(`${this.API}/quantidade`); // Alterado para chamar a rota correta
+    return this.httpClient.get<number>(`${this.API}/quantidade`, { headers: this.getHeaders() });
   }
+
   setEstoqueParaRelatorio(estoque: Estoque[]) {
     this.estoqueParaRelatorio = estoque;
   }
@@ -49,7 +62,9 @@ export class EstoqueService {
     document.body.innerHTML = originalContents;
 
     location.reload();
-}
+  }
 
-
+  removerQuantidadeEstoque(id: string, quantidade: number): Observable<any> {
+    return this.httpClient.put<any>(`${this.API}/${id}/remover`, quantidade, { headers: this.getHeaders() });
+  }
 }

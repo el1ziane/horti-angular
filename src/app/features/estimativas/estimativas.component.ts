@@ -1,54 +1,57 @@
-import { catchError, Observable, of } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatCard, MatCardHeader, MatCardTitle } from '@angular/material/card';
-import {MatTabsModule} from '@angular/material/tabs';
-import { FormEstimativasComponent } from './form-estimativas/form-estimativas.component';
-import { HistoricoEstimativasComponent } from './historico-estimativas/historico-estimativas.component';
-import { Estimativa } from '../../model/estimativa';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router, ActivatedRoute } from '@angular/router';
+import { MatTabsModule } from '@angular/material/tabs';
+import { catchError, Observable, of } from 'rxjs';
+
+import { Estimativa } from '../../model/estimativa';
 import { EstimativaService } from '../../services/estimativa.service';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
-import { AsyncPipe } from '@angular/common';
+import { FormEstimativasComponent } from './form-estimativas/form-estimativas.component';
+import { HistoricoEstimativasComponent } from './historico-estimativas/historico-estimativas.component';
 
 @Component({
   selector: 'app-estimativas',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardTitle, MatTabsModule,FormEstimativasComponent, HistoricoEstimativasComponent,AsyncPipe],
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatTabsModule,
+    FormEstimativasComponent,
+    HistoricoEstimativasComponent,
+    AsyncPipe,
+  ],
   templateUrl: './estimativas.component.html',
-  styleUrl: './estimativas.component.scss'
+  styleUrl: './estimativas.component.scss',
 })
 export class EstimativasComponent implements OnInit {
-
   estimativas$: Observable<Estimativa[]> | null = null;
-  @ViewChild(HistoricoEstimativasComponent) historicoEstimativasComponent!:HistoricoEstimativasComponent
+  @ViewChild(HistoricoEstimativasComponent)
+  historicoEstimativasComponent!: HistoricoEstimativasComponent;
 
   constructor(
     private estimativaService: EstimativaService,
-    public dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
-    private _snackBar: MatSnackBar
+    public dialog: MatDialog
   ) {
     this.atualizar();
-   }
+  }
 
-   atualizar() {
+  atualizar() {
     this.estimativas$ = this.estimativaService.list().pipe(
-      catchError(error => {
+      catchError((error) => {
         this.onError('Erro ao carregar produtos.');
-        return of([])
+        return of([]);
       })
     );
   }
 
   onError(errorMsg: string) {
     this.dialog.open(ErrorDialogComponent, {
-      data: errorMsg
+      data: errorMsg,
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

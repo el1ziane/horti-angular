@@ -3,27 +3,24 @@
     <mat-card class="widgetDash">
       <div class="title">Estoque</div>
       <div class="value">
-
         <div class="top">{{ quantidadeEstoque }} bandejas</div>
-
       </div>
 
-        <div class="icon">
+      <div class="icon">
         <span class="material-symbols-outlined">
           package_2
         </span>
       </div>
     </mat-card>
-
     <mat-card class="widgetDash">
       <div class="title">Vendas</div>
       <div class="value">
         <div class="top">R${{ valorTotalVendas| decimalVirgula}}</div>
       </div>
       <div class="icon">
-        <span style="color: rgb(18, 194, 18);"  class="material-symbols-outlined">
+        <span style="color: rgb(18, 194, 18);" class="material-symbols-outlined">
           savings
-          </span>
+        </span>
       </div>
     </mat-card>
 
@@ -33,39 +30,25 @@
         <div class="top">R${{ totalComprasEDespesas | decimalVirgula }}</div>
       </div>
       <div class="icon">
-        <span style="color: red;"  class="material-symbols-outlined">
+        <span style="color: red;" class="material-symbols-outlined">
           savings
-          </span>
-      </div>
-    </mat-card>
-
-    <mat-card class="widgetDash">
-      <div class="title">Meta de Produção</div>
-      <div class="value">
-        <div class="top">75%</div>
-        <div class="bottom">Meta de Produção</div>
-      </div>
-      <div class="icon">
-        <span style="color: #df9c0c;"  class="material-symbols-outlined">
-          readiness_score
-          </span>
+        </span>
       </div>
     </mat-card>
   </div>
-  </div>
+</div>
 
-  <div class="middle-section">
-    <mat-card class="widget left">
-      <app-alerta-estoque-dashboard></app-alerta-estoque-dashboard>
-    </mat-card>
-    <mat-card class="widget right">
-      <app-top-vendas-dashboard></app-top-vendas-dashboard>
-    </mat-card>
-  </div>
+<div class="middle-section">
+  <mat-card class="widget left">
+    <app-alerta-estoque-dashboard></app-alerta-estoque-dashboard>
+  </mat-card>
+  <mat-card class="widget right">
+    <app-top-vendas-dashboard></app-top-vendas-dashboard>
+  </mat-card>
+</div>
 
-  <div class="bottom-section">
-    <mat-card class="widget center">
-      <app-financeiro-mes-dashboard></app-financeiro-mes-dashboard>
-    </mat-card>
-  </div>
-
+<div class="bottom-section">
+  <mat-card class="widget center">
+    <app-financeiro-mes-dashboard></app-financeiro-mes-dashboard>
+  </mat-card>
+</div>

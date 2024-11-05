@@ -1,0 +1,65 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Detalhes da Compra</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form" class="form-columns">
+      <div class="form-column">
+        <mat-form-field appearance="outline" class="custom-form-field">
+          <mat-label>Fornecedor</mat-label>
+          <input matInput formControlName="fornecedorRec" placeholder="Fornecedor" id="fornecedorRec" name="fornecedorRec">
+
+
+
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="custom-form-field">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status" id="status" name="status">
+            <mat-option value="Pago">Pago</mat-option>
+            <mat-option value="Pendente">Pendente</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="custom-form-field">
+          <mat-label>Produto</mat-label>
+          <mat-select formControlName="produto"
+                      placeholder="Produto"
+                      id="produto"
+                      name="produto"
+                      (selectionChange)="onProdutoChange($event.value)">
+            <mat-option *ngFor="let produto of filteredProdutos" [value]="produto">
+              {{ produto.produtoNome }}
+
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+      </div>
+      <div class="form-column">
+        <mat-form-field appearance="outline" class="custom-form-field">
+          <mat-label>Quantidade</mat-label>
+          <input matInput formControlName="quantidadeRecebimento" placeholder="Quantidade" id="quantidadeRecebimento" name="quantidadeRecebimento" placeholder="0">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="custom-form-field">
+          <mat-label>Valor</mat-label>
+          <input currencyMask [options]="{ prefix: 'R$', thousands: '.', decimal: ',', aling:'left', allowNegative: false}" matInput type="text" formControlName="valorRecebimento" class="example-right-align">
+          <span matTextPrefix>R$&nbsp;</span>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="custom-form-field">
+          <mat-label>Data</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dataRecebimento">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions class="actions-container">
+    <button mat-raised-button color="primary" style="background-color: #98BAE6; color:white;" (click)="enviar()">Salvar</button>
+    <button  mat-raised-button style="margin-left: 8px;" (click)="cancelar()">Cancelar</button>
+  </mat-card-actions>
+</mat-card>

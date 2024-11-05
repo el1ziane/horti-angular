@@ -1,0 +1,46 @@
+@import '../produtos/produtos.component.scss';
+.search-container {
+  width: 20%;
+  height: 60px;
+  position: relative;
+  margin-left: auto;
+  margin-top: 25px;
+}
+
+input {
+  padding: 15px;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  border: none;
+  border-radius: 30px;
+  outline: none;
+  background-color: #E8F8F5;
+}
+.separator {
+  border: none; 
+  height: 1px; 
+  background-color: #050a09; 
+  margin: 16px 0; 
+}
+.message-container {
+  text-align: center;
+  margin-top: 20px;
+}
+.message-image {
+  width: 260px; 
+  height: auto;
+  margin-bottom: 10px;
+  box-shadow: 1px solid;
+  border-radius: 48%; 
+}
+.custom-form-field {
+  width: 25%;
+  margin-bottom: 12px;
+  margin-top: 40px;
+
+}
+.custom-form-field {
+  margin-right: 16px;
+  margin-bottom: 16px;}
+

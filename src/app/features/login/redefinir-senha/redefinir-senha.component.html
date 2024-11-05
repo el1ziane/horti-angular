@@ -1,0 +1,36 @@
+<div class="container-fluid ps-md-0">
+  <div class="row g-0 h-100 d-flex justify-content-center align-items-center">
+    <div class="d-flex flex-row justify-content-center align-items-center">
+      <mat-card class="custom-mat-card">
+        <mat-card-content>
+          <h3 class="login-heading mb-4 text-center">Redefinição de Senha</h3>
+
+          <form (ngSubmit)="redifinirSenha()">
+            <div class="form-floating mb-4">
+              <mat-form-field appearance="outline" class="custom-form-field">
+                <mat-label for="novaSenha">Nova Senha</mat-label>
+                <input matInput id="novaSenha" type="password" [(ngModel)]="novaSenha" name="novaSenha" required>
+              </mat-form-field>
+            </div>
+
+            <div class="form-floating mb-4">
+              <mat-form-field appearance="outline" class="custom-form-field">
+                <mat-label for="confirmarSenha">Confirmar Senha</mat-label>
+                <input matInput id="confirmarSenha" type="password" [(ngModel)]="confirmarSenha" name="confirmarSenha" required>
+              </mat-form-field>
+            </div>
+
+            <div class="d-grid mb-4">
+              <button mat-flat-button class="btn btn-lg btn-login text-uppercase fw-bold" type="submit" style="background-color: #64C2A8; color: white">
+                <mat-icon>lock</mat-icon>Redefinir Senha</button>
+            </div>
+
+            <div class="text-center">
+              <a class="small" href="/login">Voltar ao Login</a>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,15 +1,15 @@
-import { MediaObserver, MediaChange } from '@angular/flex-layout';
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, Inject } from '@angular/core';
+import { NgIf, NgStyle } from '@angular/common';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
-
+import { RouterOutlet } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RouterOutlet } from '@angular/router';
 import { SideNavClosedComponent } from './core/components/side-nav-left/side-nav-closed/side-nav-closed.component';
-import { NgStyle, NgIf } from '@angular/common';
-import { TopNavComponent } from './core/components/top-nav/top-nav.component';
 import { SideNavComponent } from './core/components/side-nav-left/side-nav/side-nav.component';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { TopNavComponent } from './core/components/top-nav/top-nav.component';
+import { AuthService } from './features/login/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -22,8 +22,10 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
   ],
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
-  title = 'Material-Side-Navbar-In-Angular';
+  isUsuarioLogado: boolean = false;
 
+  title = 'Material-Side-Navbar-In-Angular';
+  isLoggedIn = false;
   @ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
   @ViewChild('snav') sideNav!: MatSidenav;
   sideNavDefaultOpened = true;
@@ -39,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   isDarkTheme: boolean = false;
   private mediaSub!: Subscription;
 
-  constructor(@Inject(MediaObserver) private media: MediaObserver) {
+  constructor(@Inject(MediaObserver) private media: MediaObserver,private authService: AuthService) {
     this.mediaWatcher = media.asObservable()
       .pipe(
         map((changes: MediaChange[]) =>
@@ -80,6 +82,16 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.mediaSub = this.mediaWatcher.subscribe();
+    this.authService.mostrarMenuEmitter.subscribe(
+      mostrar => this.isLoggedIn = mostrar
+    );
+    this.isUsuarioLogado = this.authService.isUsuarioAutenticado();
+    this.authService.mostrarMenuEmitter.subscribe(
+      (isAuthenticated) => {
+        this.isUsuarioLogado = isAuthenticated;
+      }
+    );
+  
   }
 
   ngOnDestroy(): void {

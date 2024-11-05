@@ -65,4 +65,11 @@ export class FornecedorListaComponent implements OnInit, AfterViewInit {
     });
   }
 
+  formatarCNPJ(cnpj: string): string {
+    return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+  }
+
+  formatarTelefone(telefone: string): string {
+    return telefone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+  }
 }

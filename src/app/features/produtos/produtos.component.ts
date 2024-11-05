@@ -24,8 +24,6 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import { DecimalVirgulaPipe } from "../../shared/decimal-virgula.pipe";
 
-
-
 @Component({
   selector: 'app-produtos',
   standalone: true,
@@ -68,17 +66,17 @@ export class ProdutosComponent implements OnInit {
     this.produtos$ = this.produtosService.list().pipe(
       catchError(error => {
         this.onError('Erro ao carregar produtos.');
-        return of([]); // Retorna um array vazio em caso de erro
+        return of([]); 
       })
     );
 
     this.produtos$.subscribe(produtos => {
       this.dataSource.data = produtos;
       if (this.paginator) {
-        this.dataSource.paginator = this.paginator; // Atribuição segura
+        this.dataSource.paginator = this.paginator; 
       }
       if (this.sort) {
-        this.dataSource.sort = this.sort; // Atribuição segura
+        this.dataSource.sort = this.sort; 
       }
     });
   }
@@ -136,8 +134,6 @@ export class ProdutosComponent implements OnInit {
     });
 
   }
-
-
     applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();

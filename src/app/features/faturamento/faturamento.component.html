@@ -1,0 +1,80 @@
+<button mat-button
+(click)="onReport()"
+mat-flat-button
+color="primary"
+style="background-color: #0fac65c0; color: white; margin-left: 16px; margin-top: 20px;"
+
+ngxPrint>
+<mat-icon>open_in_browser</mat-icon>
+<span>Relatório</span>
+</button>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Faturamento</mat-card-title>
+  </mat-card-header>
+  <mat-toolbar style="background-color: white">
+
+    <mat-form-field appearance="outline" class="custom-form-field">
+      <mat-label>Data</mat-label>
+      <input matInput [matDatepicker]="dp" [formControl]="date">
+      <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker #dp
+                      startView="multi-year"
+                      (monthSelected)="onMonthChange($event)"   
+                      (monthSelected)="setMonthAndYear($event, dp)">
+      </mat-datepicker>
+    </mat-form-field>
+    
+  <div [ngStyle]="{ 'display': 'none' }" id="print-section">
+    <h1>Relatório de Faturamento</h1>
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid #000; padding: 8px;">Mês</th>
+          <th style="border: 1px solid #000; padding: 8px;">Produto</th>
+          <th style="border: 1px solid #000; padding: 8px;">Qtd Vendida</th>
+          <th style="border: 1px solid #000; padding: 8px;">Valor venda</th>
+          <th style="border: 1px solid #000; padding: 8px;">Qtd Produzida</th>
+          <th style="border: 1px solid #000; padding: 8px;">Valor Compra</th>
+          <th style="border: 1px solid #000; padding: 8px;">Lucro</th>
+          <th style="border: 1px solid #000; padding: 8px;">Perda</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let financeiro of faturamentoService.getFinanceiroParaRelatorio(); let i = index">
+          <td style="border: 1px solid #000; padding: 8px;">{{ financeiro.dataFat | date:'MM/yyyy' }}</td>
+          <td style="border: 1px solid #000; padding: 8px;">{{ financeiro.produtoFat }}</td>
+          <td style="border: 1px solid #000; padding: 8px;">{{ financeiro.vendaFat }}</td>
+          <td style="border: 1px solid #000; padding: 8px;">R${{ (financeiro.valorFat?? 0) | decimalVirgula }}</td>
+          <td style="border: 1px solid #000; padding: 8px;">{{ financeiro.prodFat }}</td>
+          <td style="border: 1px solid #000; padding: 8px;">R${{ (financeiro.vcompraFat?? 0) | decimalVirgula }}</td>
+          <td style="border: 1px solid #000; padding: 8px;"> R${{ (financeiro.lucroFat ?? 0) | decimalVirgula }}</td>
+          <td style="border: 1px solid #000; padding: 8px;">{{ financeiro.perdaFat }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    <div class="search-container">
+      <form action="">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+      </form>
+    </div>
+  </mat-toolbar>
+  <hr class="separator">
+  <div *ngIf="showSelectMonthMessage" class="message-container">
+    <h3 style="font-size: 20px; font-family: 'Arial', sans-serif;">Selecione um mês para acompanhar seu faturamento!</h3>
+    <img src="assets/cesta2.jpg" alt="Cesta" class="message-image" />
+  </div>
+
+  <div *ngIf="dataSource.data.length === 0 && !showSelectMonthMessage" class="message-container">
+    <mat-icon class="message-icon">report_problem</mat-icon>
+    <h3 style="font-size: 24px; font-family: 'Arial', sans-serif;">Nenhum dado encontrado para o mês selecionado 😞</h3>
+  </div>
+
+  <div class="column-flex" class="mat-elevation-z8" *ngIf="dataSource.data.length > 0">
+    <app-faturamento-lista
+      [dataSource]="dataSource"
+      [formatarDataFat]="formatarDataFat.bind(this)">
+    </app-faturamento-lista>
+  </div>
+</mat-card>

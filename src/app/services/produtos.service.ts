@@ -1,6 +1,6 @@
-import { first } from 'rxjs';
+import { first, catchError, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Produto } from '../model/produto';
 
 @Injectable({
@@ -13,33 +13,63 @@ export class ProdutosService {
   constructor(private httpClient: HttpClient) { }
 
   list() {
-    return this.httpClient.get<Produto[]>(this.API).pipe(
-      first(),
+    // Obtém o token do localStorage
+    const token = localStorage.getItem('token');
+    console.log('Token utilizado nas requisições:', token); // Log do token
 
+    // Define os cabeçalhos, incluindo o cabeçalho de autorização
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    // Faz a requisição com os cabeçalhos
+    return this.httpClient.get<Produto[]>(this.API, { headers }).pipe(
+      first(),
+      catchError(err => {
+        console.warn(`Erro ao buscar produtos: ${err.message}`);
+        console.error('Erro completo:', err); // Log completo do erro
+        return of([]); // Retorna um array vazio em caso de erro
+      })
     );
   }
 
-  loadById(id: string){
-    return this.httpClient.get<Produto>(`${this.API}/${id}`);
+  loadById(id: string) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.get<Produto>(`${this.API}/${id}`, { headers });
   }
-  salvar(registro: Partial<Produto>){
+
+  salvar(registro: Partial<Produto>) {
     if (registro._id) {
       return this.editar(registro);
     }
     return this.criar(registro);
-
   }
 
-  private criar(registro: Partial<Produto>){
-    return this.httpClient.post<Produto>(this.API, registro);
+  private criar(registro: Partial<Produto>) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.post<Produto>(this.API, registro, { headers });
   }
 
-  editar(registro: Partial<Produto>){
-    return this.httpClient.put<Produto>(`${this.API}/${registro._id}`,registro);
+  editar(registro: Partial<Produto>) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.put<Produto>(`${this.API}/${registro._id}`, registro, { headers });
   }
 
-  excluir(id : string){
-    return this.httpClient.delete(`${this.API}/${id}`);
+  excluir(id: string) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.delete(`${this.API}/${id}`, { headers });
   }
 
   setProdutosParaRelatorio(produtos: Produto[]) {
@@ -63,15 +93,5 @@ export class ProdutosService {
     document.body.innerHTML = originalContents;
 
     location.reload();
-}
-
-
-
-
-
-
-
-
-
-
+  }
 }

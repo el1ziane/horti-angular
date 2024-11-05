@@ -43,6 +43,7 @@ export class FormProdutoComponent implements OnInit{
       quantidadeProduto: [produto.quantidadeProduto, [Validators.required]],
       valorProduto: [produto.valorProduto, [Validators.required]],
       peso: [produto.peso, [Validators.required]],
+      quantidadePorCaixa: [produto.quantidadePorCaixa, [Validators.required]]
     });
   }
 
@@ -64,7 +65,6 @@ export class FormProdutoComponent implements OnInit{
       this.formUtils.validateAllFormFields(this.form);
     }
   }
-
 
   cancelar(): void {
     this.location.back();

@@ -33,17 +33,17 @@
 
   <ng-container matColumnDef="cnpj">
     <mat-header-cell *matHeaderCellDef> CNPJ </mat-header-cell>
-    <mat-cell *matCellDef="let fornecedor"> {{fornecedor.cnpj}} </mat-cell>
+    <mat-cell *matCellDef="let fornecedor"> {{formatarCNPJ(fornecedor.cnpj)}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="telefone">
     <mat-header-cell *matHeaderCellDef> Telefone </mat-header-cell>
-    <mat-cell *matCellDef="let fornecedor"> {{fornecedor.telefone}} </mat-cell>
+    <mat-cell *matCellDef="let fornecedor"> {{formatarTelefone(fornecedor.telefone)}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="email">
     <mat-header-cell *matHeaderCellDef> E-mail </mat-header-cell>
-    <mat-cell *matCellDef="let fornecedor"> {{fornecedor.telefone}} </mat-cell>
+    <mat-cell *matCellDef="let fornecedor"> {{fornecedor.email}} </mat-cell>
   </ng-container>
 
   <ng-container  matColumnDef="acoes">

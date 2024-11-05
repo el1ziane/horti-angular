@@ -15,6 +15,6 @@ export class ProdutoResolver  {
     if (route.params && route.params['id']) {
       return this.service.loadById(route.params['id']);
     }
-    return of({_id: "",codigo: "",produtoNome: "",quantidadeProduto: null,valorProduto: null ,peso: null});
+    return of({_id: "",codigo: "",produtoNome: "",quantidadeProduto: null,valorProduto: null ,peso: null, quantidadePorCaixa: null});
   }
 }

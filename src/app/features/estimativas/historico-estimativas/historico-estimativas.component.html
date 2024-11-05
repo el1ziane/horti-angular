@@ -31,14 +31,14 @@
       <mat-cell *matCellDef="let estimativa"> {{estimativa.caixaEstimativa}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="pesoEstimativa" >
+    <ng-container matColumnDef="pesoEstimativa">
       <mat-header-cell *matHeaderCellDef> Peso </mat-header-cell>
-      <mat-cell *matCellDef="let estimativa">  {{ estimativa.pesoEstimativa | decimalVirgula }} </mat-cell>
+      <mat-cell *matCellDef="let estimativa"> {{ estimativa.pesoEstimativa | decimalVirgula }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="resultado">
       <mat-header-cell *matHeaderCellDef> Resultado </mat-header-cell>
-      <mat-cell *matCellDef="let estimativa"> {{estimativa.resultado}} </mat-cell>
+      <mat-cell *matCellDef="let estimativa"> {{estimativa.resultado}} bandejas </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
