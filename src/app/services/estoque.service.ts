@@ -1,7 +1,7 @@
 import { Estoque } from './../model/estoque';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { first, Observable, tap } from 'rxjs';
+import { first, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,16 +11,12 @@ export class EstoqueService {
   private readonly API = 'http://localhost:8080/api/estoque';
   private readonly PRODUCT_API = 'http://localhost:8080/api/produto';
 
-
-  
   constructor(private httpClient: HttpClient) { }
 
-  // Método para obter o token do localStorage
   private getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  // Método para adicionar o token ao cabeçalho da requisição
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
       'Authorization': `Bearer ${this.getToken()}`

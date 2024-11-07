@@ -45,7 +45,7 @@ export class ProducaoService {
     return this.httpClient.delete(`${this.API}/${id}`);
   }
   verificarProduto(produtoNome: string): Observable<Produto | null> {
-    const encodedNome = encodeURIComponent(produtoNome); // Certifique-se de codificar o nome
+    const encodedNome = encodeURIComponent(produtoNome);
     return this.httpClient.get<Produto>(`http://localhost:8080/api/producao/produto/${encodedNome}`).pipe(
         first(),
         catchError(err => {
@@ -54,9 +54,6 @@ export class ProducaoService {
         })
     );
 }
-
-
-
 
   setProducaoParaRelatorio(producoes: Producao[]) {
     this.producaoParaRelatorio = producoes;
@@ -80,5 +77,4 @@ export class ProducaoService {
 
     location.reload();
 }
-
 }

@@ -26,7 +26,7 @@
         <tbody>
           <tr *ngFor="let compra of compraService.getCompraParaRelatorio(); let i = index">
             <td style="border: 1px solid #000; padding: 8px;">{{ compra.fornecedorRec }}</td>
-            <td style="border: 1px solid #000; padding: 8px;">{{ compra.produto }}</td>
+            <td style="border: 1px solid #000; padding: 8px;">{{ compra.produto?.produtoNome }}</td>
             <td style="border: 1px solid #000; padding: 8px;">{{ compra.quantidadeRecebimento }}</td>
             <td style="border: 1px solid #000; padding: 8px;">{{compra.valorRecebimento }}</td>
             <td style="border: 1px solid #000; padding: 8px;">{{ compra.dataRecebimento }}</td>

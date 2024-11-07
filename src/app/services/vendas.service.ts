@@ -21,13 +21,12 @@ export class VendasService {
       'Content-Type': 'application/json',
     });
 
-    // Faz a requisição com os cabeçalhos
     return this.httpClient.get<Venda[]>(this.API, { headers }).pipe(
       first(),
       catchError((err) => {
         console.warn(`Erro ao buscar vendas: ${err.message}`);
-        console.error('Erro completo:', err); // Log completo do erro
-        return of([]); // Retorna um array vazio em caso de erro
+        console.error('Erro completo:', err);
+        return of([]);
       })
     );
   }
@@ -66,7 +65,6 @@ export class VendasService {
       );
   }
 
-  // Método para obter os produtos mais vendidos
   getProdutosMaisVendidos(): Observable<{ nome: string; total: number }[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
@@ -89,12 +87,11 @@ export class VendasService {
       }),
       catchError((err) => {
         console.warn(`Erro ao buscar produtos mais vendidos: ${err.message}`);
-        return of([]); // Retorna um array vazio em caso de erro
+        return of([]);
       })
     );
   }
 
-  // Método para obter o valor total de vendas
   getValorTotalVendas(): Observable<number> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({

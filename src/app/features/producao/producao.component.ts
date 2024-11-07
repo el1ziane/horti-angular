@@ -66,10 +66,10 @@ export class ProducaoComponent implements OnInit {
     this.producao$.subscribe(producao => {
       this.dataSource.data = producao;
       if (this.paginator) {
-        this.dataSource.paginator = this.paginator; 
+        this.dataSource.paginator = this.paginator;
       }
       if (this.sort) {
-        this.dataSource.sort = this.sort; 
+        this.dataSource.sort = this.sort;
       }
     });
   }
@@ -124,7 +124,6 @@ export class ProducaoComponent implements OnInit {
 
   }
   onSuccess() {
-    //this.atualizarEstoque(); // Atualiza o estoque após o sucesso na produção
     this._snackBar.open('Produção salva com sucesso!', 'X', {
       duration: 3000,
       verticalPosition: 'bottom',

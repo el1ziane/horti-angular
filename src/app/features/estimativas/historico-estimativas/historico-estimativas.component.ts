@@ -19,7 +19,6 @@ import {
 } from '@angular/material/table';
 
 import { Estimativa } from '../../../model/estimativa';
-import { EstimativaService } from '../../../services/estimativa.service';
 import { DecimalVirgulaPipe } from '../../../shared/decimal-virgula.pipe';
 import { DetalhesEstimativasComponent } from '../detalhes-estimativas/detalhes-estimativas.component';
 

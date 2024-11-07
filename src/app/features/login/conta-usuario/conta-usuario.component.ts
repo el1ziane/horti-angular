@@ -19,15 +19,15 @@ import { ActivatedRoute } from '@angular/router';
   standalone: true,
   imports: [MatCard, MatCardHeader, MatCardTitle,MatCardContent, MatFormField, MatLabel, MatInput, MatInputModule, MatFormFieldModule, FormsModule, NgIf, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCard,FormsModule, MatCardHeader,MatCardTitle,CommonModule, MatCardSubtitle, MatCardContent, MatCardActions, MatCardFooter, ReactiveFormsModule],
   templateUrl: './conta-usuario.component.html',
-  styleUrl: './conta-usuario.component.css'
+  styleUrl: './conta-usuario.component.scss'
 })
 export class ContaUsuarioComponent implements OnInit{
- 
- 
+
+
   nomeEditavel: boolean = false;
   emailEditavel: boolean = false;
   senhaEditavel: boolean = false;
-  usuario!: Usuario; // Declare a propriedade usuario
+  usuario!: Usuario;
   formulario!: FormGroup;
   formularioSenha!: FormGroup;
   camposAlterarSenhaAtivos: boolean = false;
@@ -41,23 +41,22 @@ export class ContaUsuarioComponent implements OnInit{
     private authService: AuthService
   )  {
     this.formulario = this.formBuilder.group({
-      nome: ['', [Validators.required]], 
+      nome: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
     });
 
-    this.formularioSenha = this.formBuilder.group({ // Formulário para alteração de senha
+    this.formularioSenha = this.formBuilder.group({
       senhaAtual: ['', [Validators.required]],
       novaSenha: ['', [Validators.required,  Validators.minLength(8)]],
       confirmarSenha: ['', [Validators.required,  Validators.minLength(8)]]
     });
   }
 
-  
   ngOnInit(): void {
     const usuario: Usuario = this.router.snapshot.data['usuario'];
-    
+
     if (usuario) {
-      this.usuario = usuario; 
+      this.usuario = usuario;
       this.formulario.patchValue({
         nome: usuario.nome,
         email: usuario.email,
@@ -75,7 +74,7 @@ export class ContaUsuarioComponent implements OnInit{
       );
     } else {
       this.formUtils.validateAllFormFields(this.formulario);
-      console.error('Formulário inválido!', this.formulario.errors); // Adicione um log para ver os erros
+      console.error('Formulário inválido!', this.formulario.errors);
     }
   }
   clickEvent(event: MouseEvent) {
@@ -91,33 +90,31 @@ export class ContaUsuarioComponent implements OnInit{
       this.senhaEditavel = true;
     }
   }
-  
-  
+
+
   atualizarUsuario(): void {
     this.enviar();
   }
-  
+
 
   onSuccessedit(): void {
     this._snackBar.open("Usuário editado com sucesso!", '', { duration: 3000 });
-    
+
   }
   private onError(): void {
     this._snackBar.open("Erro na atualização do usuário", '', { duration: 3000 });
 
   }
-  
+
 
   private prepareSave(): any {
     const formValue = { ...this.formulario.value };
-    formValue._id = Number(this.usuario._id); // Certifique-se de que o ID está sendo convertido para um número
+    formValue._id = Number(this.usuario._id);
     return formValue;
   }
-  
-  
 
   habilitarCamposSenha(): void {
-    this.camposAlterarSenhaAtivos = true; // Habilitar os campos de senha
+    this.camposAlterarSenhaAtivos = true; 
   }
 
   // Dentro do método redefinirSenha
@@ -152,5 +149,5 @@ export class ContaUsuarioComponent implements OnInit{
       control?.markAsTouched({ onlySelf: true });
     });
   }
-  
+
 }

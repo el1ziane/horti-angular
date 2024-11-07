@@ -3,7 +3,7 @@
     <div *ngFor="let producao of dataSource.data" class="tabela-item">
       <div class="tabela-header" (click)="toggleDetails(producao)">
         <div class="tabela-info">
-          <span>{{ producao.produtoProducao }}</span>
+          <span>{{ producao.produtoProducao?.produtoNome }}</span><span>{{ producao.quantidadeProducao}}</span><span>{{ producao.dataProducao}}</span>
         </div>
         <button mat-icon-button [matMenuTriggerFor]="opcoesMenu">
           <mat-icon>menu</mat-icon>

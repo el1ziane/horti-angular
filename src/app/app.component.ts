@@ -24,7 +24,7 @@ import { AuthService } from './features/login/auth.service';
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   isUsuarioLogado: boolean = false;
 
-  title = 'Material-Side-Navbar-In-Angular';
+  title = 'HortiControle';
   isLoggedIn = false;
   @ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
   @ViewChild('snav') sideNav!: MatSidenav;
@@ -91,7 +91,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isUsuarioLogado = isAuthenticated;
       }
     );
-  
+
   }
 
   ngOnDestroy(): void {

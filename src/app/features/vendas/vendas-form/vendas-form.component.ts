@@ -1,23 +1,39 @@
 import { Location, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { DateAdapter, MAT_DATE_LOCALE, MatOption, provideNativeDateAdapter } from '@angular/material/core';
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerModule,
+  MatDatepickerToggle,
+  MatDateRangeInput,
+  MatDateRangePicker,
+} from '@angular/material/datepicker';
+import {
+  MatError,
+  MatFormField,
+  MatFormFieldModule,
+  MatHint,
+  MatLabel,
+  MatPrefix,
+  MatSuffix,
+} from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { FormUtilsService } from '../../../shared/form/form-utils.service';
-import { MatButton } from '@angular/material/button';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker, MatDateRangeInput, MatDateRangePicker, MatDatepickerModule } from '@angular/material/datepicker';
-import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
-import { MatSelect } from '@angular/material/select';
-import { MatInput } from '@angular/material/input';
-import { MatError, MatFormField, MatFormFieldModule, MatHint, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
-import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
-import { Venda } from '../../../model/venda';
-import { VendasService } from '../../../services/vendas.service';
 import moment from 'moment';
-import { Produto } from '../../../model/produto';
-import { ProdutosService } from '../../../services/produtos.service';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+
+import { Produto } from '../../../model/produto';
+import { Venda } from '../../../model/venda';
+import { ProdutosService } from '../../../services/produtos.service';
+import { VendasService } from '../../../services/vendas.service';
+import { FormUtilsService } from '../../../shared/form/form-utils.service';
 
 @Component({
   selector: 'app-vendas-form',
@@ -78,19 +94,18 @@ export class VendasFormComponent implements OnInit {
       statusVenda: [venda.statusVenda]
     });
 
-    // Carrega os produtos primeiro
     this.produtosService.list().subscribe((produtos) => {
       this.produtos = produtos;
       this.filteredProdutos = produtos;
 
-      // Só depois de carregar os produtos, tenta encontrar o produto da venda e preencher o formulário
+
       if (venda.produtoVenda) {
         const produto = this.produtos.find(p => p._id === venda.produtoVenda?._id);
 
         if (produto) {
-          console.log('Produto encontrado:', produto);  // Verifica se o produto correto foi encontrado
+          console.log('Produto encontrado:', produto);
           this.form.patchValue({
-            produtoVenda: produto,  // Associando o objeto correto da lista ao formulário
+            produtoVenda: produto,
             codigoVenda: produto.codigo,
             quantidadeVenda: venda.quantidadeVenda,
             valorVenda: venda.valorVenda,
@@ -135,7 +150,6 @@ private formatDateForBackend(date: Date | null): string {
 enviar(): void {
   if (this.form.valid) {
     const formValue = this.prepareSave();
-    // Aqui não é necessário reatribuir produtoVenda, pois já está sendo armazenado como um objeto
     if (formValue._id) {
       this.vendaService.editar(formValue).subscribe(
         result => this.onSuccessedit(),

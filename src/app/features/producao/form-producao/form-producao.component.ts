@@ -1,23 +1,24 @@
 import { Location, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MAT_DATE_LOCALE, MatOption, provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
+import { MatError, MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { FormUtilsService } from '../../../shared/form/form-utils.service';
-import { MatButton } from '@angular/material/button';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
-import { MatSelect } from '@angular/material/select';
-import { MatInput } from '@angular/material/input';
-import { MatError, MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
-import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
-import { ProducaoService } from '../../../services/producao.service';
-import { Producao } from '../../../model/producao';
 import moment from 'moment';
-import { EstoqueService } from '../../../services/estoque.service';
-import { ProdutosService } from '../../../services/produtos.service';
+
+import { Producao } from '../../../model/producao';
 import { Produto } from '../../../model/produto';
+import { EstoqueService } from '../../../services/estoque.service';
+import { ProducaoService } from '../../../services/producao.service';
+import { ProdutosService } from '../../../services/produtos.service';
+import { FormUtilsService } from '../../../shared/form/form-utils.service';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class FormProducaoComponent implements OnInit {
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
-    private service: ProducaoService,
+    private producaoService: ProducaoService,
     private estoqueService: EstoqueService,
     private _snackBar: MatSnackBar,
     private location: Location,
@@ -57,37 +58,34 @@ export class FormProducaoComponent implements OnInit {
     this.form = this.formBuilder.group({
       _id: [producao._id],
       codigoProducao: [producao.codigoProducao, [Validators.required]],
-      produtoProducao: [producao.produtoProducao, [Validators.required]],
+      produtoProducao: [null, [Validators.required]],
       quantidadeProducao: [producao.quantidadeProducao, [Validators.required]],
       dataProducao: [dataProducao, [Validators.required]],
     });
 
+    // Carrega produtos e atualiza o campo do produto se já estiver salvo na produção
     this.produtosService.list().subscribe((produtos) => {
       this.produtos = produtos;
       this.filteredProdutos = produtos;
+
+      if (producao.produtoProducao) {
+        const produto = this.produtos.find(p => p._id === producao.produtoProducao?._id);
+        if (produto) {
+          this.form.patchValue({
+            codigoProducao: produto.codigo,
+            produtoProducao: produto,
+          });
+        } else {
+          console.log('Produto não encontrado');
+        }
+      }
     });
 
-    if (producao.produtoProducao) {
-      const produto = this.produtos.find(p => p._id === producao.produtoProducao?._id);
+    this.form.get('produtoProducao')?.valueChanges.subscribe(value => {
+      this.onProdutoChange(value);
+    });
+}
 
-      if (produto) { // Add this null check
-        console.log('Produto encontrado:', produto);
-        this.form.patchValue({
-          produtoProducao: produto,
-          codigoProducao: produto.codigo,
-          quantidadeProducao: producao.quantidadeProducao,
-          dataProducao: dataProducao
-        });
-      } else {
-        console.log('Produto não encontrado');
-      }
-    }
-
-      this.form.get('produtoProducao')?.valueChanges.subscribe(value => {
-        this.onProdutoChange(value);
-      });
-
-  }
   public onProdutoChange(produto: Produto): void {
     console.log('Produto selecionado:', produto);
     if (produto) {
@@ -112,7 +110,7 @@ export class FormProducaoComponent implements OnInit {
     if (this.form.valid) {
       const formValue = this.prepareSave();
       if (formValue._id) {
-        this.service.editar(formValue).subscribe(
+        this.producaoService.editar(formValue).subscribe(
           result => {
            // this.atualizarEstoque(formValue);
             this.onSuccessedit();
@@ -120,9 +118,9 @@ export class FormProducaoComponent implements OnInit {
           error => this.onError()
         );
       } else {
-        this.service.salvar(formValue).subscribe(
+        this.producaoService.salvar(formValue).subscribe(
           result => {
-          //  this.atualizarEstoque(formValue); 
+          //  this.atualizarEstoque(formValue);
             this.onSuccess();
           },
           error => this.onError()

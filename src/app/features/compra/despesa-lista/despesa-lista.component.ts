@@ -1,3 +1,4 @@
+import { DetalhesDespesaDialogComponent } from './../detalhes-dialog/detalhes-despesa-dialog/detalhes-despesa-dialog.component';
 import { Despesa } from '../../../model/despesa';
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
@@ -11,10 +12,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { DespesaService } from '../../../services/despesa.service';
-import { DetalhesDespesaDialogComponent } from '../detalhes-dialog/detalhes-despesa-dialog/detalhes-despesa-dialog.component
-
-
-
 @Component({
     selector: 'app-despesa-lista',
     templateUrl:'./despesa-lista.component.html',

@@ -12,7 +12,7 @@ import { MatIcon } from '@angular/material/icon';
   standalone: true,
   imports: [MatCard, MatCardContent, MatFormFieldModule, MatInputModule, MatInput, FormsModule,MatIcon],
   templateUrl: './redefinir-senha.component.html',
-  styleUrl: './redefinir-senha.component.css'
+  styleUrl: './redefinir-senha.component.scss'
 })
 export class RedefinirSenhaComponent {
   public novaSenha: string = '';
@@ -23,10 +23,10 @@ export class RedefinirSenhaComponent {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.token = params['token']; // Pega o token da URL
+      this.token = params['token'];
     });
   }
-  
+
 
   redifinirSenha() {
     if (this.novaSenha && this.confirmarSenha) {
@@ -34,8 +34,8 @@ export class RedefinirSenhaComponent {
             if (this.token) {
                 this.authService.redefinirSenha(this.token, this.novaSenha).subscribe(
                     response => {
-                        console.log('Senha redefinida com sucesso:', response.message); // Acesse a mensagem da resposta
-                        alert(response.message); // Exibe a mensagem retornada
+                        console.log('Senha redefinida com sucesso:', response.message);
+                        alert(response.message);
                         this.router.navigate(['/login']);
                     },
                     error => {
@@ -54,5 +54,4 @@ export class RedefinirSenhaComponent {
     }
 }
 
-  
 }

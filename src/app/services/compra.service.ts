@@ -30,7 +30,7 @@ export class CompraService {
   }
 
   getValorTotalCompras(): Observable<number> {
-    return this.httpClient.get<number>(`${this.API}/total`); // Método que retorna o total de compras
+    return this.httpClient.get<number>(`${this.API}/total`); 
   }
   private criar(registro: Partial<Compra>){
     return this.httpClient.post<Compra>(this.API, registro);

@@ -13,22 +13,19 @@ export class ProdutosService {
   constructor(private httpClient: HttpClient) { }
 
   list() {
-    // Obtém o token do localStorage
     const token = localStorage.getItem('token');
-    console.log('Token utilizado nas requisições:', token); // Log do token
+    //console.log('Token utilizado nas requisições:', token);
 
-    // Define os cabeçalhos, incluindo o cabeçalho de autorização
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    // Faz a requisição com os cabeçalhos
     return this.httpClient.get<Produto[]>(this.API, { headers }).pipe(
       first(),
       catchError(err => {
-        console.warn(`Erro ao buscar produtos: ${err.message}`);
-        console.error('Erro completo:', err); // Log completo do erro
-        return of([]); // Retorna um array vazio em caso de erro
+       // console.warn(`Erro ao buscar produtos: ${err.message}`);
+        //console.error('Erro completo:', err);
+        return of([]); 
       })
     );
   }

@@ -114,25 +114,27 @@ export class FormEstimativasComponent implements OnInit {
         this.form.get('pesoEstimativa')!.disable();
       }
     });
+    this.form.get('produtoEstimativa')?.valueChanges.subscribe(value => {
+      this.onProdutoChange(value);
+    });
   }
+  public onProdutoChange(produto: Produto): void {
+    console.log('Produto selecionado:', produto);
 
+  }
   enviar(): void {
     if (this.form.valid) {
-      const formValue = this.prepareSave();
-      const selectedProduct: Produto = this.form.value.produtoEstimativa;
-      formValue.produtoEstimativa = selectedProduct;
+        const formValue = this.prepareSave();
 
-      if (formValue.tipoEntrada === 'PESO') {
-        formValue.caixaEstimativa = null;
-      } else if (formValue.tipoEntrada === 'CAIXA') {
-        formValue.pesoEstimativa = null;
-      }
-
-      this.service.salvar(formValue).subscribe((error) => this.onError());
+        this.service.salvar(formValue).subscribe(
+            () => { /* Lógica de sucesso */ },
+            () => this.onError()
+        );
     } else {
-      this.formUtils.validateAllFormFields(this.form);
+        this.formUtils.validateAllFormFields(this.form);
     }
-  }
+}
+
 
   cancelar(): void {
     this.location.back();
@@ -171,23 +173,42 @@ export class FormEstimativasComponent implements OnInit {
   }
   calcular(): void {
     const tipo = this.form.get('tipoEntrada')!.value;
-    this.produtoSelecionado = this.form.get('produtoEstimativa')!.value;
+    const pesoEstimativa = this.form.get('pesoEstimativa')!.value;
+    const caixaEstimativa = this.form.get('caixaEstimativa')!.value;
+    const produtoSelecionado: Produto = this.form.get('produtoEstimativa')!.value;
 
-    if (tipo === 'Peso') {
-      this.resultado = this.form.get('pesoEstimativa')!.value * 2;
-    } else if (tipo === 'Caixa') {
-      this.resultado = this.form.get('caixaEstimativa')!.value * 3;
+    // Validação e cálculo do resultado com a mesma lógica do backend
+    if (tipo === 'Peso' && pesoEstimativa !== null) {
+      // Dividir o peso estimado pelo peso de cada bandeja (produto)
+    this.resultado = pesoEstimativa / (produtoSelecionado?.peso || 0);
+    } else if (tipo === 'Caixa' && caixaEstimativa !== null) {
+      // Multiplicar o número de caixas pela quantidade de itens por caixa
+     this.resultado = caixaEstimativa * (produtoSelecionado?.quantidadePorCaixa ?? 0);
+    } else {
+      this._snackBar.open(
+        'Erro: Selecione um tipo de entrada válido e informe o valor correspondente.',
+        '',
+        { duration: 3000 }
+      );
+      return;
     }
-    const formValue = this.prepareSave();
-    formValue.produtoEstimativa = this.produtoSelecionado;
 
+    // Preparando o valor para salvar
+    const formValue = this.prepareSave();
+    formValue.produtoEstimativa = produtoSelecionado;
+    formValue.resultado = this.resultado;
+
+    // Salvando a estimativa
     this.service.salvar(formValue).subscribe({
-      next: (result) => {
-        //this.onSuccess();
+      next: () => {
+        this._snackBar.open('Estimativa salva com sucesso!', '', {
+          duration: 3000,
+        });
       },
-      error: (error) => {
+      error: () => {
         this.onError();
       },
     });
   }
+
 }

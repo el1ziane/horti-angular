@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     } else {
       console.log("AuthGuard: Acesso negado, redirecionando...");
       this.router.navigate(['/login']).then(() => {
-        window.location.reload();  // Recarrega a página após o redirecionamento
+        window.location.reload();
       });
       return false;
     }
@@ -39,7 +39,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     if (error.status === 401) {
       console.log("Token expirado, redirecionando para login...");
       this.router.navigate(['/login']).then(() => {
-        window.location.reload();  // Recarrega a página após redirecionamento devido a token expirado
+        window.location.reload(); 
       });
       return false;
     }

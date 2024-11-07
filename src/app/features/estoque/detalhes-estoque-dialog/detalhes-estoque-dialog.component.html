@@ -1,13 +1,14 @@
 <h1 mat-dialog-title>Detalhes do Item</h1>
 <div mat-dialog-content>
   <p>Código: {{data.codigoEstoque}}</p>
-  <p>Produto: {{data.produtoEstoque}}</p>
+  <p>Produto: {{data.produtoEstoque?.produtoNome}}</p>
   <p>Quantidade: {{data.quantidadeEstoque}}</p>
-  <p>Valor Unitrio: {{data.valorUnitarioEstoque}}</p>
-  <p>Valor Total: {{data.valorTotalEstoque}}</p>
+  <p>Valor Unitrio: R${{data.valorUnitarioEstoque| decimalVirgula}}</p>
+  <p>Valor Total: R${{data.valorTotalEstoque | decimalVirgula}}</p>
   <p>Data Entrada: {{data.dataEstoque}}</p>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Fechar</button>
 </div>
+
 

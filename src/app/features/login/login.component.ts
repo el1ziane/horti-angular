@@ -19,11 +19,11 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  usuario: Usuario = { 
-    _id: '',          // Inicializando com valor padrão
-    nome: '',         // Inicializando com valor padrão
-    email: '',        // Inicializando com valor padrão
-    senha: ''         // Inicializando com valor padrão
+  usuario: Usuario = {
+    _id: '',
+    nome: '',
+    email: '',
+    senha: ''
   };
 
   constructor(private authService: AuthService, private router: Router) { }
@@ -39,6 +39,4 @@ export class LoginComponent {
     console.log(this.usuario);
     this.authService.fazerLogin(this.usuario);
   }
-
-
 }

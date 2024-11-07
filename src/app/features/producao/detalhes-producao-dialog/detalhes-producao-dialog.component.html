@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Detalhes da Produção</h1>
 <div mat-dialog-content>
   <p>Data: {{data.dataProducao}}</p>
-  <p>Produto: {{data.produtoProducao}}</p>
+  <p>Produto: {{data.produtoProducao?.produtoNome}}</p>
   <p>Quantidade: {{data.quantidadeProducao}}</p>
   <p>Código: {{data.codigoProducao}}</p>
 </div>

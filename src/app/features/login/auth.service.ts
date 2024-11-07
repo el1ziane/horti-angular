@@ -1,9 +1,8 @@
-import { EventEmitter, Injectable, OnInit } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Usuario } from './usuario';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { interval, Observable } from 'rxjs';
-import jwt_decode, { jwtDecode } from 'jwt-decode';
+import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
@@ -19,11 +18,11 @@ export class AuthService   {
     this.usuarioAutenticado = JSON.parse(localStorage.getItem('isAuthenticated') || 'false');
     this.mostrarMenuEmitter.emit(this.usuarioAutenticado);
   }
-  
+
 
   fazerLogin(usuario: Usuario) {
     const usuarioParaLogin = { email: usuario.email, senha: usuario.senha };
-  
+
     this.http.post(`${this.API}/login`, usuarioParaLogin).subscribe(
       (response: any) => {
         console.log('Resposta do servidor:', response);
@@ -44,17 +43,16 @@ export class AuthService   {
         this.mostrarMenuEmitter.emit(false);
       }
     );
-  }     
+  }
 
   fazerLogout() {
     localStorage.removeItem('token');
-    localStorage.removeItem('isAuthenticated'); // Remove o estado de autenticação
+    localStorage.removeItem('isAuthenticated');
     this.mostrarMenuEmitter.emit(false);
     this.router.navigate(['/login']).then(() => {
       window.location.reload();
     });
   }
-  
 
   isUsuarioAutenticado(): boolean {
     const token = localStorage.getItem('token');
@@ -65,18 +63,15 @@ export class AuthService   {
   }
   verificarAutenticacao() {
     const isAuthenticated = this.isUsuarioAutenticado();
-    this.mostrarMenuEmitter.emit(isAuthenticated); // Emite o estado do menu
+    this.mostrarMenuEmitter.emit(isAuthenticated);
   }
   enviarEmailRecuperacao(email: string): Observable<any> {
     return this.http.post(`${this.API}/recuperar-senha`, { email });
   }
 
-  recuperarSenha(email: string) {
-   
-}
 redefinirSenha(token: string, novaSenha: string): Observable<any> {
   return this.http.post(`${this.API}/redefinir-senha`, { token, novaSenha });
 }
 
-  
+
 }

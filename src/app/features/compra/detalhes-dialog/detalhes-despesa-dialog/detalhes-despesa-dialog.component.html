@@ -2,7 +2,7 @@
 <div mat-dialog-content>
   <p>Fornecedor: {{data.fornecedorDespesa}}</p>
   <p>Descrição: {{data.descricaoDespesa}}</p>
-  <p>Valor da Despesa: {{data.valorDespesa}}</p>
+  <p>Valor da Despesa: R${{data.valorDespesa| decimalVirgula}}</p>
   <p>Vencimento:  {{ data.dataDespesa }}</p>
   <p>Status de Pagamento: {{data.statusDespesa}}</p>
 </div>

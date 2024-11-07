@@ -1,6 +1,8 @@
+import { Produto } from "./produto";
+
 export interface Estimativa {
     _id: string | null;
-    produtoEstimativa: string;
+    produtoEstimativa: Produto | null;
     caixaEstimativa: number | null;
     pesoEstimativa: number | null;
     tipoEntrada: string;

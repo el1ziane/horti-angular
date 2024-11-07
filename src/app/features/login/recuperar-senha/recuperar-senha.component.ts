@@ -18,22 +18,22 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './recuperar-senha.component.scss'
 })
 export class RecuperarSenhaComponent {
-  usuario: Usuario = { 
-    _id: '',          // Inicializando com valor padrão
-    nome: '',         // Inicializando com valor padrão
-    email: '',        // Inicializando com valor padrão
-    senha: ''         // Inicializando com valor padrão
+  usuario: Usuario = {
+    _id: '',
+    nome: '',
+    email: '',
+    senha: ''
   };
 
   constructor(private authService: AuthService, @Inject(ActivatedRoute) private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const token = this.route.snapshot.queryParamMap.get('token');
-    console.log(token); // Aqui você pode usar o token para validar a recuperação de senha
+    console.log(token);
   }
 
   enviarEmailRecuperacao() {
-    const email = this.usuario.email; // Assumindo que 'email' seja o campo do email
+    const email = this.usuario.email;
     if (email) {
         this.authService.enviarEmailRecuperacao(email).subscribe({
           next: (response) => {
@@ -41,11 +41,10 @@ export class RecuperarSenhaComponent {
                 alert('Um email de recuperação foi enviado. Verifique sua caixa de entrada.');
                 console.log('Resposta do servidor:', response);
 
-            }, 6000); // Atraso de 2 segundos
+            }, 6000);
         },
-        
+
             error: (error) => {
-                // Trata o erro adequadamente
                 if (error.status === 404) {
                     console.error('Usuário não encontrado:', error);
                     alert('Usuário com este email não encontrado. Por favor, verifique o email inserido.');
@@ -59,6 +58,4 @@ export class RecuperarSenhaComponent {
         alert('Por favor, insira seu email para recuperar a senha.');
     }
 }
-
-
 }

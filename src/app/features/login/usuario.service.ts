@@ -7,12 +7,12 @@ import { Usuario } from './usuario';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:8080/api/auth'; // Altere para o seu endpoint
+  private apiUrl = 'http://localhost:8080/api/auth';
 
   constructor(private http: HttpClient) { }
 
   getUsuarioLogado(): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.apiUrl}/me`); // Endpoint para buscar usuário logado
+    return this.http.get<Usuario>(`${this.apiUrl}/me`);
   }
   loadById(id: string) {
     const parsedId = Number(id);
@@ -26,22 +26,19 @@ export class UsuarioService {
 atualizarUsuario(registro: Partial<Usuario>){
   return this.http.put<Usuario>(`${this.apiUrl}/${registro._id}`,registro);
 }
-// Método para alterar a senha do usuário
-// Método para alterar a senha do usuário
 alterarSenha(senhaAtual: string, novaSenha: string): Observable<any> {
   const payload = {
     senhaAtual: senhaAtual,
     novaSenha: novaSenha
   };
 
-  return this.http.put<any>(`${this.apiUrl}/alterar-senha`, payload); // Endpoint para alterar senha
+  return this.http.put<any>(`${this.apiUrl}/alterar-senha`, payload);
 }
 salvar(registro: Partial<Usuario>) {
   if (registro._id) {
     return this.atualizarUsuario(registro);
   }
-  // Se não houver _id, retorne null ou uma Observable vazia
-  return null; // ou return this.http.post<Usuario>(`${this.apiUrl}`, registro);
+  return null;
 }
 
 }

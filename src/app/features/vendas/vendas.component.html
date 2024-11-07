@@ -24,7 +24,7 @@
         <tbody>
           <tr *ngFor="let venda of vendasService.getVendasParaRelatorio(); let i = index">
             <td style="border: 1px solid #000; padding: 4px;">{{ venda.codigoVenda }}</td>
-            <td style="border: 1px solid #000; padding: 4px;">{{ venda.produtoVenda }}</td>
+            <td style="border: 1px solid #000; padding: 4px;">{{ venda.produtoVenda?.produtoNome }}</td>
             <td style="border: 1px solid #000; padding: 4px;">{{ venda.quantidadeVenda }}</td>
             <td style="border: 1px solid #000; padding: 4px;">{{ venda.valorVenda }}</td>
             <td style="border: 1px solid #000; padding: 4px;">

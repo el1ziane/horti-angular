@@ -3,8 +3,8 @@
   <p>Código: {{data.codigo}}</p>
   <p>Produto: {{data.produtoNome}}</p>
   <p>Quantidade Ideal: {{data.quantidadeProduto}}</p>
-  <p>Peso Bandeja: {{data.peso}}</p>
-  <p>Valor de Venda: {{data.valorProduto}}</p>
+  <p>Peso Bandeja: {{data.peso| decimalVirgula}}</p>
+  <p>Valor de Venda: R${{data.valorProduto | decimalVirgula}}</p>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Fechar</button>

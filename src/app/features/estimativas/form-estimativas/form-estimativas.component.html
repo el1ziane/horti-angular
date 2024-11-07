@@ -2,18 +2,19 @@
   <mat-card-content>
     <form *ngIf="form" [formGroup]="form" class="form-columns">
       <div class="form-column">
-        <mat-form-field appearance="outline" class="custom-form-field">
+                <mat-form-field appearance="outline" class="custom-form-field">
           <mat-label>Produto</mat-label>
-          <input matInput formControlName="produtoEstimativa" placeholder="Produto" id="produtoEstimativa"
-            name="produtoEstimativa" [matAutocomplete]="auto" (input)="searchProducts($event)"
-            [value]="form.controls['produtoEstimativa'].value?.produtoNome || form.controls['produtoEstimativa'].value">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let produtoEstimativa of filteredProdutos" [value]="produtoEstimativa.produtoNome">
-              {{ produtoEstimativa.produtoNome }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+          <mat-select formControlName="produtoEstimativa"
+                      placeholder="Produto"
+                      id="produtoEstimativa"
+                      name="produtoEstimativa"
+                      (selectionChange)="onProdutoChange($event.value)">
+            <mat-option *ngFor="let produto of filteredProdutos" [value]="produto">
+              {{ produto.produtoNome }}
 
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field appearance="outline" class="custom-form-field">
           <mat-label value="Caixa">Quantidade de Caixas</mat-label>
           <input matInput formControlName="caixaEstimativa" placeholder="Estimativa" id="caixaEstimativa">
