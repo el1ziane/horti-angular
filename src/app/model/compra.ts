@@ -2,11 +2,11 @@ import { Produto } from "./produto";
 
 export interface Compra {
   _id: string;
-  fornecedorRec: string;
-  produto: Produto;
-  quantidadeRecebimento: number | null;
-  valorRecebimento: number | null;
-  dataRecebimento: Date;
+  fornecedorCompra: string;
+  produtoCompra: Produto;
+  quantidadeCompra: number | null;
+  valorCompra: number | null;
+  dataCompra: Date;
   status: string;
   showDetails?: boolean;
 }

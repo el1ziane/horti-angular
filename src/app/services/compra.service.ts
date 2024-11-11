@@ -7,7 +7,7 @@ import { Compra } from '../model/compra';
   providedIn: 'root'
 })
 export class CompraService {
-  private readonly API = 'http://localhost:8080/api/recebimentos';
+  private readonly API = 'http://localhost:8080/api/compras';
   private compraParaRelatorio: Compra[] = [];
   constructor(private httpClient: HttpClient) { }
 
@@ -30,7 +30,7 @@ export class CompraService {
   }
 
   getValorTotalCompras(): Observable<number> {
-    return this.httpClient.get<number>(`${this.API}/total`); 
+    return this.httpClient.get<number>(`${this.API}/total`);
   }
   private criar(registro: Partial<Compra>){
     return this.httpClient.post<Compra>(this.API, registro);

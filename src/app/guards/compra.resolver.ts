@@ -16,6 +16,6 @@ export class CompraResolver  {
     if (route.params && route.params['id']) {
       return this.service.loadById(route.params['id']);
     }
-    return of({_id: "",fornecedorRec: "",produto:{} as Produto,quantidadeRecebimento: null,valorRecebimento: null ,dataRecebimento: new Date(),status: ""});
+    return of({_id: "",fornecedorCompra: "",produtoCompra:{} as Produto,quantidadeCompra: null,valorCompra: null ,dataCompra: new Date(),status: ""});
   }
 }

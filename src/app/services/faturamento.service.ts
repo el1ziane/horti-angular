@@ -10,7 +10,7 @@ import { Faturamento } from '../model/faturamento';
 export class FaturamentoService {
   private readonly API = 'http://localhost:8080/api/faturamento';
   private readonly COMPRAS_API =
-    'http://localhost:8080/api/recebimentos/total-compras-pendentes';
+    'http://localhost:8080/api/compras/total-compras-pendentes';
   private readonly DESPESAS_API =
     'http://localhost:8080/api/despesa/total-despesas-pendentes';
   private readonly VENDAS_API = 'http://localhost:8080/api/vendas';

@@ -1,12 +1,10 @@
 import { Location, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatButton } from '@angular/material/button';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardActions, MatCardContent } from '@angular/material/card';
 import { MatOption } from '@angular/material/core';
-import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
-import { MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
+import { MatFormField, MatLabel, MatPrefix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelect } from '@angular/material/select';
@@ -26,8 +24,6 @@ import { FormUtilsService } from '../../../shared/form/form-utils.service';
     MatRadioModule,
     FormsModule,
     MatCard,
-    MatCardHeader,
-    MatCardTitle,
     MatCardContent,
     ReactiveFormsModule,
     MatFormField,
@@ -35,14 +31,8 @@ import { FormUtilsService } from '../../../shared/form/form-utils.service';
     MatInput,
     MatSelect,
     MatOption,
-    MatAutocompleteTrigger,
-    MatAutocomplete,
     NgFor,
     MatPrefix,
-    MatSuffix,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatDatepicker,
     MatCardActions,
     MatButton,
     NgIf,

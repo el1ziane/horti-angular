@@ -1,7 +1,6 @@
 import { Location, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MAT_DATE_LOCALE, MatOption, provideNativeDateAdapter } from '@angular/material/core';
@@ -19,6 +18,7 @@ import { EstoqueService } from '../../../services/estoque.service';
 import { ProducaoService } from '../../../services/producao.service';
 import { ProdutosService } from '../../../services/produtos.service';
 import { FormUtilsService } from '../../../shared/form/form-utils.service';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 
 
 @Component({
@@ -63,7 +63,7 @@ export class FormProducaoComponent implements OnInit {
       dataProducao: [dataProducao, [Validators.required]],
     });
 
-    // Carrega produtos e atualiza o campo do produto se já estiver salvo na produção
+
     this.produtosService.list().subscribe((produtos) => {
       this.produtos = produtos;
       this.filteredProdutos = produtos;

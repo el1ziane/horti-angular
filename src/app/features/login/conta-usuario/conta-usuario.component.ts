@@ -2,7 +2,7 @@ import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../usuario';
 import { UsuarioService } from '../usuario.service';
-import { MatCard, MatCardActions, MatCardContent, MatCardFooter, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-conta-usuario',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardTitle,MatCardContent, MatFormField, MatLabel, MatInput, MatInputModule, MatFormFieldModule, FormsModule, NgIf, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCard,FormsModule, MatCardHeader,MatCardTitle,CommonModule, MatCardSubtitle, MatCardContent, MatCardActions, MatCardFooter, ReactiveFormsModule],
+  imports: [MatCard, MatCardHeader, MatCardTitle,MatCardContent, MatFormField, MatLabel, MatInput, MatInputModule, MatFormFieldModule, FormsModule, NgIf, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCard,FormsModule, MatCardHeader,MatCardTitle,CommonModule, MatCardContent, ReactiveFormsModule],
   templateUrl: './conta-usuario.component.html',
   styleUrl: './conta-usuario.component.scss'
 })
@@ -114,7 +114,7 @@ export class ContaUsuarioComponent implements OnInit{
   }
 
   habilitarCamposSenha(): void {
-    this.camposAlterarSenhaAtivos = true; 
+    this.camposAlterarSenhaAtivos = true;
   }
 
   // Dentro do método redefinirSenha

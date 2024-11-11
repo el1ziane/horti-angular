@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCard, MatCardActions, MatCardContent, MatCardFooter, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCard,FormsModule, MatCardHeader,MatCardTitle,CommonModule, MatCardSubtitle, MatCardContent, MatCardActions, MatCardFooter],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCard,FormsModule, CommonModule, MatCardContent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

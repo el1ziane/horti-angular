@@ -1,9 +1,8 @@
-import { AsyncPipe, DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBoxes, faIcons, faLocation, faMoneyBill, faShop } from '@fortawesome/free-solid-svg-icons';
@@ -22,7 +21,6 @@ import { TopVendasDashboardComponent } from './top-vendas-dashboard/top-vendas-d
   styleUrl: './dashboard.component.scss',
   standalone: true,
   imports: [
-    AsyncPipe,
     MatGridListModule,
     MatMenuModule,
     MatIconModule,
@@ -33,8 +31,6 @@ import { TopVendasDashboardComponent } from './top-vendas-dashboard/top-vendas-d
     AlertaEstoqueDashboardComponent,
     FinanceiroMesDashboardComponent,
     TopVendasDashboardComponent,
-    MatIcon,
-    DecimalPipe,
     DecimalVirgulaPipe,
   ],
 })

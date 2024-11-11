@@ -12,7 +12,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatToolbar } from '@angular/material/toolbar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgxPrintService } from 'ngx-print';
 import { Observable, tap } from 'rxjs';
 
@@ -35,7 +34,6 @@ import { EstoqueListaComponent } from './estoque-lista/estoque-lista.component';
     MatIcon,
     ReactiveFormsModule,
     FormsModule,
-    FaIconComponent,
     NgIf,
     EstoqueListaComponent,
     MatProgressSpinner,

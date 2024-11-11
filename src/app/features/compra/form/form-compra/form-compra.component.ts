@@ -1,7 +1,7 @@
-import { Location, NgFor } from '@angular/common';
+import { Location, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MAT_DATE_LOCALE, MatDateFormats, MatOption, provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatOption, provideNativeDateAdapter } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Compra } from '../../../../model/compra';
@@ -11,7 +11,7 @@ import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular
 import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatSelect } from '@angular/material/select';
 import { MatInput } from '@angular/material/input';
-import { MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
+import { MatError, MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
 import { CompraService } from '../../../../services/compra.service';
 import { Produto } from '../../../../model/produto';
@@ -19,17 +19,7 @@ import { ProdutosService } from '../../../../services/produtos.service';
 import moment from 'moment';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
-export const MY_DATE_FORMATS: MatDateFormats = {
-  parse: {
-    dateInput: 'input',
-  },
-  display: {
-    dateInput: 'dd-MM-yyyy',
-    monthYearLabel: { year: 'numeric', month: 'numeric' },
-    dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
-    monthYearA11yLabel: { year: 'numeric', month: 'long' }
-  }
-};
+
 
 @Component({
     selector: 'app-form-compra',
@@ -40,7 +30,7 @@ export const MY_DATE_FORMATS: MatDateFormats = {
       {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
     ],
     standalone: true,
-    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatPrefix, MatSuffix, MatDatepickerInput, MatDatepickerToggle, MatDatepicker, MatCardActions, MatButton, CurrencyMaskModule]
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatPrefix, MatSuffix, MatDatepickerInput, MatDatepickerToggle, MatDatepicker, MatCardActions, MatButton, NgIf, MatError, CurrencyMaskModule]
 })
 export class FormCompraComponent implements OnInit {
 
@@ -63,16 +53,16 @@ export class FormCompraComponent implements OnInit {
     const compra: Compra = this.router.snapshot.data['compra'];
 
 
-    const dataRecebimento = typeof compra.dataRecebimento === 'string' ? this.parseDate(compra.dataRecebimento)
-    : compra.dataRecebimento;
+    const dataCompra = typeof compra.dataCompra === 'string' ? this.parseDate(compra.dataCompra)
+    : compra.dataCompra;
 
     this.form = this.formBuilder.group({
       _id: [compra._id],
-      fornecedorRec: [compra.fornecedorRec, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      produto: [compra.produto, [Validators.required]],
-      quantidadeRecebimento: [compra.quantidadeRecebimento, [Validators.required]],
-      valorRecebimento: [compra.valorRecebimento, [Validators.required]],
-      dataRecebimento: [dataRecebimento, [Validators.required]],
+      fornecedorCompra: [compra.fornecedorCompra, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      produtoCompra: [compra.produtoCompra, [Validators.required]],
+      quantidadeCompra: [compra.quantidadeCompra, [Validators.required]],
+      valorCompra: [compra.valorCompra, [Validators.required]],
+      dataCompra: [dataCompra, [Validators.required]],
       status: [compra.status]
     });
 
@@ -80,29 +70,41 @@ export class FormCompraComponent implements OnInit {
       this.produtos = produtos;
       this.filteredProdutos = produtos;
 
-      if (compra.produto) {
-        const produto = this.produtos.find(p => p._id === compra.produto?._id);
+      if (compra.produtoCompra) {
+        const produto = this.produtos.find(p => p._id === compra.produtoCompra?._id);
 
 
           this.form.patchValue({
-            produto: produto,
-            fornecedorRec: compra.fornecedorRec,
-            quantidadeRecebimento: compra.quantidadeRecebimento,
-            valorRecebimento: compra.valorRecebimento,
-            dataRecebimento: dataRecebimento,
+            produtoCompra: produto,
+            fornecedorCompra: compra.fornecedorCompra,
+            quantidadeCompra: compra.quantidadeCompra,
+            valorCompra: compra.valorCompra,
+            dataCompra: dataCompra,
             status: compra.status
           });
         }
       }
     );
 
-    this.form.get('produto')?.valueChanges.subscribe(value => {
+    this.form.get('produtoCompra')?.valueChanges.subscribe(value => {
       this.onProdutoChange(value);
     });
   }
   public onProdutoChange(produto: Produto): void {
     console.log('Produto selecionado:', produto);
 
+  }
+  private parseDate(dateStr: string): Date | null {
+    const [day, month, year] = dateStr.split('-').map(Number);
+    if (day && month && year) {
+      return new Date(year, month - 1, day);
+    }
+    return null;
+  }
+
+  private formatDateForBackend(date: Date | null): string {
+    if (!date) return '';
+    return moment(date).format('DD-MM-YYYY');
   }
   enviar(): void {
     if (this.form.valid) {
@@ -124,18 +126,7 @@ export class FormCompraComponent implements OnInit {
     }
   }
 
-  private parseDate(dateStr: string): Date | null {
-    const [day, month, year] = dateStr.split('-').map(Number);
-    if (day && month && year) {
-      return new Date(year, month - 1, day);
-    }
-    return null;
-  }
 
-  private formatDateForBackend(date: Date | null): string {
-    if (!date) return '';
-    return moment(date).format('DD-MM-YYYY');
-  }
 
   cancelar(): void {
     this.location.back();
@@ -156,7 +147,7 @@ export class FormCompraComponent implements OnInit {
 
   private prepareSave(): any {
     const formValue = { ...this.form.value };
-    formValue.dataRecebimento = this.formatDateForBackend(formValue.dataRecebimento);
+    formValue.dataCompra = this.formatDateForBackend(formValue.dataCompra);
     return formValue;
   }
 

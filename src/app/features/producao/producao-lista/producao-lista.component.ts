@@ -2,8 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChil
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatTableDataSource } from '@angular/material/table';
-import { CommonModule, DecimalPipe } from '@angular/common';
-import { DecimalVirgulaPipe } from '../../../shared/decimal-virgula.pipe';
+import { CommonModule } from '@angular/common';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatDivider } from '@angular/material/divider';
 import {DetalhesProducaoDialogComponent} from '../detalhes-producao-dialog/detalhes-producao-dialog.component'
@@ -12,7 +11,6 @@ import { Producao } from '../../../model/producao';
 import { ProducaoService } from '../../../services/producao.service';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 
 
@@ -21,7 +19,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
     templateUrl: './producao-lista.component.html',
     styleUrl: './producao-lista.component.scss',
     standalone: true,
-    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe, DecimalVirgulaPipe, CommonModule, MatMenu, MatMenuItem, MatDivider, MatMenuTrigger,MatPaginator,MatSortModule, MatPaginatorModule, MatFormField, MatLabel]
+    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow,  CommonModule, MatMenu, MatMenuItem, MatDivider, MatMenuTrigger,MatPaginator,MatSortModule, MatPaginatorModule]
 })
 export class ProducaoListaComponent implements OnInit, AfterViewInit {
 
@@ -40,8 +38,8 @@ export class ProducaoListaComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
   ngAfterViewInit() {
     if (this.dataSource) {
-      this.dataSource.paginator = this.paginator; 
-      this.dataSource.sort = this.sort; 
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
 
   }

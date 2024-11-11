@@ -1,7 +1,6 @@
 import { Location, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { DateAdapter, MAT_DATE_LOCALE, MatOption, provideNativeDateAdapter } from '@angular/material/core';
@@ -47,9 +46,10 @@ import { FormUtilsService } from '../../../shared/form/form-utils.service';
   standalone: true,
   imports: [
     MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule,
-    MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatAutocompleteTrigger,
-    MatAutocomplete, NgFor, MatPrefix, MatSuffix, MatDatepickerInput, MatDatepickerToggle,
-    MatDatepickerModule, MatCardActions, MatButton, MatDateRangeInput, MatHint, MatDateRangePicker,MatFormFieldModule, MatDatepicker,CurrencyMaskModule,NgIf, MatError
+    MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatDatepickerToggle,
+    NgFor, MatPrefix, MatSuffix, MatCardActions, MatButton, MatDateRangeInput, MatDateRangePicker,MatFormFieldModule,CurrencyMaskModule,NgIf, MatError,  MatDatepicker,
+    MatDatepickerInput,
+    MatDatepickerModule,
   ]
 })
 export class VendasFormComponent implements OnInit {
@@ -108,7 +108,7 @@ export class VendasFormComponent implements OnInit {
             produtoVenda: produto,
             codigoVenda: produto.codigo,
             quantidadeVenda: venda.quantidadeVenda,
-            valorVenda: venda.valorVenda,
+            valorVenda: produto.valorProduto,
             statusVenda: venda.statusVenda,
             dataInicial: dataInicial,
             dataFinal: dataFinal
@@ -129,7 +129,8 @@ export class VendasFormComponent implements OnInit {
     console.log('Produto selecionado:', produto);
     if (produto) {
       this.form.patchValue({
-        codigoVenda: produto.codigo
+        codigoVenda: produto.codigo,
+        valorVenda: produto.valorProduto
       });
     }
   }

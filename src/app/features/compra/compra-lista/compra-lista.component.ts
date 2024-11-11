@@ -32,7 +32,7 @@ export class CompraListaComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  readonly displayedColumns = ['fornecedorRec', 'produto', 'quantidadeRecebimento', 'valorRecebimento', 'dataRecebimento', 'status','acoes'];
+  readonly displayedColumns = ['fornecedorCompra', 'produtoCompra', 'quantidadeCompra', 'valorCompra', 'dataCompra', 'status','acoes'];
 
   constructor(public dialog: MatDialog, private compraService: CompraService){}
   ngOnInit(): void {

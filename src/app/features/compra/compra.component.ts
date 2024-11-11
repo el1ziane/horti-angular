@@ -33,7 +33,7 @@ import { DespesaService } from '../../services/despesa.service';
     imports: [MatCard, MatCardHeader, MatCardTitle, MatToolbar, MatButton, MatIcon, ReactiveFormsModule, FormsModule, FaIconComponent, NgIf, CompraListaComponent,DespesaListaComponent, MatProgressSpinner, AsyncPipe, NgStyle, NgForOf,MatTabsModule ]
 })
 export class CompraComponent implements OnInit {
-  selectedIndex: number = 0; // Índice da aba ativa
+  selectedIndex: number = 0;
   compras$: Observable<Compra[]> | null = null;
   despesas$: Observable<Despesa[]> | null = null;
   compraDataSource: MatTableDataSource<Compra> = new MatTableDataSource<Compra>();
@@ -75,7 +75,7 @@ export class CompraComponent implements OnInit {
     });
   }
 
-  // Função para atualizar Despesas
+
   atualizarDespesas() {
     this.despesas$ = this.despesaService.listDespesa().pipe(
       catchError(error => {
@@ -95,7 +95,7 @@ export class CompraComponent implements OnInit {
     });
   }
   onTabChange(event: any) {
-    this.selectedIndex = event.index; // Atualiza o índice quando a aba muda
+    this.selectedIndex = event.index;
   }
   onError(errorMsg: string) {
     this.dialog.open(ErrorDialogComponent, {
@@ -153,7 +153,7 @@ export class CompraComponent implements OnInit {
           this.compraService.excluir((item as Compra)._id).subscribe(
             () => {
               this._snackBar.open("Compra removida com sucesso!", 'X', { duration: 3000, verticalPosition: 'bottom', horizontalPosition: 'center' });
-              this.atualizarCompras(); // Atualiza a lista de compras
+              this.atualizarCompras();
             },
             (error) => this.onError('Erro ao tentar remover Compra')
           );
@@ -161,7 +161,7 @@ export class CompraComponent implements OnInit {
           this.despesaService.excluir((item as Despesa)._id).subscribe(
             () => {
               this._snackBar.open("Despesa removida com sucesso!", 'X', { duration: 3000, verticalPosition: 'bottom', horizontalPosition: 'center' });
-              this.atualizarDespesas(); // Atualiza a lista de despesas
+              this.atualizarDespesas();
             },
             (error) => this.onError('Erro ao tentar remover Despesa')
           );

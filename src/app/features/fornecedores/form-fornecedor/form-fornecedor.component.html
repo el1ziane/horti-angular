@@ -15,6 +15,9 @@
         <mat-form-field appearance="outline" class="custom-form-field">
           <mat-label>CNPJ</mat-label>
           <input matInput mask="00.000.000/0000-00" formControlName="cnpj" placeholder="CNPJ" id="cnpj" name="cnpj">
+          <mat-error *ngIf="form.get('cnpj')?.invalid && (form.get('cnpj')?.dirty || form.get('cnpj')?.touched)">
+            {{ formUtils.getFieldErrorMessage(form, 'cnpj') }}
+          </mat-error>
         </mat-form-field>
       </div>
         <div class="form-column">
@@ -32,7 +35,7 @@
     </form>
   </mat-card-content>
   <mat-card-actions class="actions-container">
-    <button mat-raised-button color="primary" style="background-color: #98BAE6; color:white;" (click)="enviar()">Salvar</button>
+    <button mat-raised-button color="primary" style="background-color: #64C2A8; color:white;" (click)="enviar()">Salvar</button>
     <button  mat-raised-button style="margin-left: 8px;" (click)="cancelar()">Cancelar</button>
   </mat-card-actions>
 </mat-card>

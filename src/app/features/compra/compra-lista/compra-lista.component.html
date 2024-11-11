@@ -3,8 +3,8 @@
     <div *ngFor="let compra of dataSource.data" class="tabela-item">
       <div class="tabela-header" (click)="toggleDetails(compra)">
         <div class="tabela-info">
-          <span>{{ compra.produto?.produtoNome }}</span>
-          <span>{{ compra.dataRecebimento}}</span>
+          <span>{{ compra.produtoCompra?.produtoNome }}</span>
+          <span>{{ compra.dataCompra}}</span>
         </div>
         <button mat-icon-button [matMenuTriggerFor]="opcoesMenu">
           <mat-icon>menu</mat-icon>
@@ -28,29 +28,29 @@
 
   <mat-table [dataSource]="dataSource" class="mat-table" matSort>
     <!-- Definições de colunas -->
-    <ng-container matColumnDef="fornecedorRec">
+    <ng-container matColumnDef="fornecedorCompra">
       <mat-header-cell *matHeaderCellDef> Fornecedor </mat-header-cell>
-      <mat-cell *matCellDef="let compra"> {{compra.fornecedorRec}} </mat-cell>
+      <mat-cell *matCellDef="let compra"> {{compra.fornecedorCompra}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="produto">
+    <ng-container matColumnDef="produtoCompra">
       <mat-header-cell *matHeaderCellDef> Produto </mat-header-cell>
-      <mat-cell *matCellDef="let compra"> {{compra.produto?.produtoNome}} </mat-cell>
+      <mat-cell *matCellDef="let compra"> {{compra.produtoCompra?.produtoNome}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="quantidadeRecebimento">
+    <ng-container matColumnDef="quantidadeCompra">
       <mat-header-cell *matHeaderCellDef> Quantidade </mat-header-cell>
-      <mat-cell *matCellDef="let compra"> {{compra.quantidadeRecebimento}} </mat-cell>
+      <mat-cell *matCellDef="let compra"> {{compra.quantidadeCompra}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="valorRecebimento">
+    <ng-container matColumnDef="valorCompra">
       <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
-      <mat-cell *matCellDef="let compra"> R${{ compra.valorRecebimento | decimalVirgula }} </mat-cell>
+      <mat-cell *matCellDef="let compra"> R${{ compra.valorCompra | decimalVirgula }} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="dataRecebimento">
+    <ng-container matColumnDef="dataCompra">
       <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
-      <mat-cell *matCellDef="let compra"> {{compra.dataRecebimento}} </mat-cell>
+      <mat-cell *matCellDef="let compra"> {{compra.dataCompra}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="status">

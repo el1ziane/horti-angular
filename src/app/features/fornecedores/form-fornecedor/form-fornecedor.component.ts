@@ -1,18 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
-import { Location, NgFor } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatOption } from '@angular/material/core';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { FornecedoresService } from '../../../services/fornecedores.service';
-import { FormUtilsService } from '../../../shared/form/form-utils.service';
+import { FormUtilsService, validarCNPJ } from '../../../shared/form/form-utils.service';
 import { Fornecedor } from '../../../model/fornecedor';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
@@ -21,7 +17,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
   templateUrl: './form-fornecedor.component.html',
   styleUrls: ['./form-fornecedor.component.scss'],
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatSelect, MatOption, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatPrefix, MatSuffix, MatDatepickerInput, MatDatepickerToggle, MatDatepicker, MatCardActions, MatButton, NgxMaskDirective],
+  imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatCardActions, MatButton, NgxMaskDirective, MatError, NgIf],
   providers: [provideNgxMask()],
 })
 export class FormFornecedorComponent implements OnInit {
@@ -40,7 +36,7 @@ export class FormFornecedorComponent implements OnInit {
     this.form = this.formBuilder.group({
       _id: [fornecedor._id],
       fornecedorNome: [fornecedor.fornecedorNome, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      cnpj: [fornecedor.cnpj, [Validators.required, Validators.minLength(14), Validators.maxLength(14)]],
+      cnpj: [fornecedor.cnpj, [Validators.required, Validators.minLength(14), Validators.maxLength(14), validarCNPJ()]],
       telefone: [fornecedor.telefone, [Validators.minLength(10), Validators.maxLength(15)]],
       email: [fornecedor.email, [Validators.maxLength(100)]],
     });

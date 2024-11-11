@@ -25,7 +25,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app/app-routing.module';
 import { AppComponent } from './app/app.component';
 import { AuthInterceptor } from './app/auth.interceptor';
-import { MY_DATE_FORMATS } from './app/features/compra/form/form-compra/form-compra.component';
+//import { MY_DATE_FORMATS } from './app/features/compra/form/form-compra/form-compra.component';
 import { environment } from './environments/environment';
 
 if (environment.production) {
@@ -44,7 +44,7 @@ bootstrapApplication(AppComponent, {
     },
       importProvidersFrom(MatNativeDateModule),
         importProvidersFrom(BrowserModule, AppRoutingModule, ReactiveFormsModule, MatMenuModule, MatTableModule, MatFormFieldModule, MatSelectModule, FormsModule, MatButtonModule, MatInputModule, MatAutocompleteModule, MatDatepickerModule, FontAwesomeModule, MatDatepickerModule, MatButtonModule, MatButtonModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatSlideToggleModule, MatSnackBarModule),
-        { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+       // { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
           { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
 
        // provideHttpClient(withInterceptorsFromDi()),

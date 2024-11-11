@@ -1,4 +1,4 @@
-import { CommonModule, DecimalPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -38,7 +38,6 @@ import { DetalhesEstimativasComponent } from '../detalhes-estimativas/detalhes-e
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    DecimalPipe,
     DecimalVirgulaPipe,
     CommonModule,
     MatMenu,

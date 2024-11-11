@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatDialogTitle, MatDialogContent, MatDialogActions, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DecimalVirgulaPipe } from '../../../../shared/decimal-virgula.pipe';
 
 @Component({
@@ -9,7 +8,7 @@ import { DecimalVirgulaPipe } from '../../../../shared/decimal-virgula.pipe';
   templateUrl: './detalhes-despesa-dialog.component.html',
   styleUrls: ['./detalhes-despesa-dialog.component.scss'],
   standalone: true,
-  imports:[MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule, MatFormField, MatLabel, DecimalVirgulaPipe]
+  imports:[MatDialogTitle, MatDialogContent, MatDialogActions, MatButtonModule, DecimalVirgulaPipe]
 })
 export class DetalhesDespesaDialogComponent implements OnInit {
 

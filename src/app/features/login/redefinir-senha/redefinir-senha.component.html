@@ -5,29 +5,59 @@
         <mat-card-content>
           <h3 class="login-heading mb-4 text-center">Redefinição de Senha</h3>
 
-          <form (ngSubmit)="redifinirSenha()">
+          <form [formGroup]="redefinirSenhaForm" (ngSubmit)="redefinirSenha()">
             <div class="form-floating mb-4">
               <mat-form-field appearance="outline" class="custom-form-field">
                 <mat-label for="novaSenha">Nova Senha</mat-label>
-                <input matInput id="novaSenha" type="password" [(ngModel)]="novaSenha" name="novaSenha" required>
+                <input
+                  matInput
+                  id="novaSenha"
+                  type="password"
+                  formControlName="novaSenha"
+                  required
+                />
+                <mat-error *ngIf="redefinirSenhaForm.get('novaSenha')?.hasError('required')">
+                  A senha é obrigatória.
+                </mat-error>
+                <mat-error *ngIf="redefinirSenhaForm.get('novaSenha')?.hasError('minlength')">
+                  A senha deve ter no mínimo 8 caracteres.
+                </mat-error>
               </mat-form-field>
             </div>
 
             <div class="form-floating mb-4">
               <mat-form-field appearance="outline" class="custom-form-field">
                 <mat-label for="confirmarSenha">Confirmar Senha</mat-label>
-                <input matInput id="confirmarSenha" type="password" [(ngModel)]="confirmarSenha" name="confirmarSenha" required>
+                <input
+                  matInput
+                  id="confirmarSenha"
+                  type="password"
+                  formControlName="confirmarSenha"
+                  required
+                />
+                <mat-error *ngIf="redefinirSenhaForm.get('confirmarSenha')?.hasError('required')">
+                  A confirmação de senha é obrigatória.
+                </mat-error>
+                <mat-error *ngIf="redefinirSenhaForm.get('confirmarSenha')?.hasError('minlength')">
+                  A confirmação deve ter no mínimo 8 caracteres.
+                </mat-error>
               </mat-form-field>
             </div>
 
             <div class="d-grid mb-4">
-              <button mat-flat-button class="btn btn-lg btn-login text-uppercase fw-bold" type="submit" style="background-color: #64C2A8; color: white">
-                <mat-icon>lock</mat-icon>Redefinir Senha</button>
+              <button
+                mat-flat-button
+                class="btn btn-lg btn-login text-uppercase fw-bold"
+                type="submit"
+                style="background-color: #64C2A8; color: white">
+                <mat-icon>lock</mat-icon>Redefinir Senha
+              </button>
             </div>
 
             <div class="text-center">
               <a class="small" href="/login">Voltar ao Login</a>
             </div>
+
           </form>
         </mat-card-content>
       </mat-card>

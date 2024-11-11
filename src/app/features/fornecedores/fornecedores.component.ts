@@ -12,7 +12,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatToolbar } from '@angular/material/toolbar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgxPrintService } from 'ngx-print';
 import { catchError, Observable, of } from 'rxjs';
 
@@ -34,7 +33,6 @@ import { FornecedorListaComponent } from './fornecedor-lista/fornecedor-lista.co
     MatIcon,
     ReactiveFormsModule,
     FormsModule,
-    FaIconComponent,
     NgIf,
     FornecedorListaComponent,
     MatProgressSpinner,

@@ -12,7 +12,6 @@ import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ProducaoListaComponent } from './producao-lista/producao-lista.component';
 import { Producao } from '../../model/producao';
 import { ProducaoService } from '../../services/producao.service';
@@ -26,7 +25,7 @@ import { EstoqueService } from '../../services/estoque.service';
 @Component({
   selector: 'app-producao',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardTitle, MatToolbar, MatButton, MatIcon, ReactiveFormsModule, FormsModule, FaIconComponent, NgIf, ProducaoListaComponent, MatProgressSpinner, AsyncPipe, NgStyle, NgForOf],
+  imports: [MatCard, MatCardHeader, MatCardTitle, MatToolbar, MatButton, MatIcon, ReactiveFormsModule, FormsModule, NgIf, ProducaoListaComponent, MatProgressSpinner, AsyncPipe, NgStyle, NgForOf],
   templateUrl: './producao.component.html',
   styleUrl: './producao.component.scss'
 })

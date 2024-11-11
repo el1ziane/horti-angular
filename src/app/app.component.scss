@@ -6,6 +6,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  height: 100vh;
 
   .sidenav-container {
     flex: 1;
@@ -19,6 +20,8 @@
     .main-container {
       background-color: #E8F8F5;
       padding: 8px;
+      flex-grow: 1;
+      height: 100%;
     }
   }
 }
