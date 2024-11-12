@@ -21,7 +21,7 @@ export class RedefinirSenhaComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private fb: FormBuilder, // injeção de FormBuilder
+    private fb: FormBuilder, 
     @Inject(ActivatedRoute) private route: ActivatedRoute,
     private router: Router
   ) {

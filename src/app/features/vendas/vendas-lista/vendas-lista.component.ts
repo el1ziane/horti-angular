@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DetalhesVendasDialogComponent } from '../detalhes-vendas-dialog/detalhes-vendas-dialog.component';
 import { VendasService } from '../../../services/vendas.service';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSort, MatSortHeader, MatSortModule } from '@angular/material/sort';
 
 
 
@@ -20,7 +20,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
     templateUrl: './vendas-lista.component.html',
     styleUrl: './vendas-lista.component.scss',
     standalone: true,
-    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe, DecimalVirgulaPipe, CommonModule, MatMenu, MatMenuItem, MatDivider, MatMenuTrigger,MatPaginator,MatSortModule, MatPaginatorModule]
+    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe, DecimalVirgulaPipe, CommonModule, MatMenu, MatMenuItem, MatDivider, MatMenuTrigger,MatPaginator,MatSortModule, MatPaginatorModule, MatSortHeader]
 })
 export class VendasListaComponent implements OnInit, AfterViewInit {
 

@@ -29,22 +29,22 @@
 
 <mat-table  [dataSource]="dataSource" class="mat-table" matSort>
   <ng-container matColumnDef="fornecedorDespesa">
-    <mat-header-cell *matHeaderCellDef> Fornecedor </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> Fornecedor </mat-header-cell>
     <mat-cell *matCellDef="let despesa"> {{despesa.fornecedorDespesa}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="descricaoDespesa">
-    <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> Descrição </mat-header-cell>
     <mat-cell *matCellDef="let despesa"> {{despesa.descricaoDespesa}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="valorDespesa">
-    <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> Valor </mat-header-cell>
     <mat-cell *matCellDef="let despesa"> R${{despesa.valorDespesa | decimalVirgula}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="dataDespesa">
-    <mat-header-cell *matHeaderCellDef> Data de Vencimento </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> Data de Vencimento </mat-header-cell>
     <mat-cell *matCellDef="let despesa">{{ despesa.dataDespesa }}
     </mat-cell>
   </ng-container>

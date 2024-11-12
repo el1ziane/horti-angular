@@ -27,29 +27,28 @@
   </div>
 
   <mat-table [dataSource]="dataSource" class="mat-table" matSort>
-    <!-- Definições de colunas -->
     <ng-container matColumnDef="fornecedorCompra">
-      <mat-header-cell *matHeaderCellDef> Fornecedor </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef  mat-sort-header> Fornecedor </mat-header-cell>
       <mat-cell *matCellDef="let compra"> {{compra.fornecedorCompra}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="produtoCompra">
-      <mat-header-cell *matHeaderCellDef> Produto </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef  mat-sort-header> Produto </mat-header-cell>
       <mat-cell *matCellDef="let compra"> {{compra.produtoCompra?.produtoNome}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="quantidadeCompra">
-      <mat-header-cell *matHeaderCellDef> Quantidade </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef  mat-sort-header> Quantidade </mat-header-cell>
       <mat-cell *matCellDef="let compra"> {{compra.quantidadeCompra}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="valorCompra">
-      <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef  mat-sort-header> Valor </mat-header-cell>
       <mat-cell *matCellDef="let compra"> R${{ compra.valorCompra | decimalVirgula }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="dataCompra">
-      <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef  mat-sort-header> Data </mat-header-cell>
       <mat-cell *matCellDef="let compra"> {{compra.dataCompra}} </mat-cell>
     </ng-container>
 

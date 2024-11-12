@@ -27,22 +27,22 @@
   </div>
 <mat-table [dataSource]="dataSource" class="mat-table" matSort >
   <ng-container matColumnDef="fornecedorNome">
-    <mat-header-cell *matHeaderCellDef> Fornecedor </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> Fornecedor </mat-header-cell>
     <mat-cell *matCellDef="let fornecedor"> {{fornecedor.fornecedorNome}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="cnpj">
-    <mat-header-cell *matHeaderCellDef> CNPJ </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> CNPJ </mat-header-cell>
     <mat-cell *matCellDef="let fornecedor"> {{formatarCNPJ(fornecedor.cnpj)}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="telefone">
-    <mat-header-cell *matHeaderCellDef> Telefone </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> Telefone </mat-header-cell>
     <mat-cell *matCellDef="let fornecedor"> {{formatarTelefone(fornecedor.telefone)}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="email">
-    <mat-header-cell *matHeaderCellDef> E-mail </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> E-mail </mat-header-cell>
     <mat-cell *matCellDef="let fornecedor"> {{fornecedor.email}} </mat-cell>
   </ng-container>
 

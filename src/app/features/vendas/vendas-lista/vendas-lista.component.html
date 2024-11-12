@@ -28,27 +28,27 @@
   </div>
 <mat-table  [dataSource]="dataSource" class="mat-table" matSort>
   <ng-container matColumnDef="codigoVenda">
-    <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> Código </mat-header-cell>
     <mat-cell *matCellDef="let venda"> {{venda.codigoVenda}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="produtoVenda">
-    <mat-header-cell *matHeaderCellDef> Produto </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> Produto </mat-header-cell>
     <mat-cell *matCellDef="let venda"> {{venda.produtoVenda?.produtoNome}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="quantidadeVenda">
-    <mat-header-cell *matHeaderCellDef> Quantidade </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> Quantidade </mat-header-cell>
     <mat-cell *matCellDef="let venda"> {{venda.quantidadeVenda}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="valorVenda" >
-    <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> Valor </mat-header-cell>
     <mat-cell *matCellDef="let venda"> R${{ venda.valorVenda | decimalVirgula }} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="periodoVenda">
-    <mat-header-cell *matHeaderCellDef> Período </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef  mat-sort-header> Período </mat-header-cell>
     <mat-cell *matCellDef="let venda">
       {{ venda.dataInicial }} - {{ venda.dataFinal }}
     </mat-cell>

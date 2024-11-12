@@ -27,22 +27,22 @@
 
   <mat-table [dataSource]="dataSource" class="mat-table" matSort>
     <ng-container matColumnDef="codigoProducao">
-      <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef  mat-sort-header> Código </mat-header-cell>
       <mat-cell *matCellDef="let producao"> {{producao.codigoProducao}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="produtoProducao">
-      <mat-header-cell *matHeaderCellDef> Produto </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef  mat-sort-header> Produto </mat-header-cell>
       <mat-cell *matCellDef="let producao"> {{producao.produtoProducao?.produtoNome}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="quantidadeProducao">
-      <mat-header-cell *matHeaderCellDef> Quantidade </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef  mat-sort-header> Quantidade </mat-header-cell>
       <mat-cell *matCellDef="let producao"> {{producao.quantidadeProducao}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="dataProducao">
-      <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef  mat-sort-header> Data </mat-header-cell>
       <mat-cell *matCellDef="let producao"> {{producao.dataProducao}} </mat-cell>
     </ng-container>
 
